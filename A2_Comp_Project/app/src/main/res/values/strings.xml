@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">A2_Comp_Project</string>
+    <string name="action_settings">Settings</string>
+    <string name="button_2d">2D Graph</string>
+    <string name="button_3d">3D Graph</string>
+    <string name="button_stats">Statistics</string>
+    <string name="title_activity_main_stats">MainStatsActivity</string>
+    <string name="class_width">Class Width</string>
+    <string name="frequency">Frequency</string>
+    <string name="stats_inequality"><![CDATA[<x<]]></string>
+    <string name="New_Row">Add New Row</string>
+</resources>
