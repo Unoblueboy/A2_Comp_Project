@@ -41,4 +41,15 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="5dp"
         android:onClick="goToStats"/>
+
+    <Button
+        android:text="Tabbed Statistics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_statistics"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="5dp"
+        android:id="@+id/button_tabstats"
+        android:layout_alignParentEnd="true"
+        android:onClick="goToTabbedStats" />
 </RelativeLayout>

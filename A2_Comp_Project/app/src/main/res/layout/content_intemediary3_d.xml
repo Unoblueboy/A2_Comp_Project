@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_intemediary3_d"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.natha_000.a2_comp_project.Intemediary3D"
+    tools:showIn="@layout/intemediary3d">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="sin(x)+sin(y)"
+        android:ems="10"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/funcText"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="3D"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/funcText"
+        android:layout_alignParentStart="true"
+        android:id="@+id/button6"
+        android:layout_width="wrap_content"
+        android:onClick="goTo3D" />
+
+    <Button
+        android:text="3D VR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/funcText"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/button7"
+        android:onClick="goTo3DVR" />
+</RelativeLayout>

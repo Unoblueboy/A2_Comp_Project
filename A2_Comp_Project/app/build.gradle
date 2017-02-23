@@ -5,6 +5,9 @@ android {
     buildToolsVersion "24.0.2"
 
     defaultConfig {
+        jackOptions {
+            enabled true
+        }
         applicationId "com.example.natha_000.a2_comp_project"
         minSdkVersion 19
         targetSdkVersion 24
@@ -14,15 +17,22 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles.add(file('../../proguard-gvr.txt'))
         }
+    }
+
+    dependencies {
+        compile 'com.google.vr:sdk-audio:1.10.0'
+        compile 'com.google.vr:sdk-base:1.10.0'
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile files('libs/android-core.jar')
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support:design:24.2.0'
     compile 'com.android.support:support-v4:24.2.0'
+    testCompile 'junit:junit:4.12'
 }
