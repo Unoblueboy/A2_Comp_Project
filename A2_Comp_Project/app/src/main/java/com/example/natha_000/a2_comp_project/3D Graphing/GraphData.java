@@ -191,7 +191,13 @@ public class GraphData {
         put("abs",abs);
     }};
 
-    //This creates a mathematical function into which a value of x and y can be entered.
+    /**
+     * This creates a mathematical function into which a value of x and y
+     * can be entered.
+     * @param func A string which represents the function to be evaluated
+     * @return a Function object which can be used to evaluate the function for
+     * different x and y
+    */
     public static Function function_creator(String func) throws IOException{
         //This uses the function input and converts it into a string of tokens
         ShuntingYard parser = new ShuntingYard();
@@ -430,15 +436,20 @@ public class GraphData {
         return (Function) stack.pop();
     }
 
-    // This takes in a string and breaks it up into it's constituent tokens
+    /**
+     * This takes in a string and breaks it up into it's constituent tokens
+     * @param s A string that is going to be tokenised
+     * @return a list of string tokens in the order in which they appeared in s
+    */
     private static List<String> tokenise(String s) throws IOException {
         StreamTokenizer tokenizer = new StreamTokenizer(new StringReader(s));
         tokenizer.ordinaryChar('-'); // Don't parse minus as part of numbers.
         tokenizer.ordinaryChar('/'); // Don't parse / as a special character
         List<String> tokBuf = new ArrayList<String>();
-        // While the finnal token has not been reached
+        // While the final token has not been reached
         while (tokenizer.nextToken() != StreamTokenizer.TT_EOF) {
-            //Make sure all of the items that are added to the list are of type string
+            /* Make sure all of the items that are added to the list are of type 
+            string */
             switch(tokenizer.ttype) {
                 case StreamTokenizer.TT_NUMBER:
                     tokBuf.add(String.valueOf(tokenizer.nval));
@@ -453,4 +464,3 @@ public class GraphData {
         return tokBuf;
     }
 }
-
