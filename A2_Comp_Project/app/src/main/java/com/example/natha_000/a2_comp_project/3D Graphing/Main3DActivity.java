@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 
 public class Main3DActivity extends AppCompatActivity{
 
-    // This is a string into which we put the function text so that it can be used by the attached fragment
+    /**
+     * This is a string into which we put the function text so that it can be used by the attached fragment
+    */
     static String functext;
 
 
@@ -21,7 +23,9 @@ public class Main3DActivity extends AppCompatActivity{
         Intent intent = getIntent();
         functext = intent.getStringExtra(Intemediary3D.EXTRA_MESSAGE);
 
-        // Set up the fragment that draws  the 3D graph and start it within the activity
+        // Set up the fragment that draws the 3D graph
+        //
+         and start it within the activity
         FragmentManager fragmentManager = getFragmentManager();
         Fragment fragment = new Sketch3DGraph();
         fragmentManager.beginTransaction()
@@ -41,6 +45,3 @@ public class Main3DActivity extends AppCompatActivity{
     }
 
 }
-
-
-

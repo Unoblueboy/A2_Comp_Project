@@ -32,7 +32,13 @@ public class WorldLayoutData {
     private static boolean flying = false;
     private static Function a;
 
-    static void setParameters(float xMin, float xMax, float yMin, float yMax, int col, int row, float sl) {
+    /**
+     * This is used to change the parameters used in generating the coordinate of the landscape
+     * @param xMin 
+    */
+    static void setParameters(float xMin, float xMax,
+                              float yMin, float yMax,
+                              int col, int row, float sl) {
         minX = xMin;
         maxX = xMax;
         minY = yMin;
@@ -83,7 +89,13 @@ public class WorldLayoutData {
         a = GraphData.function_creator(functext);
     }
 
-    private static float[] hslTorgb(float h, float s, float l) { // h between 0 and 360 degrees, s between 0 and 1, v between 0 and 1
+    /**
+     * Converts Hue, saturation, lightness into red, green, blue
+     * @param h Hue between 0 and 360 degrees
+     * @param s Saturation between 0 and 1l
+     * @param l lightness between 0 and 1
+    */
+    private static float[] hslTorgb(float h, float s, float l) {
         float C = (1 - abs(2*l - 1)) * s;
         float H = Math.max(0,Math.min(h/60,6));
         float X = C*(1- abs((H/60)%2 - 1));
@@ -112,6 +124,10 @@ public class WorldLayoutData {
         }
     }
 
+    /**
+     * This is a convenience method so that I can call func(x,y) instead of
+     * a.evalfunc(x,y)
+    */
     private static float func(float x, float y) throws IOException {
         return a.evalfunc(x,y);
     }
@@ -159,13 +175,13 @@ public class WorldLayoutData {
         while (x < cols-1){
             int y = 0;
             while (y < rows-1){
-                float[] p00 = values.get(x*cols + y);
-                float[] p01 = values.get(x*cols + y+1);
-                float[] p10 = values.get((x+1)*cols + y);
+                float[] p00 = values.get(x*cols     + y  );
+                float[] p01 = values.get(x*cols     + y+1);
+                float[] p10 = values.get((x+1)*cols + y  );
                 float[] p11 = values.get((x+1)*cols + y+1);
                 //  poo po1 p1o po1 p11 p10
                 //kill me
-                SURFACE_COORDS[counter*18] = p00[0];
+                SURFACE_COORDS[counter*18]   = p00[0];
                 SURFACE_COORDS[counter*18+1] = p00[1];
                 SURFACE_COORDS[counter*18+2] = p00[2];
                 SURFACE_COORDS[counter*18+3] = p01[0];
@@ -198,24 +214,6 @@ public class WorldLayoutData {
                     SURFACE_NORMALS[counter*18+ 9 + i] = cp2[i%3];
                 }
 
-//                SURFACE_NORMALS[counter*18] = cp1[0];
-//                SURFACE_NORMALS[counter*18+1] = cp1[1];
-//                SURFACE_NORMALS[counter*18+2] = cp1[2];
-//                SURFACE_NORMALS[counter*18+3] = cp1[0];
-//                SURFACE_NORMALS[counter*18+4] = cp1[1];
-//                SURFACE_NORMALS[counter*18+5] = cp1[2];
-//                SURFACE_NORMALS[counter*18+6] = cp1[0];
-//                SURFACE_NORMALS[counter*18+7] = cp1[1];
-//                SURFACE_NORMALS[counter*18+8] = cp1[2];
-//                SURFACE_NORMALS[counter*18+9] = cp2[0];
-//                SURFACE_NORMALS[counter*18+10] = cp2[1];
-//                SURFACE_NORMALS[counter*18+11] = cp2[2];
-//                SURFACE_NORMALS[counter*18+12] = cp2[0];
-//                SURFACE_NORMALS[counter*18+13] = cp2[1];
-//                SURFACE_NORMALS[counter*18+14] = cp2[2];
-//                SURFACE_NORMALS[counter*18+15] = cp2[0];
-//                SURFACE_NORMALS[counter*18+16] = cp2[1];
-//                SURFACE_NORMALS[counter*18+17] = cp2[2];
                 counter++;
                 y++;
             }

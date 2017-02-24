@@ -9,10 +9,15 @@ import android.widget.EditText;
 
 public class Intemediary3D extends AppCompatActivity {
 
-    //Textstring used so that the other activities can get the information provided by this activity
+    /**
+     * Textstring used so that the other activities can get the information provided by this activity
+    */
     public final static String EXTRA_MESSAGE = "com.example.natha_000.a2_comp_project.MESSAGE";
 
-    // Sets up the general start up of the activity
+    /**
+     * Sets up the general start up of the activity
+     * @param savedInstanceState The information sent from the previous activity
+    */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +26,10 @@ public class Intemediary3D extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-    // Sends the user to the activity that contains the projection of the 3D graph
+    /**
+     * Sends the user to the activity that contains the projection of the 3D graph
+     * @param view The view which called this function
+    */
     public void goTo3D(View view) {
         //Sets up the new activity
         Intent intent = new Intent(this, Main3DActivity.class);
@@ -35,7 +43,10 @@ public class Intemediary3D extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // Sends the user to the activity that contains the VR 3D graph
+    /**
+     * Sends the user to the activity that contains the VR 3D graph
+     * @param view The view which called this function
+    */
     public void goTo3DVR(View view) {
         //Sets up the new activity
         Intent intent = new Intent(this, Main3DVRActivity.class);

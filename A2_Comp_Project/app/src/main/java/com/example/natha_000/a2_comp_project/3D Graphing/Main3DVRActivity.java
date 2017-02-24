@@ -26,14 +26,7 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 
 /**
- * A Google VR sample application.
- *
- * <p>The TreasureHunt scene consists of a planar ground grid and a floating
- * "treasure" cube. When the user looks at the cube, the cube will turn gold.
- * While gold, the user can activate the Cardboard trigger, either directly
- * using the touch trigger on their Cardboard viewer, or using the Daydream
- * controller-based trigger emulation. Activating the trigger will in turn
- * randomly reposition the cube.
+ * A class suitable for the drawing of the 3D graph within virtual reality
  */
 public class Main3DVRActivity extends GvrActivity implements GvrView.StereoRenderer {
 
@@ -65,34 +58,34 @@ public class Main3DVRActivity extends GvrActivity implements GvrView.StereoRende
 
     private final float[] lightPosInEyeSpace = new float[4];
 
-    private FloatBuffer floorVertices;
-    private FloatBuffer floorColors;
-    private FloatBuffer floorNormals;
+    private FloatBuffer surfaceVertices;
+    private FloatBuffer surfaceColors;
+    private FloatBuffer surfaceNormals;
 
     private HeadTransform ht;
 
-    private int floorProgram;
+    private int surfaceProgram;
 
-    private int floorPositionParam;
-    private int floorNormalParam;
-    private int floorColorParam;
-    private int floorModelParam;
-    private int floorModelViewParam;
-    private int floorModelViewProjectionParam;
-    private int floorLightPosParam;
+    private int surfacePositionParam;
+    private int surfaceNormalParam;
+    private int surfaceColorParam;
+    private int surfaceModelParam;
+    private int surfaceModelViewParam;
+    private int surfaceModelViewProjectionParam;
+    private int surfaceLightPosParam;
 
     private float[] camera;
     private float[] view;
     private float[] headView;
     private float[] modelViewProjection;
     private float[] modelView;
-    private float[] modelFloor;
+    private float[] modelSurface;
 
     private float[] tempPosition;
     private float[] headRotation;
 
     private float objectDistance = MAX_MODEL_DISTANCE / 2.0f;
-    private float floorDepth = 20f;
+    private float surfaceDepth = 20f;
 
     private Vibrator vibrator;
 
@@ -100,7 +93,7 @@ public class Main3DVRActivity extends GvrActivity implements GvrView.StereoRende
     /**
      * Converts a raw text file, saved as a resource, into an OpenGL ES shader.
      *
-     * @param type The type of shader we will be creating.
+     * @param type The type of shader I will be creating.
      * @param resId The resource ID of the raw text file about to be turned into a shader.
      * @return The shader object handler.
      */
@@ -129,7 +122,7 @@ public class Main3DVRActivity extends GvrActivity implements GvrView.StereoRende
     }
 
     /**
-     * Checks if we've had an error inside of OpenGL ES, and if so what that error is.
+     * Checks if there's an error inside of OpenGL ES, and if so what that error is.
      *
      * @param label Label to report in case of error.
      */
@@ -142,8 +135,8 @@ public class Main3DVRActivity extends GvrActivity implements GvrView.StereoRende
     }
 
     /**
-     * Sets the view to our GvrView and initializes the transformation matrices we will use
-     * to render our scene.
+     * Sets the view to our GvrView and initializes the transformation matrices I will use
+     * to render the scene.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,7 +160,7 @@ public class Main3DVRActivity extends GvrActivity implements GvrView.StereoRende
         view = new float[16];
         modelViewProjection = new float[16];
         modelView = new float[16];
-        modelFloor = new float[16];
+        modelSurface = new float[16];
         tempPosition = new float[4];
         // Model first appears directly in front of user.
         modelPosition = new float[] {0.0f, 0.0f, -MAX_MODEL_DISTANCE / 2.0f};
@@ -185,8 +178,7 @@ public class Main3DVRActivity extends GvrActivity implements GvrView.StereoRende
         gvrView.setRenderer(this);
         gvrView.setTransitionViewEnabled(true);
 
-        // Enable Cardboard-trigger feedback with Daydream headsets. This is a simple way of supporting
-        // Daydream controller input for basic interactions using the existing Cardboard trigger API.
+        // Enable Cardboard-trigger feedback with Daydream headsets.
         gvrView.enableCardboardTriggerEmulation();
 
         if (gvrView.setAsyncReprojectionEnabled(true)) {
@@ -211,13 +203,11 @@ public class Main3DVRActivity extends GvrActivity implements GvrView.StereoRende
 
     @Override
     public void onRendererShutdown() {
-        Log.i(TAG, "onRendererShutdown");
         WorldLayoutData.reset();
     }
 
     @Override
     public void onSurfaceChanged(int width, int height) {
-        Log.i(TAG, "onSurfaceChanged");
     }
 
 
@@ -225,30 +215,30 @@ public class Main3DVRActivity extends GvrActivity implements GvrView.StereoRende
         Log.i(TAG,Float.toString(WorldLayoutData.SURFACE_COORDS[0])+ ", " + Float.toString(WorldLayoutData.SURFACE_COORDS[1]) + ", " + Float.toString(WorldLayoutData.SURFACE_COORDS[2]));
         Log.i(TAG,Float.toString(WorldLayoutData.getOffset()[0])+ ", " + Float.toString(WorldLayoutData.getOffset()[1]) + ", " + Float.toString(WorldLayoutData.getOffset()[2]));
 
-        ByteBuffer bbFloorVertices = ByteBuffer.allocateDirect(WorldLayoutData.SURFACE_COORDS.length * 4);
-        bbFloorVertices.order(ByteOrder.nativeOrder());
-        floorVertices = bbFloorVertices.asFloatBuffer();
-        floorVertices.put(WorldLayoutData.SURFACE_COORDS);
-        floorVertices.position(0);
+        ByteBuffer bbSurfaceVertices = ByteBuffer.allocateDirect(WorldLayoutData.SURFACE_COORDS.length * 4);
+        bbSurfaceVertices.order(ByteOrder.nativeOrder());
+        surfaceVertices = bbSurfaceVertices.asFloatBuffer();
+        surfaceVertices.put(WorldLayoutData.SURFACE_COORDS);
+        surfaceVertices.position(0);
 
-        ByteBuffer bbFloorNormals = ByteBuffer.allocateDirect(WorldLayoutData.SURFACE_NORMALS.length * 4);
-        bbFloorNormals.order(ByteOrder.nativeOrder());
-        floorNormals = bbFloorNormals.asFloatBuffer();
-        floorNormals.put(WorldLayoutData.SURFACE_NORMALS);
-        floorNormals.position(0);
+        ByteBuffer bbSurfaceNormals = ByteBuffer.allocateDirect(WorldLayoutData.SURFACE_NORMALS.length * 4);
+        bbSurfaceNormals.order(ByteOrder.nativeOrder());
+        surfaceNormals = bbSurfaceNormals.asFloatBuffer();
+        surfaceNormals.put(WorldLayoutData.SURFACE_NORMALS);
+        surfaceNormals.position(0);
 
-        ByteBuffer bbFloorColors = ByteBuffer.allocateDirect(WorldLayoutData.SURFACE_COLORS.length * 4);
-        bbFloorColors.order(ByteOrder.nativeOrder());
-        floorColors = bbFloorColors.asFloatBuffer();
-        floorColors.put(WorldLayoutData.SURFACE_COLORS);
-        floorColors.position(0);
+        ByteBuffer bbSurfaceColors = ByteBuffer.allocateDirect(WorldLayoutData.SURFACE_COLORS.length * 4);
+        bbSurfaceColors.order(ByteOrder.nativeOrder());
+        surfaceColors = bbSurfaceColors.asFloatBuffer();
+        surfaceColors.put(WorldLayoutData.SURFACE_COLORS);
+        surfaceColors.position(0);
     }
 
     /**
-     * Creates the buffers we use to store information about the 3D world.
+     * Creates the buffers used to store information about the 3D world.
      *
-     * <p>OpenGL doesn't use Java arrays, but rather needs data in a format it can understand.
-     * Hence we use ByteBuffers.
+     * OpenGL doesn't use Java arrays, but rather needs data in a format it can understand.
+     * Hence I use ByteBuffers.
      *
      * @param config The EGL configuration used when creating the surface.
      */
@@ -257,34 +247,34 @@ public class Main3DVRActivity extends GvrActivity implements GvrView.StereoRende
         Log.i(TAG, "onSurfaceCreated");
         GLES20.glClearColor(0.1f, 0.1f, 0.1f, 0.5f); // Dark background so text shows up well.
 
-        // make a floor
+        // Defines the buffers responsible for drawing the surface
         defineBuffers();
 
         int vertexShader = loadGLShader(GLES20.GL_VERTEX_SHADER, R.raw.light_vertex);
         int gridShader = loadGLShader(GLES20.GL_FRAGMENT_SHADER, R.raw.grid_fragment);
         int passthroughShader = loadGLShader(GLES20.GL_FRAGMENT_SHADER, R.raw.passthrough_fragment);
 
-        floorProgram = GLES20.glCreateProgram();
-        GLES20.glAttachShader(floorProgram, vertexShader);
-        GLES20.glAttachShader(floorProgram, passthroughShader);
-        GLES20.glLinkProgram(floorProgram);
-        GLES20.glUseProgram(floorProgram);
+        surfaceProgram = GLES20.glCreateProgram();
+        GLES20.glAttachShader(surfaceProgram, vertexShader);
+        GLES20.glAttachShader(surfaceProgram, passthroughShader);
+        GLES20.glLinkProgram(surfaceProgram);
+        GLES20.glUseProgram(surfaceProgram);
 
-        checkGLError("Floor program");
+        checkGLError("Surface program");
 
-        floorModelParam = GLES20.glGetUniformLocation(floorProgram, "u_Model");
-        floorModelViewParam = GLES20.glGetUniformLocation(floorProgram, "u_MVMatrix");
-        floorModelViewProjectionParam = GLES20.glGetUniformLocation(floorProgram, "u_MVP");
-        floorLightPosParam = GLES20.glGetUniformLocation(floorProgram, "u_LightPos");
+        surfaceModelParam = GLES20.glGetUniformLocation(surfaceProgram, "u_Model");
+        surfaceModelViewParam = GLES20.glGetUniformLocation(surfaceProgram, "u_MVMatrix");
+        surfaceModelViewProjectionParam = GLES20.glGetUniformLocation(surfaceProgram, "u_MVP");
+        surfaceLightPosParam = GLES20.glGetUniformLocation(surfaceProgram, "u_LightPos");
 
-        floorPositionParam = GLES20.glGetAttribLocation(floorProgram, "a_Position");
-        floorNormalParam = GLES20.glGetAttribLocation(floorProgram, "a_Normal");
-        floorColorParam = GLES20.glGetAttribLocation(floorProgram, "a_Color");
+        surfacePositionParam = GLES20.glGetAttribLocation(surfaceProgram, "a_Position");
+        surfaceNormalParam = GLES20.glGetAttribLocation(surfaceProgram, "a_Normal");
+        surfaceColorParam = GLES20.glGetAttribLocation(surfaceProgram, "a_Color");
 
-        checkGLError("Floor program params");
+        checkGLError("Surface program params");
 
-        Matrix.setIdentityM(modelFloor, 0);
-        Matrix.translateM(modelFloor, 0, 0, -floorDepth, 0); // Floor appears below user.
+        Matrix.setIdentityM(modelSurface, 0);
+        Matrix.translateM(modelSurface, 0, 0, -surfaceDepth, 0); // Surface appears below user.
 
         checkGLError("onSurfaceCreated");
     }
@@ -313,7 +303,7 @@ public class Main3DVRActivity extends GvrActivity implements GvrView.StereoRende
     }
 
     /**
-     * Prepares OpenGL ES before we draw a frame.
+     * Prepares OpenGL ES before I draw a frame.
      *
      * @param headTransform The head transformation in the new frame.
      */
@@ -343,8 +333,7 @@ public class Main3DVRActivity extends GvrActivity implements GvrView.StereoRende
      */
     @Override
     public void onDrawEye(Eye eye) {
-//        String sentence = Float.toString(eye.getFov().getBottom())+", ";
-//        Log.i(TAG, "onDrawEye");
+
         if (WorldLayoutData.isFlying()) {
             WorldLayoutData.fly(ht);
             try {
@@ -374,46 +363,46 @@ public class Main3DVRActivity extends GvrActivity implements GvrView.StereoRende
 //        Matrix.multiplyMM(modelViewProjection, 0, perspective, 0, modelView, 0);
 //    drawCube();
 
-        // Set modelView for the floor, so we draw floor in the correct location
-        Matrix.multiplyMM(modelView, 0, view, 0, modelFloor, 0);
+        // Set modelView for the surface, so I draw surface in the correct location
+        Matrix.multiplyMM(modelView, 0, view, 0, modelSurface, 0);
         Matrix.multiplyMM(modelViewProjection, 0, perspective, 0, modelView, 0);
-        drawFloor();
+        drawSurface();
     }
 
     @Override
     public void onFinishFrame(Viewport viewport) {}
 
     /**
-     * Draw the floor.
+     * Draw the surface.
      *
-     * <p>This feeds in data for the floor into the shader. Note that this doesn't feed in data about
-     * position of the light, so if we rewrite our code to draw the floor first, the lighting might
+     * <p>This feeds in data for the surface into the shader. Note that this doesn't feed in data about
+     * position of the light, so if I rewrite our code to draw the surface first, the lighting might
      * look strange.
      */
-    public void drawFloor() {
-        GLES20.glUseProgram(floorProgram);
+    public void drawSurface() {
+        GLES20.glUseProgram(surfaceProgram);
 
         // Set ModelView, MVP, position, normals, and color.
-        GLES20.glUniform3fv(floorLightPosParam, 1, lightPosInEyeSpace, 0);
-        GLES20.glUniformMatrix4fv(floorModelParam, 1, false, modelFloor, 0);
-        GLES20.glUniformMatrix4fv(floorModelViewParam, 1, false, modelView, 0);
-        GLES20.glUniformMatrix4fv(floorModelViewProjectionParam, 1, false, modelViewProjection, 0);
+        GLES20.glUniform3fv(surfaceLightPosParam, 1, lightPosInEyeSpace, 0);
+        GLES20.glUniformMatrix4fv(surfaceModelParam, 1, false, modelSurface, 0);
+        GLES20.glUniformMatrix4fv(surfaceModelViewParam, 1, false, modelView, 0);
+        GLES20.glUniformMatrix4fv(surfaceModelViewProjectionParam, 1, false, modelViewProjection, 0);
         GLES20.glVertexAttribPointer(
-                floorPositionParam, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false, 0, floorVertices);
-        GLES20.glVertexAttribPointer(floorNormalParam, 3, GLES20.GL_FLOAT, false, 0, floorNormals);
-        GLES20.glVertexAttribPointer(floorColorParam, 4, GLES20.GL_FLOAT, false, 0, floorColors);
+                surfacePositionParam, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false, 0, surfaceVertices);
+        GLES20.glVertexAttribPointer(surfaceNormalParam, 3, GLES20.GL_FLOAT, false, 0, surfaceNormals);
+        GLES20.glVertexAttribPointer(surfaceColorParam, 4, GLES20.GL_FLOAT, false, 0, surfaceColors);
 
-        GLES20.glEnableVertexAttribArray(floorPositionParam);
-        GLES20.glEnableVertexAttribArray(floorNormalParam);
-        GLES20.glEnableVertexAttribArray(floorColorParam);
+        GLES20.glEnableVertexAttribArray(surfacePositionParam);
+        GLES20.glEnableVertexAttribArray(surfaceNormalParam);
+        GLES20.glEnableVertexAttribArray(surfaceColorParam);
 
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, WorldLayoutData.SURFACE_COORDS.length/3);
 
-        GLES20.glDisableVertexAttribArray(floorPositionParam);
-        GLES20.glDisableVertexAttribArray(floorNormalParam);
-        GLES20.glDisableVertexAttribArray(floorColorParam);
+        GLES20.glDisableVertexAttribArray(surfacePositionParam);
+        GLES20.glDisableVertexAttribArray(surfaceNormalParam);
+        GLES20.glDisableVertexAttribArray(surfaceColorParam);
 
-        checkGLError("drawing floor");
+        checkGLError("drawing surface");
     }
 
     /**
