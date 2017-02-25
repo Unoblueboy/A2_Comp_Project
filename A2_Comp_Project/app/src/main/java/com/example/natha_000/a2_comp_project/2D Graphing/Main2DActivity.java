@@ -5,6 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+/**
+ * This contains the activity responsible for the plotting of the 2D
+ * graph using the Desmos API 
+*/
 public class Main2DActivity extends AppCompatActivity{
 
     // Sets up the general start up of the activity

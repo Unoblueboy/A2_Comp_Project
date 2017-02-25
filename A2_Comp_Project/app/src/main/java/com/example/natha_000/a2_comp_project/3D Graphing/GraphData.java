@@ -8,6 +8,10 @@ import java.lang.Math;
 import java.util.*;
 import java.io.*;
 
+/**
+ * This class is used to generate an evaluatable function from a string function
+ * It uses the Function interface to allow for easy composition of functions.
+*/
 public class GraphData {
 
     //The following code defines a large array of simple arithmetic functions
@@ -448,7 +452,7 @@ public class GraphData {
         List<String> tokBuf = new ArrayList<String>();
         // While the final token has not been reached
         while (tokenizer.nextToken() != StreamTokenizer.TT_EOF) {
-            /* Make sure all of the items that are added to the list are of type 
+            /* Make sure all of the items that are added to the list are of type
             string */
             switch(tokenizer.ttype) {
                 case StreamTokenizer.TT_NUMBER:

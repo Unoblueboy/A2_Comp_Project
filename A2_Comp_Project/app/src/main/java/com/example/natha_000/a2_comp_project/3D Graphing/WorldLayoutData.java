@@ -11,7 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Math.abs;
-
+/**
+ * This class is used to generate the class data that will be used for the
+ * Plotting of the 3D graphs
+*/
 public class WorldLayoutData {
     private static float minX;
     private static float maxX;
@@ -34,7 +37,7 @@ public class WorldLayoutData {
 
     /**
      * This is used to change the parameters used in generating the coordinate of the landscape
-     * @param xMin 
+     * @param xMin
     */
     static void setParameters(float xMin, float xMax,
                               float yMin, float yMax,

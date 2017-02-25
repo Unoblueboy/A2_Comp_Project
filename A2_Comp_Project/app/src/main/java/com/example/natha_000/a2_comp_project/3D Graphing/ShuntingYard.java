@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * This class is used to perform the suhnting yard algorithm as well as
+ * methods relating to the running of this algorithm
+*/
 public class ShuntingYard {
     private static boolean left = true;
     private static boolean right = false;
@@ -103,46 +107,90 @@ public class ShuntingYard {
      * @see opsCheck
     */
     public String shuntingYard(List<String> tokens) {
+        // This shall be used as a queue
         StringBuilder output = new StringBuilder();
+        // This shall be used as a stack
         Deque<String> stack  = new LinkedList<>();
+
+        // For token in the token list
         for (String token : tokens) {
+            // If the number is a number or variable, push it to the stack
             if (isAlgebraic(token)){
                 output.append(token).append(" ");
+
+            // Else, if it is an opperator
             } else if (ops_prec.containsKey(token)){
+
+                // While there is an operator in the stack and:
                 while (true){
+                    /*
+                    IF:
+                    (The stack isn't empty) AND
+                    (The next operator in the stack is an operator) AND
+                    (The first operator is left asociative and
+                      its precedence is less than or equal to that of the second
+                      operator OR
+                    The first operator is right asociative and
+                      its precedence is less than to that of the second
+                      operator)
+                    */
                     if (!stack.isEmpty() &&
                         ops_prec.containsKey(stack.peek()) &&
                         opsCheck((boolean) ops_assoc.get(token),
                                 token,
                                 stack.peek())){
+                        // Push the operator to the queue
                         output.append(stack.pop()).append(" ");
                     } else {
                         break;
                     }
                 }
+                // Push the operator to the stack
                 stack.push(token);
+            // If the token is a left parenthesis
             } else if (Objects.equals(token,"(")) {
+                // Push it to the stack
                 stack.push(token);
+            // If the token is a right parenthesis
             } else if (Objects.equals(token,")")){
+                // While the token at the top of the stack isn't a
+                // Right parenthesis
                 while (!Objects.equals(stack.peek(),"(")) {
+                    // Pop it from the stack and append it to the queue
                     output.append(stack.pop()).append(" ");
                 }
+                // Pop the left parenthesis from the stack but
+                // Don't add it to the queue
                 stack.pop();
+
+                // If the token at the top is a function
                 if (isFunction(stack.peek())) {
+                    // Pop it from the stack and append it to the queue
                     output.append(stack.pop()).append(" ");
                 }
+
+            // If the token is a argument seperator (a comma)
             } else if (Objects.equals(token,",")) {
+                // While the token at the top of the stack isn't a
+                // Right parenthesis
                 while (!Objects.equals(stack.peek(),"(")) {
+                    // Pop it from the stack and append it to the queue
                     output.append(stack.pop()).append(" ");
                 }
+            // If the token is a function token
             } else if (isFunction(token)){
+                // Push it onto the stack
                 stack.push(token);
             }
         }
 
+        // After all the tokens have been read
+        // While the stack isn't empty
         while (!stack.isEmpty()){
+            // Pop it from the stack and append it to the queue
             output.append(stack.pop()).append(" ");
         }
+        // Return the function as a string
         return output.toString();
     }
 }

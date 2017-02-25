@@ -6,6 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+/**
+ * This class is used as a the container for the fragment used to draw a 2D
+ * Projection of the 3D graph
+*/
 public class Main3DActivity extends AppCompatActivity{
 
     /**

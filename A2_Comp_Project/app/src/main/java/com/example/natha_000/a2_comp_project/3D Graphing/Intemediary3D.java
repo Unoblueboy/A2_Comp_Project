@@ -7,6 +7,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
+/**
+ * This class holds the activity that allows the user to input their 3D function
+ * And allows them to choose the way in which they wih to view it.
+*/
 public class Intemediary3D extends AppCompatActivity {
 
     /**
