@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.natha_000.a2_comp_project.MainStatsActivity">
+    tools:context="com.example.natha_000.a2_comp_project.Graphing_Stats.MainStatsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

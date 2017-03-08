@@ -1,4 +1,4 @@
-package com.example.natha_000.a2_comp_project;
+package com.example.natha_000.a2_comp_project.Graphing_3D;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+
+import com.example.natha_000.a2_comp_project.R;
 
 /**
  * This class holds the activity that allows the user to input their 3D function

@@ -1,10 +1,12 @@
-package com.example.natha_000.a2_comp_project;
+package com.example.natha_000.a2_comp_project.Graphing_3D;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.natha_000.a2_comp_project.R;
 
 /**
  * This class is used as a the container for the fragment used to draw a 2D
@@ -28,8 +30,7 @@ public class Main3DActivity extends AppCompatActivity{
         functext = intent.getStringExtra(Intemediary3D.EXTRA_MESSAGE);
 
         // Set up the fragment that draws the 3D graph
-        //
-         and start it within the activity
+        // and start it within the activity
         FragmentManager fragmentManager = getFragmentManager();
         Fragment fragment = new Sketch3DGraph();
         fragmentManager.beginTransaction()

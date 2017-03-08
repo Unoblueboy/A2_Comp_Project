@@ -1,4 +1,4 @@
-package com.example.natha_000.a2_comp_project;
+package com.example.natha_000.a2_comp_project.Graphing_Stats;
 
 /**
  * Created by Natha_000 on 22/12/2016.

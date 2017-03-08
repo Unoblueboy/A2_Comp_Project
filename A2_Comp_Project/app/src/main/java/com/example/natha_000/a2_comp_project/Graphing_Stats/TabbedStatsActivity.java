@@ -1,4 +1,4 @@
-package com.example.natha_000.a2_comp_project;
+package com.example.natha_000.a2_comp_project.Graphing_Stats;
 
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -16,7 +16,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.natha_000.a2_comp_project.R;
+
 public class TabbedStatsActivity extends AppCompatActivity {
+
+    private static final int READ_REQUEST_CODE = 42;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -37,14 +41,16 @@ public class TabbedStatsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed_stats);
-//        new StatsClasses(0,10,10);
-//        new StatsClasses(10,20,18);
-//        new StatsClasses(20,25,14);
-//        new StatsClasses(25,30,10);
-//        new StatsClasses(30,50,8);
+        new StatsClasses(0,10,10);
+        new StatsClasses(10,20,18);
+        new StatsClasses(20,25,14);
+        new StatsClasses(25,30,10);
+        new StatsClasses(30,50,8);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());

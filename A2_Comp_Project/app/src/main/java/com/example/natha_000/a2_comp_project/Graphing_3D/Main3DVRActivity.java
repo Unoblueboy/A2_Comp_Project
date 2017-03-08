@@ -1,4 +1,4 @@
-package com.example.natha_000.a2_comp_project;
+package com.example.natha_000.a2_comp_project.Graphing_3D;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
 
+import com.example.natha_000.a2_comp_project.R;
 import com.google.vr.sdk.base.AndroidCompat;
 import com.google.vr.sdk.base.Eye;
 import com.google.vr.sdk.base.GvrActivity;
@@ -411,7 +412,7 @@ public class Main3DVRActivity extends GvrActivity implements GvrView.StereoRende
     @Override
     public void onCardboardTrigger() {
         WorldLayoutData.toggleFlying();
-        WorldLayoutData.changeResolution();
+//        WorldLayoutData.changeResolution();
         Log.i(TAG, "onCardboardTrigger: " + Boolean.toString(WorldLayoutData.isFlying()));
 
         // Always give user feedback.

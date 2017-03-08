@@ -1,4 +1,4 @@
-package com.example.natha_000.a2_comp_project;
+package com.example.natha_000.a2_comp_project.Graphing_Stats;
 
 import android.app.Fragment;
 import android.app.FragmentManager;

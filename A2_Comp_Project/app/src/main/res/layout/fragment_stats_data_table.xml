@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.natha_000.a2_comp_project.StatsDataTable">
+    tools:context="com.example.natha_000.a2_comp_project.Graphing_Stats.StatsDataTable">
 
     <!-- TODO: Update blank fragment layout -->
 

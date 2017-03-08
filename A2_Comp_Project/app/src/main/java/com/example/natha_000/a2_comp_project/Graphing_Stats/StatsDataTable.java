@@ -1,4 +1,4 @@
-package com.example.natha_000.a2_comp_project;
+package com.example.natha_000.a2_comp_project.Graphing_Stats;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
+
+import com.example.natha_000.a2_comp_project.R;
 
 import java.util.ArrayList;
 import java.util.List;

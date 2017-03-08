@@ -1,13 +1,15 @@
-package com.example.natha_000.a2_comp_project;
+package com.example.natha_000.a2_comp_project.Graphing_2D;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.example.natha_000.a2_comp_project.R;
+
 /**
  * This contains the activity responsible for the plotting of the 2D
- * graph using the Desmos API 
+ * graph using the Desmos API
 */
 public class Main2DActivity extends AppCompatActivity{
 

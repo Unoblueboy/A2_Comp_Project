@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.natha_000.a2_comp_project.Intemediary3D">
+    tools:context="com.example.natha_000.a2_comp_project.Graphing_3D.Intemediary3D">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

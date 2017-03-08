@@ -1,4 +1,4 @@
-package com.example.natha_000.a2_comp_project;
+package com.example.natha_000.a2_comp_project.Graphing_3D;
 
 /**
  * Created by Natha_000 on 02/01/2017.

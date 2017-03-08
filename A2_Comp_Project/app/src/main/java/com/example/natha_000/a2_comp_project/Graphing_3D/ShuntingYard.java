@@ -1,4 +1,4 @@
-package com.example.natha_000.a2_comp_project;
+package com.example.natha_000.a2_comp_project.Graphing_3D;
 
 /**
  * Created by Natha_000 on 02/01/2017.
@@ -102,9 +102,9 @@ public class ShuntingYard {
      * @param tokens A list of tokens, which represent a function
      * @return A string that represents the inputted function in reverse polish
      * notation
-     * @see isAlgebraic
-     * @see isFunction
-     * @see opsCheck
+     * @see #isAlgebraic(String)
+     * @see #isFunction(String)
+     * @see #opsCheck(boolean, String, String)
     */
     public String shuntingYard(List<String> tokens) {
         // This shall be used as a queue

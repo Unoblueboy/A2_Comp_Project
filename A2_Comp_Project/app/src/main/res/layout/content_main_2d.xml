@@ -9,7 +9,7 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.natha_000.a2_comp_project.Main2DActivity"
+    tools:context="com.example.natha_000.a2_comp_project.Graphing_2D.Main2DActivity"
     tools:showIn="@layout/activity_main_2d">
 
     <WebView

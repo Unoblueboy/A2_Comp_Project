@@ -1,4 +1,4 @@
-package com.example.natha_000.a2_comp_project;
+package com.example.natha_000.a2_comp_project.Graphing_3D;
 
 /**
  * Created by Natha_000 on 02/01/2017.
@@ -9,8 +9,6 @@ import com.google.vr.sdk.base.HeadTransform;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.lang.Math.abs;
 /**
  * This class is used to generate the class data that will be used for the
  * Plotting of the 3D graphs
@@ -49,19 +47,35 @@ public class WorldLayoutData {
         cols = col;
         rows = row;
         scl = sl;
+
+        // Find the distance between consecutive x values
         w = (maxX - minX)/(cols-1);
+        // Find the distance between consecutive y values
         h = (maxY - minY)/(rows-1);
+
+        // Calculate the size of the necessary arrays and instantiate arrays of the appropriate size
         SURFACE_COORDS = new float[(cols-1)*(rows-1)*6*3];
         SURFACE_NORMALS = new float[SURFACE_COORDS.length];
         SURFACE_COLORS = new float[4 * SURFACE_COORDS.length / 3];
     }
 
-    static void toggleFlying() {flying = !flying;};
 
+    /**
+     * Toggles to indicate whether the user is moving through the space or not.
+     */
+    static void toggleFlying() {flying = !flying;}
+
+
+    /**
+     * Used to obtain whether the user is flying from outside of the class.
+     */
     static boolean isFlying() {
         return flying;
     }
 
+    /**
+     * Used to reset the class once the activity has finished using it.
+     */
     static void reset() {
         offset[0] = 0;
         offset[1] = 0;
@@ -76,18 +90,48 @@ public class WorldLayoutData {
         }
     }
 
+    /**
+     * Used to obtain whether the x,y, and z offset from outside of the class.
+     */
     static float[] getOffset() {
         return offset;
     }
 
+
+    /**
+     * The purpose of this function is to use the rotation of the user to emulate
+     * the feeling of flight via the changing of the relative x,y, and z offset.
+     * @param hT the relative position of the head, from the Google VR class
+     */
     static void fly(HeadTransform hT) {
         hT.getEulerAngles(eulerAngles, 0);
-        offset[0] = offset[0] - flySpeed*(float) Math.sin( (double) eulerAngles[1])*(float) Math.cos( (double) eulerAngles[0]);
-        offset[1] = offset[1] - flySpeed*(float) Math.cos( (double) eulerAngles[1])*(float) Math.cos( (double) eulerAngles[0]);
+        offset[0] = offset[0] - flySpeed*(float) Math.sin( (double) eulerAngles[1])*
+                (float) Math.cos( (double) eulerAngles[0]);
+        offset[1] = offset[1] - flySpeed*(float) Math.cos( (double) eulerAngles[1])*
+                (float) Math.cos( (double) eulerAngles[0]);
         offset[2] = offset[2] - flySpeed*(float) Math.sin( (double) eulerAngles[0]);
-
     }
 
+    /**
+     * The purpose of this function is to use the rotation of the user to emulate
+     * the feeling of flight via the changing of the relative x,y, and z offset.
+     * @param eulerAngle the relative rotation of the user, given by an array of length 2 or 3
+     */
+    static void fly(float[] eulerAngle) {
+        offset[0] = offset[0] + flySpeed*(float) Math.sin( (double) eulerAngle[1])*
+                (float) Math.cos( (double) eulerAngle[0]);
+        offset[1] = offset[1] - flySpeed*(float) Math.cos( (double) eulerAngle[1])*
+                (float) Math.cos( (double) eulerAngle[0]);
+        offset[2] = offset[2] - flySpeed*(float) Math.sin( (double) eulerAngle[0]);
+    }
+
+
+    /**
+     * The purpose of this function is to parse the functext to generate a mathematical formula
+     * That can be used in the rest of this activity.
+     * @param functext is the text that represents the main function
+     * @throws IOException If the function is invalid
+     */
     static void setfunction(String functext) throws IOException{
         a = GraphData.function_creator(functext);
     }
@@ -99,30 +143,30 @@ public class WorldLayoutData {
      * @param l lightness between 0 and 1
     */
     private static float[] hslTorgb(float h, float s, float l) {
-        float C = (1 - abs(2*l - 1)) * s;
-        float H = Math.max(0,Math.min(h/60,6));
-        float X = C*(1- abs((H/60)%2 - 1));
+        float C = (1 - Math.abs(2*l - 1)) * s;
+        float X = C*(1- Math.abs(((h/60)%2) - 1));
         float m = l-C/2;
+        float H = Math.max(0,Math.min(h/60,6));
         if (H==0) {
-            float[] result = {0+m,0+m,0+m};
+            float[] result = {Math.round((0+m)*255),Math.round((0+m)*255),Math.round((0+m)*255)};
             return result;
         } else if (H<=1) {
-            float[] result = {C+m,X+m,0+m};
+            float[] result = {Math.round((C+m)*255),Math.round((X+m)*255),Math.round((0+m)*255)};
             return result;
         } else if (H<=2) {
-            float[] result = {X+m,C+m,0+m};
+            float[] result = {Math.round((X+m)*255),Math.round((C+m)*255),Math.round((0+m)*255)};
             return result;
         } else if (H<=3) {
-            float[] result = {0+m,C+m,X+m};
+            float[] result = {Math.round((0+m)*255),Math.round((C+m)*255),Math.round((X+m)*255)};
             return result;
         } else if (H<=4) {
-            float[] result = {0+m,X+m,C+m};
+            float[] result = {Math.round((0+m)*255),Math.round((X+m)*255),Math.round((C+m)*255)};
             return result;
         } else if (H<=5) {
-            float[] result = {X+m,0+m,C+m};
+            float[] result = {Math.round((X+m)*255),Math.round((0+m)*255),Math.round((C+m)*255)};
             return result;
         } else {
-            float[] result = {C+m,0+m,X+m};
+            float[] result = {Math.round((C+m)*255),Math.round((0+m)*255),Math.round((X+m)*255)};
             return result;
         }
     }
@@ -135,6 +179,12 @@ public class WorldLayoutData {
         return a.evalfunc(x,y);
     }
 
+    /**
+     * Calculates the crossproduct of 2 vectors
+     * @param v1 The first vector
+     * @param v2 The second vector
+     * @return A 1D array of size 3, Representing a 3D vector
+     */
     private static float[] crossproduct(float[] v1, float[] v2){
         float[] cp = {v1[1]*v2[2] - v1[2]*v2[1],
                 v1[2]*v2[0] - v1[0]*v2[2],
@@ -142,12 +192,22 @@ public class WorldLayoutData {
         return cp;
     }
 
+    /**
+     * normalise a 3D vector
+     * @param v1 A vector to be normalised
+     * @return The vector v1 normalised
+     */
     private static float[] normalise(float[] v1){
         float mag = (float) Math.sqrt(v1[0]*v1[0] + v1[1]*v1[1] + v1[2]*v1[2]);
         float[] resvec = {v1[0]/mag, v1[1]/mag, v1[2]/mag};
         return resvec;
     }
 
+
+    /**
+     * Responsible for generating the values for the floor coords, floor colour, and floor normals.
+     * @throws IOException if an invalid function is used.
+     */
     static void generate() throws IOException {
         values = new ArrayList<float[]>();
         int x=0;
@@ -161,17 +221,7 @@ public class WorldLayoutData {
             x++;
         }
 
-        for (int i=0; i<SURFACE_COLORS.length/4; i++) {
-//                float zvalue = values.get(i)[1];
-//                float mapZValue = 360/200*(zvalue+100);
-//                float[] rgbvalue = hslTorgb(mapZValue, 1.0f, 1.0f);
-                SURFACE_COLORS[i*4] = 0;
-                SURFACE_COLORS[i*4+1] = 1.0f;
-                SURFACE_COLORS[i*4+2] = 1.0f;
-                SURFACE_COLORS[i*4+3] = 1.0f;
 
-
-        }
 
         x=0;
         int counter = 0;
@@ -221,6 +271,16 @@ public class WorldLayoutData {
                 y++;
             }
             x++;
+        }
+
+        for (int i=0; i<SURFACE_COLORS.length/4; i++) {
+            float zvalue = SURFACE_COORDS[i*3+1];
+            float mapZValue = 360/200*(4*zvalue+100);
+            float[] rgbvalue = hslTorgb(mapZValue, 1.0f, 0.5f);
+            SURFACE_COLORS[i*4] = rgbvalue[0]/255;
+            SURFACE_COLORS[i*4+1] = rgbvalue[1]/255;
+            SURFACE_COLORS[i*4+2] = rgbvalue[2]/255;
+            SURFACE_COLORS[i*4+3] = 1.0f;
         }
 
     }

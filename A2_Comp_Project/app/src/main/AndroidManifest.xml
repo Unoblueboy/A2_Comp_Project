@@ -41,7 +41,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".Main_Activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -51,18 +51,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Main2DActivity"
+            android:name=".Graphing_2D.Main2DActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
-            android:name=".Main3DActivity"
+            android:name=".Graphing_3D.Main3DActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".MainStatsActivity"
+            android:name=".Graphing_Stats.MainStatsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_main_stats"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Main3DVRActivity"
+            android:name=".Graphing_3D.Main3DVRActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:enableVrMode="@string/gvr_vr_mode_component"
             android:label="@string/title_activity_main3_dvr"
@@ -73,11 +73,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Intemediary3D"
+            android:name=".Graphing_3D.Intemediary3D"
             android:label="@string/title_activity_intemediary3_d"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".TabbedStatsActivity"
+            android:name=".Graphing_Stats.TabbedStatsActivity"
             android:label="@string/title_activity_tabbed_stats"
             android:theme="@style/AppTheme"></activity>
     </application>
