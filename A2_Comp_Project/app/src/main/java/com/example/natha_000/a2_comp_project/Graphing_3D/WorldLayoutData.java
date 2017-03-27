@@ -25,9 +25,9 @@ public class WorldLayoutData {
     private static float h;
     private static float[] offset = {0,0,0};
     private static List<float[]> values;
-    static float[] SURFACE_COORDS;
-    static float[] SURFACE_NORMALS;
-    static float[] SURFACE_COLORS;
+    public static float[] SURFACE_COORDS;
+    public static float[] SURFACE_NORMALS;
+    public static float[] SURFACE_COLORS;
     private static float[] eulerAngles = new float[3];
     private static float flySpeed = 0.1f;
     private static boolean flying = false;
@@ -37,7 +37,7 @@ public class WorldLayoutData {
      * This is used to change the parameters used in generating the coordinate of the landscape
      * @param xMin
     */
-    static void setParameters(float xMin, float xMax,
+    public static void setParameters(float xMin, float xMax,
                               float yMin, float yMax,
                               int col, int row, float sl) {
         minX = xMin;
@@ -132,7 +132,7 @@ public class WorldLayoutData {
      * @param functext is the text that represents the main function
      * @throws IOException If the function is invalid
      */
-    static void setfunction(String functext) throws IOException{
+    public static void setfunction(String functext) throws IOException{
         a = GraphData.function_creator(functext);
     }
 
@@ -142,15 +142,12 @@ public class WorldLayoutData {
      * @param s Saturation between 0 and 1l
      * @param l lightness between 0 and 1
     */
-    private static float[] hslTorgb(float h, float s, float l) {
+    public static float[] hslTorgb(float h, float s, float l) {
         float C = (1 - Math.abs(2*l - 1)) * s;
         float X = C*(1- Math.abs(((h/60)%2) - 1));
         float m = l-C/2;
         float H = Math.max(0,Math.min(h/60,6));
-        if (H==0) {
-            float[] result = {Math.round((0+m)*255),Math.round((0+m)*255),Math.round((0+m)*255)};
-            return result;
-        } else if (H<=1) {
+        if (H<=1) {
             float[] result = {Math.round((C+m)*255),Math.round((X+m)*255),Math.round((0+m)*255)};
             return result;
         } else if (H<=2) {
@@ -185,7 +182,7 @@ public class WorldLayoutData {
      * @param v2 The second vector
      * @return A 1D array of size 3, Representing a 3D vector
      */
-    private static float[] crossproduct(float[] v1, float[] v2){
+    public static float[] crossproduct(float[] v1, float[] v2){
         float[] cp = {v1[1]*v2[2] - v1[2]*v2[1],
                 v1[2]*v2[0] - v1[0]*v2[2],
                 v1[0]*v2[1] - v1[1]*v2[0]};
@@ -197,9 +194,12 @@ public class WorldLayoutData {
      * @param v1 A vector to be normalised
      * @return The vector v1 normalised
      */
-    private static float[] normalise(float[] v1){
+    public static float[] normalise(float[] v1){
         float mag = (float) Math.sqrt(v1[0]*v1[0] + v1[1]*v1[1] + v1[2]*v1[2]);
         float[] resvec = {v1[0]/mag, v1[1]/mag, v1[2]/mag};
+        if (mag==0){
+            return new float[]{0,0,0};
+        }
         return resvec;
     }
 
@@ -208,13 +208,16 @@ public class WorldLayoutData {
      * Responsible for generating the values for the floor coords, floor colour, and floor normals.
      * @throws IOException if an invalid function is used.
      */
-    static void generate() throws IOException {
+    public static void generate() throws IOException {
         values = new ArrayList<float[]>();
         int x=0;
         while (x < cols){
             int y = 0;
             while (y < rows){
-                float[] value = {(minX + x*w)*scl, (func(minX + x*w + offset[0], minY + y*h + offset[1]) + offset[2])*scl, (minY + y*h)*scl};
+                float[] value = {   (minX + x*w)*scl,
+                                    (func(  minX + x*w + offset[0],
+                                            minY + y*h + offset[1]) + offset[2])*scl,
+                                    (minY + y*h)*scl};
                 values.add(value);
                 y++;
             }
@@ -228,22 +231,22 @@ public class WorldLayoutData {
         while (x < cols-1){
             int y = 0;
             while (y < rows-1){
-                float[] p00 = values.get(x*cols     + y  );
-                float[] p01 = values.get(x*cols     + y+1);
-                float[] p10 = values.get((x+1)*cols + y  );
-                float[] p11 = values.get((x+1)*cols + y+1);
+                float[] p00 = values.get(x*rows     + y  );
+                float[] p01 = values.get(x*rows     + y+1);
+                float[] p10 = values.get((x+1)*rows + y  );
+                float[] p11 = values.get((x+1)*rows + y+1);
                 //  poo po1 p1o po1 p11 p10
                 //kill me
-                SURFACE_COORDS[counter*18]   = p00[0];
-                SURFACE_COORDS[counter*18+1] = p00[1];
-                SURFACE_COORDS[counter*18+2] = p00[2];
-                SURFACE_COORDS[counter*18+3] = p01[0];
-                SURFACE_COORDS[counter*18+4] = p01[1];
-                SURFACE_COORDS[counter*18+5] = p01[2];
-                SURFACE_COORDS[counter*18+6] = p10[0];
-                SURFACE_COORDS[counter*18+7] = p10[1];
-                SURFACE_COORDS[counter*18+8] = p10[2];
-                SURFACE_COORDS[counter*18+9] = p01[0];
+                SURFACE_COORDS[counter*18]    = p00[0];
+                SURFACE_COORDS[counter*18+1]  = p00[1];
+                SURFACE_COORDS[counter*18+2]  = p00[2];
+                SURFACE_COORDS[counter*18+3]  = p01[0];
+                SURFACE_COORDS[counter*18+4]  = p01[1];
+                SURFACE_COORDS[counter*18+5]  = p01[2];
+                SURFACE_COORDS[counter*18+6]  = p10[0];
+                SURFACE_COORDS[counter*18+7]  = p10[1];
+                SURFACE_COORDS[counter*18+8]  = p10[2];
+                SURFACE_COORDS[counter*18+9]  = p01[0];
                 SURFACE_COORDS[counter*18+10] = p01[1];
                 SURFACE_COORDS[counter*18+11] = p01[2];
                 SURFACE_COORDS[counter*18+12] = p11[0];
@@ -274,12 +277,17 @@ public class WorldLayoutData {
         }
 
         for (int i=0; i<SURFACE_COLORS.length/4; i++) {
-            float zvalue = SURFACE_COORDS[i*3+1];
-            float mapZValue = 360/200*(4*zvalue+100);
-            float[] rgbvalue = hslTorgb(mapZValue, 1.0f, 0.5f);
-            SURFACE_COLORS[i*4] = rgbvalue[0]/255;
-            SURFACE_COLORS[i*4+1] = rgbvalue[1]/255;
-            SURFACE_COLORS[i*4+2] = rgbvalue[2]/255;
+//            Uncoomment for colour based on height
+//            float zvalue = SURFACE_COORDS[i*3+1];
+//            float mapZValue = 360/200*(4*zvalue+100);
+//            float[] rgbvalue = hslTorgb(mapZValue, 1.0f, 0.5f);
+//            SURFACE_COLORS[i*4] = rgbvalue[0]/255;
+//            SURFACE_COLORS[i*4+1] = rgbvalue[1]/255;
+//            SURFACE_COLORS[i*4+2] = rgbvalue[2]/255;
+//            SURFACE_COLORS[i*4+3] = 1.0f;
+            SURFACE_COLORS[i*4] = 0.5f;
+            SURFACE_COLORS[i*4+1] = 0.5f;
+            SURFACE_COLORS[i*4+2] = 0.5f;
             SURFACE_COLORS[i*4+3] = 1.0f;
         }
 

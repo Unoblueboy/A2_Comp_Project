@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.example.natha_000.a2_comp_project.R;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,9 +83,9 @@ public class StatsDataTable extends Fragment {
         EditText lb = (EditText) parent.getChildAt(0);
         EditText ub = (EditText) parent.getChildAt(1);
         EditText freq = (EditText) parent.getChildAt(2);
-        Log.i("Delete row",lb.getText().toString());
-        Log.i("Delete row",ub.getText().toString());
-        Log.i("Delete row",freq.getText().toString());
+        Log.i("Project: Delete row",lb.getText().toString());
+        Log.i("Project: Delete row",ub.getText().toString());
+        Log.i("Project: Delete row",freq.getText().toString());
         try {
             StatsClasses relClass = StatsClasses.findClassByLb(Integer.parseInt(lb.getText().toString()));
             relClass.delete();
@@ -104,11 +106,11 @@ public class StatsDataTable extends Fragment {
 
     public void add_row(View view){
         EditText[] lastItem = etList.get(etList.size()-1);
-        Log.i("add_Row","This is the first item '" + lastItem[0].getText().toString()+"'") ;
-        Log.i("add_Row","This is the second item '" + lastItem[1].getText().toString()+"'");
-        Log.i("add_Row","This is the third item '" + lastItem[2].getText().toString()+"'");
+        Log.i("Project: add_Row","This is the first item '" + lastItem[0].getText().toString()+"'") ;
+        Log.i("Project: add_Row","This is the second item '" + lastItem[1].getText().toString()+"'");
+        Log.i("Project: add_Row","This is the third item '" + lastItem[2].getText().toString()+"'");
         boolean isEmpty = lastItem[0].getText().toString().equals("") || lastItem[1].getText().toString().equals("") || lastItem[2].getText().toString().equals("");
-        Log.i("add_Row",Boolean.toString(isEmpty));
+        Log.i("Project: add_Row",Boolean.toString(isEmpty));
         if(isEmpty) {
             Toast.makeText((Context) getActivity(),"Please enter valid data", Toast.LENGTH_SHORT).show();
         } else {
@@ -117,11 +119,11 @@ public class StatsDataTable extends Fragment {
             boolean validBounds = StatsClasses.validBounds(Float.parseFloat(lastItem[0].getText().toString()), Float.parseFloat(lastItem[1].getText().toString()));
             boolean validFreq = Integer.parseInt(lastItem[2].getText().toString()) != 0;
             boolean invalid = !(validLb && validUb && validBounds && validFreq);
-            Log.i("add_Row","ValidLb: "+Boolean.toString(validLb));
-            Log.i("add_Row","ValidUb: "+Boolean.toString(validUb));
-            Log.i("add_Row","ValidBounds: "+Boolean.toString(validBounds));
-            Log.i("add_Row","ValidFreq: "+Boolean.toString(validFreq));
-            Log.i("add_Row","invalid: "+Boolean.toString(invalid));
+            Log.i("Project: add_Row","ValidLb: "+Boolean.toString(validLb));
+            Log.i("Project: add_Row","ValidUb: "+Boolean.toString(validUb));
+            Log.i("Project: add_Row","ValidBounds: "+Boolean.toString(validBounds));
+            Log.i("Project: add_Row","ValidFreq: "+Boolean.toString(validFreq));
+            Log.i("Project: add_Row","invalid: "+Boolean.toString(invalid));
             if (invalid) {
                 Toast.makeText((Context) getActivity(),"Please enter valid data", Toast.LENGTH_SHORT).show();
                 return;
@@ -179,10 +181,40 @@ public class StatsDataTable extends Fragment {
             tr.addView(btn, btnparams);
 
             tl.addView(tr, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
-            Log.i("Add_Row", "Now adding a row");
+            Log.i("Project: Add_Row", "Now adding a row");
 
             EditText[] etArray = {lb,ub,freq};
             etList.add(etArray);
+        }
+    }
+
+    public void export(File folder) {
+        StringBuilder csv = new StringBuilder();
+        for (StatsClasses ele: StatsClasses.classes) {
+            String lb = Float.toString(ele.lowerbound);
+            String ub = Float.toString(ele.upperbound);
+            String freq = Integer.toString(ele.frequency);
+            String freqdens = Float.toString(ele.freqdensity);
+            csv.append(lb);
+            csv.append(",");
+            csv.append(ub);
+            csv.append(",");
+            csv.append(freq);
+            csv.append(",");
+            csv.append(freqdens);
+            csv.append("\n");
+        }
+        FileWriter file = null;
+        try {
+            file = new FileWriter(new File(folder.toString() + File.separator + "Table.csv"));
+            file.append("Lowerbound, Upperbound, Frequency, Frequency Density\n");
+            file.append(csv.toString());
+        } catch (Exception e) {
+        } finally {
+            try {
+                file.flush();
+                file.close();
+            } catch (Exception e) {}
         }
     }
 }

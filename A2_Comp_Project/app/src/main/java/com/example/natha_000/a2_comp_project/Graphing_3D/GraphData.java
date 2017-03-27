@@ -4,9 +4,16 @@ package com.example.natha_000.a2_comp_project.Graphing_3D;
  * Created by Natha_000 on 02/01/2017.
  */
 
-import java.lang.Math;
-import java.util.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.StreamTokenizer;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * This class is used to generate an evaluatable function from a string function
@@ -163,6 +170,12 @@ public class GraphData {
         return z;
     };
 
+    //This calculates the square root of the first input
+    private static Function sqrt = (float x, float y) -> {
+        float z = (float) Math.sqrt(x);
+        return z;
+    };
+
     //This maps all of the functions to corresponding strings
     private static Map<String, Function> ops_func = new HashMap<String, Function>(){{
         put("+",add);
@@ -193,7 +206,20 @@ public class GraphData {
         put("round",round);
         put("signum",signum);
         put("abs",abs);
+        put("sqrt",sqrt);
+        put("√",sqrt);
     }};
+
+    public static String format(String func){
+        return func.replaceAll("(\\d+(\\.\\d+)?)\\s*(e|pi)","$1 * $3")
+                .replaceAll("(e|pi)\\s*(e|pi)","$1 * $2")
+                .replaceAll("(e|pi|\\d+(\\.\\d+)?)\\s*(\\w)","$1 * $3")
+                .replaceAll("e",Double.toString(Math.E))
+                .replaceAll("pi",Double.toString(Math.PI))
+                .replaceAll("(^|\\D) \\s* - \\s* (\\w) ","$1 0 - $0");
+
+    }
+
 
     /**
      * This creates a mathematical function into which a value of x and y
@@ -445,7 +471,7 @@ public class GraphData {
      * @param s A string that is going to be tokenised
      * @return a list of string tokens in the order in which they appeared in s
     */
-    private static List<String> tokenise(String s) throws IOException {
+    public static List<String> tokenise(String s) throws IOException {
         StreamTokenizer tokenizer = new StreamTokenizer(new StringReader(s));
         tokenizer.ordinaryChar('-'); // Don't parse minus as part of numbers.
         tokenizer.ordinaryChar('/'); // Don't parse / as a special character

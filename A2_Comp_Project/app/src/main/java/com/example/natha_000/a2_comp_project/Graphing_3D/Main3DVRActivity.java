@@ -151,7 +151,7 @@ public class Main3DVRActivity extends GvrActivity implements GvrView.StereoRende
             WorldLayoutData.setfunction(message);
             WorldLayoutData.generate();
         } catch (IOException e) {
-            Log.e("Parameter Data", e.toString());
+            Log.e("Project: Parameter Data", e.toString());
         }
 
         initializeGvrView();

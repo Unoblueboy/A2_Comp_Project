@@ -10,6 +10,7 @@ import java.util.Locale;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
+import processing.core.PImage;
 
 /**
  * Created by Natha_000 on 05/02/2017.
@@ -33,8 +34,6 @@ public class SketchCumFreq extends PApplet {
     private static float yScale;
 //    private static float[] cumfreq;
     private static List<StatsClasses> sClasses;
-    public static PGraphics cumuFreq;
-
     public static List<StatsClasses> sortedClasses(){
         List<StatsClasses> c = StatsClasses.classes;
         return mergeSort(c);
@@ -159,36 +158,11 @@ public class SketchCumFreq extends PApplet {
     }
 
     public void settings() {
-        size(displayWidth,displayHeight-60,P2D);
-        // Generation of random data, will be changed to get data from other fragments
-        //Random r = new Random(2000);
-//        new StatsClasses(1,5,6);
-        //for (int i=0; i<100; i++){
-        //  // System.out.println(i);
-        //  float lb = r.nextFloat()*1000+1;
-        //  float ub = r.nextFloat()*1000+1;
-        //  int freq = (int)(r.nextFloat()*50-24);
-        //  if (!StatsClasses.validBound(lb)) {
-        //    continue;
-        //  } else if (!StatsClasses.validBound(ub)) {
-        //    continue;
-        //  } else if (!StatsClasses.validBounds(lb,ub)) {
-        //    continue;
-        //  } else if (freq<=0) {
-        //    continue;
-        //  }
-        //  new StatsClasses(lb,ub,freq);
-        //}
-        //GCSE Question
-        //new StatsClasses(0,10,10);
-        //new StatsClasses(10,20,18);
-        //new StatsClasses(30,50,8);
-        //new StatsClasses(20,25,14);
-        //new StatsClasses(25,30,10);
+        size(displayWidth,displayHeight-60);
+        startUp(displayWidth,displayHeight-60);
+    }
 
-
-
-        // end of random generation
+    public void startUp(int w, int h) {
         float[] bounds = new float[StatsClasses.noOfClasses*2];
         float[] freqdens = new float[StatsClasses.noOfClasses];
         for (int i = 0; i<StatsClasses.noOfClasses; i++) {
@@ -223,149 +197,167 @@ public class SketchCumFreq extends PApplet {
         while (yAxisUB < yScale * (ytick-1)){
             ytick--;
         }
-        xtickdist = sketchWidth()*(1 - rmargin - lmargin)/(xtick-1);
-        ytickdist = sketchHeight()*(1 - tmargin - bmargin)/(ytick-1);
+        xtickdist = w*(1 - rmargin - lmargin)/(xtick-1);
+        ytickdist = h*(1 - tmargin - bmargin)/(ytick-1);
     }
 
     public void draw() {
         try {
-            Log.i("Folder Path", MainStatsActivity.folder.toString());
-            //,MainStatsActivity.folder.toString() + File.separator + "hello.png"
-            cumuFreq = createGraphics(displayWidth,displayHeight-60,P2D);
-            cumuFreq.beginDraw();
-            cumuFreq.background(255);
-            cumuFreq.endDraw();
-            drawAxis(cumuFreq);
-            drawLines(cumuFreq);
-            cumuFreq.save(MainStatsActivity.folder.toString() + File.separator + "hello.png");
-//            background(255);
-//            drawAxis();
-//            drawLines();
-//            noLoop();
             background(255);
-            imageMode(CENTER);
-            image(cumuFreq,displayWidth,displayHeight-60);
-            noLoop();
+            drawAxis();
+            drawLines();
         } catch (Exception e) {
-            Log.i("Error",e.toString());
             Toast.makeText(getActivity(), "please Enter Valid Data", Toast.LENGTH_SHORT).show();
         }
+        noLoop();
+    }
+
+    public void export(int w,int h, File folder) {
+        PGraphics cumuFreq = createGraphics(w,h);
+        startUp(w,h);
+        cumuFreq.beginDraw();
+        cumuFreq.background(255);
+        cumuFreq.endDraw();
+        drawAxis(cumuFreq);
+        drawLines(cumuFreq);
+        PImage result = cumuFreq.get();
+        result.save(folder.toString() + File.separator + "CumulativeFrequency.jpg");
+//        Toast.makeText(getActivity(), "Saved :P", Toast.LENGTH_SHORT).show();
     }
 
     public void drawAxis(PGraphics pg) {
-        if (pg == null) {
-            line(sketchWidth() * lmargin, sketchHeight() * (1 - bmargin), sketchWidth() * lmargin, sketchHeight() * tmargin);
-            line(sketchWidth() * lmargin, sketchHeight() * (1 - bmargin), sketchWidth() * (1 - rmargin), sketchHeight() * (1 - bmargin));
-            //yaxis
-            textAlign(RIGHT, CENTER);
-            for (int y = 0; y < ytick; y++) {
-                float relY = sketchHeight() * tmargin + ytickdist * y;
-                float tickBegin = (1 - ticklength) * sketchWidth() * lmargin;
-                float tickEnd = sketchWidth() * lmargin;
-                line(tickBegin, relY, tickEnd, relY);
-                textSize(14);
-                fill(0);
-                text(sigfigs(yAxisUB - yScale * y, 3), tickBegin, relY);
-            }
-            //xaxis
-            textAlign(LEFT, TOP);
-            float theta = PI / 3;
-            for (int x = 0; x < xtick; x++) {
-                float relX = sketchWidth() * lmargin + xtickdist * x;
-                float tickBegin = sketchHeight() * (1 - bmargin * (1 - ticklength));
-                float tickEnd = sketchHeight() * (1 - bmargin);
-                line(relX, tickBegin, relX, tickEnd);
-
-                textSize(14);
-                fill(0);
-                //relX,sketchHeight()*(1-bmargin*(1-ticklength))
-                pushMatrix();
-                rotate(theta);
-                translate(tickBegin * sin(theta) + relX * cos(theta), tickBegin * cos(theta) - relX * sin(theta));
-                text(sigfigs(xAxisLB + xScale * x, 3), 0, 0);
-                popMatrix();
-            }
-        } else {
-            pg.beginDraw();
-            pg.line(sketchWidth() * lmargin, sketchHeight() * (1 - bmargin), sketchWidth() * lmargin, sketchHeight() * tmargin);
-            pg.line(sketchWidth() * lmargin, sketchHeight() * (1 - bmargin), sketchWidth() * (1 - rmargin), sketchHeight() * (1 - bmargin));
-            //yaxis
-            pg.textAlign(RIGHT, CENTER);
-            for (int y = 0; y < ytick; y++) {
-                float relY = sketchHeight() * tmargin + ytickdist * y;
-                float tickBegin = (1 - ticklength) * sketchWidth() * lmargin;
-                float tickEnd = sketchWidth() * lmargin;
-                pg.line(tickBegin, relY, tickEnd, relY);
-                pg.textSize(14);
-                pg.fill(0);
-                pg.text(sigfigs(yAxisUB - yScale * y, 3), tickBegin, relY);
-            }
-            //xaxis
-            pg.textAlign(LEFT, TOP);
-            float theta = PI / 3;
-            for (int x = 0; x < xtick; x++) {
-                float relX = sketchWidth() * lmargin + xtickdist * x;
-                float tickBegin = sketchHeight() * (1 - bmargin * (1 - ticklength));
-                float tickEnd = sketchHeight() * (1 - bmargin);
-                pg.line(relX, tickBegin, relX, tickEnd);
-
-                pg.textSize(14);
-                pg.fill(0);
-                //relX,sketchHeight()*(1-bmargin*(1-ticklength))
-                pg.pushMatrix();
-                pg.rotate(theta);
-                pg.translate(tickBegin * sin(theta) + relX * cos(theta), tickBegin * cos(theta) - relX * sin(theta));
-                pg.text(sigfigs(xAxisLB + xScale * x, 3), 0, 0);
-                pg.popMatrix();
-            }
-            pg.endDraw();
+        Log.i("Project: SketchCumFreq", "Draw Axis, with PGraphic");
+        pg.beginDraw();
+        pg.line(pg.width * lmargin, pg.height * (1 - bmargin), pg.width * lmargin, pg.height * tmargin);
+        pg.line(pg.width * lmargin, pg.height * (1 - bmargin), pg.width * (1 - rmargin), pg.height * (1 - bmargin));
+        //yaxis
+        pg.textAlign(RIGHT, CENTER);
+        for (int y = 0; y < ytick; y++) {
+            float relY = pg.height * tmargin + ytickdist * y;
+            float tickBegin = (1 - ticklength) * pg.width * lmargin;
+            float tickEnd = pg.width * lmargin;
+            pg.line(tickBegin, relY, tickEnd, relY);
+            pg.textSize(14);
+            pg.fill(0);
+            pg.text(sigfigs(yAxisUB - yScale * y, 3), tickBegin, relY);
         }
+        //xaxis
+        pg.textAlign(LEFT, TOP);
+        float theta = PI / 3;
+        for (int x = 0; x < xtick; x++) {
+            float relX = pg.width * lmargin + xtickdist * x;
+            float tickBegin = pg.height * (1 - bmargin * (1 - ticklength));
+            float tickEnd = pg.height * (1 - bmargin);
+            pg.line(relX, tickBegin, relX, tickEnd);
+
+            pg.textSize(14);
+            pg.fill(0);
+            //relX,pg.height*(1-bmargin*(1-ticklength))
+            pg.pushMatrix();
+            pg.rotate(theta);
+            pg.translate(tickBegin * sin(theta) + relX * cos(theta), tickBegin * cos(theta) - relX * sin(theta));
+            pg.text(sigfigs(xAxisLB + xScale * x, 3), 0, 0);
+            pg.popMatrix();
+        }
+        pg.endDraw();
     }
 
-    public void drawAxis(){
-        drawAxis(null);
+    public void drawAxis() {
+        Log.i("Project: SketchCumFreq", "Draw Axis, no PGraphic");
+        line(sketchWidth() * lmargin, sketchHeight() * (1 - bmargin), sketchWidth() * lmargin, sketchHeight() * tmargin);
+        line(sketchWidth() * lmargin, sketchHeight() * (1 - bmargin), sketchWidth() * (1 - rmargin), sketchHeight() * (1 - bmargin));
+        //yaxis
+        textAlign(RIGHT, CENTER);
+        for (int y = 0; y < ytick; y++) {
+            float relY = sketchHeight() * tmargin + ytickdist * y;
+            float tickBegin = (1 - ticklength) * sketchWidth() * lmargin;
+            float tickEnd = sketchWidth() * lmargin;
+            line(tickBegin, relY, tickEnd, relY);
+            textSize(14);
+            fill(0);
+            text(sigfigs(yAxisUB - yScale * y, 3), tickBegin, relY);
+        }
+        //xaxis
+        textAlign(LEFT, TOP);
+        float theta = PI / 3;
+        for (int x = 0; x < xtick; x++) {
+            float relX = sketchWidth() * lmargin + xtickdist * x;
+            float tickBegin = sketchHeight() * (1 - bmargin * (1 - ticklength));
+            float tickEnd = sketchHeight() * (1 - bmargin);
+            line(relX, tickBegin, relX, tickEnd);
+
+            textSize(14);
+            fill(0);
+            //relX,sketchHeight()*(1-bmargin*(1-ticklength))
+            pushMatrix();
+            rotate(theta);
+            translate(tickBegin * sin(theta) + relX * cos(theta), tickBegin * cos(theta) - relX * sin(theta));
+            text(sigfigs(xAxisLB + xScale * x, 3), 0, 0);
+            popMatrix();
+        }
     }
 
     public void drawLines(PGraphics pg) {
-        if (pg == null) {
-            noFill();
-            float cumFreq = 0;
-            beginShape();
-            for (StatsClasses class_ : sClasses) {
-                float freq = sketchHeight() * (1 - bmargin) - sketchHeight() * (1 - tmargin - bmargin) * ((cumFreq - yAxisLB) / (yAxisUB - yAxisLB));
-                float bound = sketchWidth() * lmargin + sketchWidth() * (1 - rmargin - lmargin) * ((class_.lowerbound - xAxisLB) / (xAxisUB - xAxisLB));
-                vertex(bound, freq);
-                cumFreq += class_.frequency;
-                freq = sketchHeight() * (1 - bmargin) - sketchHeight() * (1 - tmargin - bmargin) * ((cumFreq - yAxisLB) / (yAxisUB - yAxisLB));
-                bound = sketchWidth() * lmargin + sketchWidth() * (1 - rmargin - lmargin) * ((class_.upperbound - xAxisLB) / (xAxisUB - xAxisLB));
-                vertex(bound, freq);
-            }
-            endShape();
-        } else {
-            pg.beginDraw();
-            pg.noFill();
-            float cumFreq = 0;
-            pg.beginShape();
-            for (StatsClasses class_ : sClasses) {
-                float freq = sketchHeight() * (1 - bmargin) - sketchHeight() * (1 - tmargin - bmargin) * ((cumFreq - yAxisLB) / (yAxisUB - yAxisLB));
-                float bound = sketchWidth() * lmargin + sketchWidth() * (1 - rmargin - lmargin) * ((class_.lowerbound - xAxisLB) / (xAxisUB - xAxisLB));
-                pg.vertex(bound, freq);
-                cumFreq += class_.frequency;
-                freq = sketchHeight() * (1 - bmargin) - sketchHeight() * (1 - tmargin - bmargin) * ((cumFreq - yAxisLB) / (yAxisUB - yAxisLB));
-                bound = sketchWidth() * lmargin + sketchWidth() * (1 - rmargin - lmargin) * ((class_.upperbound - xAxisLB) / (xAxisUB - xAxisLB));
-                pg.vertex(bound, freq);
-            }
-            pg.endShape();
-            pg.endDraw();
+        Log.i("Project: SketchCumFreq", "Draw Lines, with PGraphic");
+        pg.beginDraw();
+        pg.noFill();
+        float cumFreq = 0;
+        pg.beginShape();
+        for (StatsClasses class_ : sClasses) {
+            float freq = pg.height * (1 - bmargin) - pg.height * (1 - tmargin - bmargin) * ((cumFreq - yAxisLB) / (yAxisUB - yAxisLB));
+            float bound = pg.width * lmargin + pg.width * (1 - rmargin - lmargin) * ((class_.lowerbound - xAxisLB) / (xAxisUB - xAxisLB));
+            pg.vertex(bound, freq);
+            cumFreq += class_.frequency;
+            freq = pg.height * (1 - bmargin) - pg.height * (1 - tmargin - bmargin) * ((cumFreq - yAxisLB) / (yAxisUB - yAxisLB));
+            bound = pg.width * lmargin + pg.width * (1 - rmargin - lmargin) * ((class_.upperbound - xAxisLB) / (xAxisUB - xAxisLB));
+            pg.vertex(bound, freq);
         }
+        pg.endShape();
+        pg.endDraw();
+        return;
     }
 
-    public void drawLines(){
-        drawLines(null);
+    public void drawLines() {
+        Log.i("Project: SketchCumFreq", "Draw Lines, no PGraphic");
+        noFill();
+        float cumFreq = 0;
+        beginShape();
+        for (StatsClasses class_ : sClasses) {
+            float freq = sketchHeight() * (1 - bmargin) - sketchHeight() * (1 - tmargin - bmargin) * ((cumFreq - yAxisLB) / (yAxisUB - yAxisLB));
+            float bound = sketchWidth() * lmargin + sketchWidth() * (1 - rmargin - lmargin) * ((class_.lowerbound - xAxisLB) / (xAxisUB - xAxisLB));
+            vertex(bound, freq);
+            cumFreq += class_.frequency;
+            freq = sketchHeight() * (1 - bmargin) - sketchHeight() * (1 - tmargin - bmargin) * ((cumFreq - yAxisLB) / (yAxisUB - yAxisLB));
+            bound = sketchWidth() * lmargin + sketchWidth() * (1 - rmargin - lmargin) * ((class_.upperbound - xAxisLB) / (xAxisUB - xAxisLB));
+            vertex(bound, freq);
+        }
+        endShape();
     }
 
     public void onDestroyView() {
         super.onDestroyView();
         reset();
+    }
+
+    public void onStart() {
+        Log.i("CumFreq","OnStart");
+        super.onStart();
+        redraw();
+    }
+
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//
+//        if (isVisibleToUser)
+//            Log.d("MyFragment", "Fragment is visible.");
+//        else
+//            Log.d("MyFragment", "Fragment is not visible.");
+//    }
+
+    public void onResume() {
+        Log.i("CumFreq","OnResume");
+        super.onResume();
+        redraw();
     }
 }

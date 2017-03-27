@@ -57,13 +57,12 @@ public class ShuntingYard {
     /**
      * This method is used to check whether the first operator should be added
      * To the stack
-     * @param  assoc The associativity of the first operator
      * @param  o1 The first operator
      * @param  o2 The second operator
      * @return Whether the first operator should be pushed to the stack
     */
-    private boolean opsCheck(boolean assoc, String o1, String o2) {
-        if (Objects.equals(assoc, left)){
+    public static boolean opsCheck(String o1, String o2) {
+        if (Objects.equals(ops_assoc.get(o1), left)){
             return (int) ops_prec.get(o1) <= (int) ops_prec.get(o2);
         } else {
             return (int) ops_prec.get(o1) < (int) ops_prec.get(o2);
@@ -76,7 +75,7 @@ public class ShuntingYard {
      * @param s The token to be checked
      * @return True if s is a float or variable, False otherwise
     */
-    public boolean isAlgebraic(String s) {
+    public static boolean isAlgebraic(String s) {
         return s.matches("-?\\d+(\\.\\d+)?") ||
                         Objects.equals(s,"x") ||
                         Objects.equals(s,"y");
@@ -87,13 +86,14 @@ public class ShuntingYard {
      * @param s The token to be checked
      * @return True if s is a valid function, False otherwise
     */
-    public boolean isFunction(String s) {
+    public static boolean isFunction(String s) {
         return (!Objects.equals(s,null) &&
                 !isAlgebraic(s) &&
                 s.length()>1 &&
                 !Objects.equals(s,"x") &&
                 !Objects.equals(s,"y") &&
-                !Objects.equals(s,")"));
+                !s.contains(")")) &&
+                !s.contains("(");
     }
 
     /**
@@ -104,9 +104,9 @@ public class ShuntingYard {
      * notation
      * @see #isAlgebraic(String)
      * @see #isFunction(String)
-     * @see #opsCheck(boolean, String, String)
+     * @see #opsCheck(String, String)
     */
-    public String shuntingYard(List<String> tokens) {
+    public static String shuntingYard(List<String> tokens) {
         // This shall be used as a queue
         StringBuilder output = new StringBuilder();
         // This shall be used as a stack
@@ -136,8 +136,7 @@ public class ShuntingYard {
                     */
                     if (!stack.isEmpty() &&
                         ops_prec.containsKey(stack.peek()) &&
-                        opsCheck((boolean) ops_assoc.get(token),
-                                token,
+                        opsCheck(token,
                                 stack.peek())){
                         // Push the operator to the queue
                         output.append(stack.pop()).append(" ");
@@ -191,6 +190,6 @@ public class ShuntingYard {
             output.append(stack.pop()).append(" ");
         }
         // Return the function as a string
-        return output.toString();
+        return output.toString().trim();
     }
 }

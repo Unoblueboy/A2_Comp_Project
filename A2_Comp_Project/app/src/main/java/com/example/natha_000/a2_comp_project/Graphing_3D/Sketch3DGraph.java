@@ -43,7 +43,7 @@ public class Sketch3DGraph extends PApplet {
     public void settings() {
         size(displayWidth, displayHeight, P3D);
         parent = (Main3DActivity) getActivity();
-        Log.i("Sketch3DGraph","settings");
+        Log.i("Project: Sketch3DGraph","settings");
         funcText = parent.functext;
         try {
             WorldLayoutData.setParameters(-10f,10f,-10f,10f,51,51,100f);
@@ -63,7 +63,7 @@ public class Sketch3DGraph extends PApplet {
     @Override
     public void draw() {
         sketchGraph();
-        Log.i("Sketch3DGraph","draw");
+        Log.i("Project: Sketch3DGraph","draw");
     }
 
     /**
@@ -78,11 +78,11 @@ public class Sketch3DGraph extends PApplet {
                 WorldLayoutData.generate();
                 floorVertices = WorldLayoutData.SURFACE_COORDS;
             } catch (IOException e) {
-                Log.e("LOL", "An error has occurred trying to generate new co-ordinates");
+                Log.e("Project: LOL", "An error has occurred trying to generate new co-ordinates");
             }
         }
         noStroke();
-        Log.i("Sketch3DGraph","sketchGraph");
+        Log.i("Project: Sketch3DGraph","sketchGraph");
         translate(width/2, height);
 //        float rota = map(mouseY,0,displayHeight,-PI,PI);
         rotateX(rotation[0]);
@@ -107,7 +107,7 @@ public class Sketch3DGraph extends PApplet {
     public void mouseReleased() {
         pMouseX = 0;
         pMouseY = 0;
-        Log.i("mouseReleased","Screen has been released and absDist is " + Float.toString(absDistSquared));
+        Log.i("Project: mouseReleased","Screen has been released and absDist is " + Float.toString(absDistSquared));
         if (absDistSquared <=5) {
             WorldLayoutData.toggleFlying();
         }

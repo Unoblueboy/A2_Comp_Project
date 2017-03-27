@@ -8,7 +8,6 @@ import android.view.View;
 
 import com.example.natha_000.a2_comp_project.Graphing_2D.Main2DActivity;
 import com.example.natha_000.a2_comp_project.Graphing_3D.Intemediary3D;
-import com.example.natha_000.a2_comp_project.Graphing_Stats.MainStatsActivity;
 import com.example.natha_000.a2_comp_project.Graphing_Stats.TabbedStatsActivity;
 import com.example.natha_000.a2_comp_project.R;
 
@@ -41,19 +40,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Sends the user to the activity that contains the Statistical Plotting
-     * @param view The view which called this function
-     */
-    public void goToStats(View view) {
-        Intent intent = new Intent(this, MainStatsActivity.class);
-        startActivity(intent);
-    }
-
-    /**
      * Sends the user to the activity that contains the Statistical Plotting V2
      * @param view The view which called this function
      */
-    public void goToTabbedStats(View view) {
+    public void goToStats(View view) {
         Intent intent = new Intent(this, TabbedStatsActivity.class);
         startActivity(intent);
     }

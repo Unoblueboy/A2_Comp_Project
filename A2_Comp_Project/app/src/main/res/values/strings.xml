@@ -12,4 +12,5 @@
     <string name="title_activity_main3_dvr">Main3DVRActivity</string>
     <string name="title_activity_intemediary3_d">Intemediary3D</string>
     <string name="title_activity_tabbed_stats">TabbedStatsActivity</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

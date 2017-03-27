@@ -4,10 +4,14 @@ package com.example.natha_000.a2_comp_project.Graphing_Stats;
  * Created by Natha_000 on 22/12/2016.
  */
 
-import java.util.Arrays;
+import android.util.Log;
+
+import java.io.File;
 import java.util.Locale;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
+import processing.core.PImage;
 
 public class SketchHistogram extends PApplet {
     private static float lmargin = 0.15f;
@@ -106,8 +110,13 @@ public class SketchHistogram extends PApplet {
 
     public void settings() {
         size(displayWidth,displayHeight-60);
+        startUp(displayWidth,sketchHeight());
+    }
+
+    public void startUp(int w, int h) {
         float[] bounds = new float[StatsClasses.noOfClasses*2];
         float[] freqdens = new float[StatsClasses.noOfClasses];
+        Log.i("Project: ABC",Integer.toString(StatsClasses.noOfClasses));
         for (int i = 0; i<StatsClasses.noOfClasses; i++) {
             StatsClasses sclass = StatsClasses.classes.get(i);
             bounds[i*2] = sclass.lowerbound;
@@ -134,13 +143,8 @@ public class SketchHistogram extends PApplet {
         while (yAxisUB < yScale * (ytick-1)){
             ytick--;
         }
-        System.out.println(Arrays.toString(scaling(0,1, 10)));
-        System.out.println(Arrays.toString(bounds));
-        System.out.println(Arrays.toString(freqdens));
-        System.out.println(Arrays.toString(xresults));
-        System.out.println(Arrays.toString(yresults));
-        xtickdist = displayWidth*(1 - rmargin - lmargin)/(xtick-1);
-        ytickdist = sketchHeight()*(1 - tmargin - bmargin)/(ytick-1);
+        xtickdist = w*(1 - rmargin - lmargin)/(xtick-1);
+        ytickdist = h*(1 - tmargin - bmargin)/(ytick-1);
     }
 
     public void draw() {
@@ -198,8 +202,94 @@ public class SketchHistogram extends PApplet {
         }
     }
 
+    public void drawAxis(PGraphics pg) {
+        pg.beginDraw();
+        pg.line(pg.width*lmargin, pg.height*(1-bmargin),pg.width*lmargin,pg.height*tmargin);
+        pg.line(pg.width*lmargin, pg.height*(1-bmargin),pg.width*(1-rmargin),pg.height*(1-bmargin));
+        //yaxis
+        pg.textAlign(RIGHT, CENTER);
+        for (int y = 0; y<ytick; y++) {
+            float relY = pg.height*tmargin + ytickdist*y;
+            float tickBegin = (1-ticklength)*pg.width*lmargin;
+            float tickEnd = pg.width*lmargin;
+            pg.line(tickBegin, relY, tickEnd, relY);
+            pg.textSize(14);
+            pg.fill(0);
+            pg.text(sigfigs(yAxisUB - yScale*y,2),tickBegin,relY);
+        }
+        //xaxis
+        pg.textAlign(LEFT, TOP);
+        float theta = PI/3;
+        for (int x = 0; x<xtick; x++) {
+            float relX = pg.width*lmargin + xtickdist*x;
+            float tickBegin = pg.height*(1-bmargin*(1-ticklength));
+            float tickEnd = pg.height*(1-bmargin);
+            pg.line(relX, tickBegin, relX, tickEnd);
+
+            pg.textSize(14);
+            pg.fill(0);
+            pg.pushMatrix();
+            pg.rotate(theta);
+            pg.translate(tickBegin*sin(theta) + relX*cos(theta),tickBegin*cos(theta) - relX*sin(theta));
+            pg.text(sigfigs(xAxisLB + xScale*x,2),0,0);
+            pg.popMatrix();
+        }
+        pg.endDraw();
+    }
+
+    public void drawBars(PGraphics pg) {
+        pg.beginDraw();
+        int hue = 0;
+        pg.colorMode(HSB,255);
+        for (StatsClasses c: StatsClasses.classes) {
+            float left = pg.width*(1 - rmargin - lmargin)*((c.lowerbound - xAxisLB)/(xAxisUB - xAxisLB));
+            float top = pg.height*(1 - tmargin - bmargin)*((c.freqdensity - yAxisLB)/(yAxisUB - yAxisLB));
+            float w = pg.width*(1 - rmargin - lmargin)*(c.classwidth/(xAxisUB - xAxisLB));
+            pg.fill(hue,255,255);
+            pg.rect(pg.width*lmargin+left,pg.height*(1-bmargin)-top,w,top);
+            hue = hue + 40;
+            hue = hue % 255;
+        }
+        pg.endDraw();
+    }
+
+    public void export(int w,int h,File folder) {
+        PGraphics hist = createGraphics(w,h);
+        startUp(w,h);
+        hist.beginDraw();
+        hist.background(255);
+        hist.endDraw();
+        drawAxis(hist);
+        drawBars(hist);
+        PImage result = hist.get();
+        result.save(folder.toString() + File.separator + "Histogram.jpg");
+//        Toast.makeText(getActivity(), "Saved :P", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onStart() {
+        Log.i("Hist","OnStart");
+        super.onStart();
+        redraw();
+    }
+
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//
+//        if (isVisibleToUser)
+//            Log.d("MyFragment", "Fragment is visible.");
+//        else
+//            Log.d("MyFragment", "Fragment is not visible.");
+//    }
+
     public void onDestroyView() {
         super.onDestroyView();
         reset();
+    }
+
+    public void onResume() {
+        Log.i("Hist","OnResume");
+        super.onResume();
+        redraw();
     }
 }
