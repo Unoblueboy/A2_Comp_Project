@@ -7,7 +7,6 @@ package com.example.natha_000.a2_comp_project.Graphing_Stats;
 import android.util.Log;
 
 import java.io.File;
-import java.util.Locale;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -29,13 +28,6 @@ public class SketchHistogram extends PApplet {
     private static float yAxisLB;
     private static float yAxisUB;
     private static float yScale;
-    public static String sigfigs(float num, int sf) {
-        String test = String.format("%."+sf+"G",num);
-        if (test.contains("E+")) {
-            test = String.format(Locale.US, "%.0f", Double.valueOf(String.format("%."+sf+"G",num)));
-        }
-        return test;
-    }
 
     public static void reset() {
         ytickdist=0f;
@@ -46,66 +38,6 @@ public class SketchHistogram extends PApplet {
         yAxisLB=0f;
         yAxisUB=0f;
         yScale=0f;
-    }
-
-    private static float getMin(float[] array) {
-        float min = array[0];
-        for (float ele: array) {
-            if (ele<min) {
-                min = ele;
-            }
-        }
-        return min;
-    }
-
-    private static float getMax(float[] array) {
-        float max = array[0];
-        for (float ele: array) {
-            if (ele>max) {
-                max = ele;
-            }
-        }
-        return max;
-    }
-
-    private static float[] scaling(float lb, float ub, int tick) {
-
-        float classMin = lb;
-        float classMax = ub;
-        float range = classMax-classMin;
-        float tickrange = range/tick;
-        int x = 0;
-        while (tickrange > 1 || tickrange < 0.1) {
-            if (tickrange < 0.1) {
-                tickrange = tickrange*10;
-                x--;
-            }
-            else {
-                tickrange = tickrange/10;
-                x++;
-            }
-        }
-        if (tickrange==0.1){
-            tickrange = (float) 0.1 * pow(10,x);
-        } else if (tickrange<=0.2){
-            tickrange = (float) 0.2 * pow(10,x);
-        } else if (tickrange<=0.25){
-            tickrange = (float) 0.25 * pow(10,x);
-        } else if (tickrange<=0.4){
-            tickrange = (float) 0.4 * pow(10,x);
-        } else if (tickrange<=0.5){
-            tickrange = (float) 0.5 * pow(10,x);
-        } else if (tickrange<=0.75){
-            tickrange = (float) 0.75 * pow(10,x);
-        } else if (tickrange<=0.8){
-            tickrange = (float) 0.8 * pow(10,x);
-        } else if (tickrange<=1.0){
-            tickrange = (float) 1.0 * pow(10,x);
-        }
-        float lowerbound = tickrange*floor(classMin/tickrange);
-        float upperbound = tickrange*ceil(classMax/tickrange);
-        float[] result = {lowerbound, upperbound, tickrange};
-        return result;
     }
 
     public void settings() {
@@ -123,26 +55,19 @@ public class SketchHistogram extends PApplet {
             bounds[i*2+1] = sclass.upperbound;
             freqdens[i] = sclass.freqdensity;
         }
-        float[] xresults = scaling(getMin(bounds), getMax(bounds), xtick);
+
+        float[] xresults = GrahphingMethods.scaling(GrahphingMethods.getMin(bounds), GrahphingMethods.getMax(bounds), xtick);
         xAxisLB = xresults[0];
         xAxisUB = xresults[1];
         xScale = xresults[2];
-        while (xAxisUB > xScale * (xtick-1)) {
-            xtick++;
-        }
-        while (xAxisUB < xScale * (xtick-1)){
-            xtick--;
-        }
-        float[] yresults = scaling(0, getMax(freqdens), ytick);
+        xtick = (int) xresults[3];
+
+        float[] yresults = GrahphingMethods.scaling(0, GrahphingMethods.getMax(freqdens), ytick);
         yAxisLB = 0;
         yAxisUB = yresults[1];
         yScale = yresults[2];
-        while (yAxisUB > yScale * (ytick-1)) {
-            ytick++;
-        }
-        while (yAxisUB < yScale * (ytick-1)){
-            ytick--;
-        }
+        ytick = (int) xresults[3];
+
         xtickdist = w*(1 - rmargin - lmargin)/(xtick-1);
         ytickdist = h*(1 - tmargin - bmargin)/(ytick-1);
     }
@@ -166,7 +91,7 @@ public class SketchHistogram extends PApplet {
             line(tickBegin, relY, tickEnd, relY);
             textSize(14);
             fill(0);
-            text(sigfigs(yAxisUB - yScale*y,2),tickBegin,relY);
+            text(GrahphingMethods.sigfigs(yAxisUB - yScale*y,2),tickBegin,relY);
         }
         //xaxis
         textAlign(LEFT, TOP);
@@ -183,7 +108,7 @@ public class SketchHistogram extends PApplet {
             pushMatrix();
             rotate(theta);
             translate(tickBegin*sin(theta) + relX*cos(theta),tickBegin*cos(theta) - relX*sin(theta));
-            text(sigfigs(xAxisLB + xScale*x,2),0,0);
+            text(GrahphingMethods.sigfigs(xAxisLB + xScale*x,2),0,0);
             popMatrix();
         }
     }
@@ -215,7 +140,7 @@ public class SketchHistogram extends PApplet {
             pg.line(tickBegin, relY, tickEnd, relY);
             pg.textSize(14);
             pg.fill(0);
-            pg.text(sigfigs(yAxisUB - yScale*y,2),tickBegin,relY);
+            pg.text(GrahphingMethods.sigfigs(yAxisUB - yScale*y,2),tickBegin,relY);
         }
         //xaxis
         pg.textAlign(LEFT, TOP);
@@ -231,7 +156,7 @@ public class SketchHistogram extends PApplet {
             pg.pushMatrix();
             pg.rotate(theta);
             pg.translate(tickBegin*sin(theta) + relX*cos(theta),tickBegin*cos(theta) - relX*sin(theta));
-            pg.text(sigfigs(xAxisLB + xScale*x,2),0,0);
+            pg.text(GrahphingMethods.sigfigs(xAxisLB + xScale*x,2),0,0);
             pg.popMatrix();
         }
         pg.endDraw();
