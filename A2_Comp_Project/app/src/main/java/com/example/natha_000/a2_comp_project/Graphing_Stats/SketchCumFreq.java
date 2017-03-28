@@ -4,7 +4,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,8 +34,7 @@ public class SketchCumFreq extends PApplet {
 //    private static float[] cumfreq;
     private static List<StatsClasses> sClasses;
     public static List<StatsClasses> sortedClasses(){
-        List<StatsClasses> c = StatsClasses.classes;
-        return mergeSort(c);
+        return StatsClasses.getSortedClasses();
     }
 
     public static void reset() {
@@ -49,44 +47,6 @@ public class SketchCumFreq extends PApplet {
         yAxisUB=0f;
         yScale=0f;
 //        cumfreq = new float[0];
-    }
-
-    private static List<StatsClasses> mergeSort(List<StatsClasses> classes) {
-        int n = classes.size();
-        if (n == 1){
-            return classes;
-        }
-        List<StatsClasses> l1 = mergeSort(classes.subList(0,floor(n/2)));
-        List<StatsClasses> l2 = mergeSort(classes.subList(floor(n/2),n));
-
-
-        return merge(l1,l2);
-    }
-
-    private static List<StatsClasses> merge(List<StatsClasses> l1, List<StatsClasses> l2){
-        List<StatsClasses> l3 = new ArrayList<StatsClasses>();
-        int l1counter = 0;
-        int l2counter = 0;
-        while (l1counter!=l1.size() && l2counter!=l2.size()) {
-            if (l1.get(l1counter).lowerbound>l2.get(l2counter).lowerbound) {
-                l3.add(l2.get(l2counter));
-                l2counter++;
-            } else {
-                l3.add(l1.get(l1counter));
-                l1counter++;
-            }
-        }
-
-        while (l1counter!=l1.size()) {
-            l3.add(l1.get(l1counter));
-            l1counter++;
-        }
-
-        while (l2counter!=l2.size()) {
-            l3.add(l2.get(l2counter));
-            l2counter++;
-        }
-        return l3;
     }
 
     public static String sigfigs(float num, int sf) {

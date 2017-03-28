@@ -34,29 +34,68 @@ public class StatsClasses {
         classes.add(class_);
     }
 
-    private boolean contains(float bound) {
+    static List<StatsClasses> mergeSort(List<StatsClasses> classes) {
+        int n = classes.size();
+        if (n <= 1){
+            return classes;
+        }
+        List<StatsClasses> l1 = mergeSort(classes.subList(0, (int) Math.floor(n/2)));
+        List<StatsClasses> l2 = mergeSort(classes.subList((int) Math.floor(n/2),n));
+
+
+        return merge(l1,l2);
+    }
+
+    private static List<StatsClasses> merge(List<StatsClasses> l1, List<StatsClasses> l2){
+        List<StatsClasses> l3 = new ArrayList<StatsClasses>();
+        int l1counter = 0;
+        int l2counter = 0;
+        while (l1counter!=l1.size() && l2counter!=l2.size()) {
+            if (l1.get(l1counter).lowerbound>l2.get(l2counter).lowerbound) {
+                l3.add(l2.get(l2counter));
+                l2counter++;
+            } else {
+                l3.add(l1.get(l1counter));
+                l1counter++;
+            }
+        }
+
+        while (l1counter!=l1.size()) {
+            l3.add(l1.get(l1counter));
+            l1counter++;
+        }
+
+        while (l2counter!=l2.size()) {
+            l3.add(l2.get(l2counter));
+            l2counter++;
+        }
+        return l3;
+    }
+
+    public static List<StatsClasses> getSortedClasses() {
+        return mergeSort(classes);
+    }
+
+    public boolean contains(float bound) {
         if (this.lowerbound < bound && this.upperbound > bound) {
             return true;
         }
         return false;
     }
 
-    private boolean contains(StatsClasses other) {
-        if (this.lowerbound < other.lowerbound && this.upperbound > other.upperbound) {
-            return true;
-        }
-        return false;
+    public boolean contains(StatsClasses other) {
+        return contains(other.lowerbound,other.upperbound);
     }
 
-    private boolean surrounds(StatsClasses other) {
-        if (this.lowerbound > other.lowerbound && this.upperbound < other.upperbound) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean contains(float lb, float ub) {
+    public boolean contains(float lb, float ub) {
         if (this.lowerbound <= lb && this.upperbound >= ub) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean surrounds(StatsClasses other) {
+        if (this.lowerbound >= other.lowerbound && this.upperbound <= other.upperbound) {
             return true;
         }
         return false;
@@ -99,7 +138,7 @@ public class StatsClasses {
             return false;
         }
         for (StatsClasses class_ : classes) {
-            if (class_.contains(lb,ub) || class_.surrounds(lb,ub)) {
+            if (class_.contains(lb,ub) || class_.surrounds(lb,ub) || !validBound(lb) || !validBound(ub)) {
                 return false;
             }
         }
@@ -110,7 +149,7 @@ public class StatsClasses {
         return this.id == other.id;
     }
 
-    public static int findClassById(int id) {
+    public static int findClassIndexById(int id) {
         boolean found = false;
         boolean failed = false;
         int l = 0;
@@ -131,12 +170,11 @@ public class StatsClasses {
     }
 
     public static StatsClasses getClassById(int id){
-        for (int i=0; i<classes.size();i++){
-            if (classes.get(i).id == id) {
-                return classes.get(i);
-            }
+        int classIndex = findClassIndexById(id);
+        if (classIndex == -1) {
+            return null;
         }
-        return null;
+        return classes.get(classIndex);
     }
 
     public static int findClassIndexByLb(float lb) {
@@ -159,7 +197,7 @@ public class StatsClasses {
         return -1;
     }
 
-    public static StatsClasses findClassByLb(float lb) {
+    public static StatsClasses getClassByLb(float lb) {
         int classIndex = findClassIndexByLb(lb);
         if (classIndex == -1) {
             return null;
@@ -178,7 +216,7 @@ public class StatsClasses {
     }
 
     public static boolean deleteClass(int id) {
-        int classIndex = findClassById(id);
+        int classIndex = findClassIndexById(id);
         if (classIndex != -1) {
             classes.remove(classIndex);
             noOfClasses--;

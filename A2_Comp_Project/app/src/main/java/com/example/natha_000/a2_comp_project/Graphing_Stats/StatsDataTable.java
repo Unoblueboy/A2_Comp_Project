@@ -87,7 +87,7 @@ public class StatsDataTable extends Fragment {
         Log.i("Project: Delete row",ub.getText().toString());
         Log.i("Project: Delete row",freq.getText().toString());
         try {
-            StatsClasses relClass = StatsClasses.findClassByLb(Integer.parseInt(lb.getText().toString()));
+            StatsClasses relClass = StatsClasses.getClassByLb(Integer.parseInt(lb.getText().toString()));
             relClass.delete();
         } catch (Exception e) {}
         for (int i = etList.size()-1; i>= 0; i--) {
@@ -132,7 +132,7 @@ public class StatsDataTable extends Fragment {
             float lowerbound = Float.parseFloat(lastItem[0].getText().toString());
             float upperbound = Float.parseFloat(lastItem[1].getText().toString());
             int frequency = Integer.parseInt(lastItem[2].getText().toString());
-            if (StatsClasses.findClassByLb(lowerbound) == null) {
+            if (StatsClasses.getClassByLb(lowerbound) == null) {
                 new StatsClasses(lowerbound, upperbound, frequency);
             }
 
