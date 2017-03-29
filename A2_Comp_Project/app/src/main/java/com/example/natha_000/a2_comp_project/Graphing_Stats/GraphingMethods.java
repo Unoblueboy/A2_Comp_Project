@@ -8,36 +8,51 @@ import processing.core.PApplet;
  * Created by Natha_000 on 28/03/2017.
  */
 
-public class GrahphingMethods {
+public class GraphingMethods {
+
     public static String sigfigs(float num, int sf) {
         String test = String.format("%."+sf+"G",num);
         if (test.contains("E+")) {
             test = String.format(Locale.US, "%.0f", Double.valueOf(String.format("%."+sf+"G",num)));
         }
-        return test;
-    }
-
-    static float getMin(float[] array) {
-        float min = array[0];
-        for (float ele: array) {
-            if (ele<min) {
-                min = ele;
+        if (test.contains(".")) {
+            while (test.charAt(test.length()-1)=='0'){
+                test = test.substring(0,test.length()-1);
             }
         }
-        return min;
-    }
-
-    static float getMax(float[] array) {
-        float max = array[0];
-        for (float ele: array) {
-            if (ele>max) {
-                max = ele;
-            }
+        if (test.charAt(test.length()-1)=='.'){
+            test = test.substring(0,test.length()-1);
         }
-        return max;
+        return num == 0 ? "0" : test;
     }
 
-    static float[] scaling(float lb, float ub, int tick) {
+    public static float getMin(float[] array) {
+        if (array.length!=0) {
+            float min = array[0];
+            for (float ele: array) {
+                if (ele<min) {
+                    min = ele;
+                }
+            }
+            return min;
+        }
+        return Float.NaN;
+    }
+
+    public static float getMax(float[] array) {
+        if (array.length!=0) {
+            float max = array[0];
+            for (float ele : array) {
+                if (ele > max) {
+                    max = ele;
+                }
+            }
+            return max;
+        }
+        return Float.NaN;
+    }
+
+    public static float[] scaling(float lb, float ub, int tick) {
 
         float classMin = lb;
         float classMax = ub;
@@ -71,14 +86,15 @@ public class GrahphingMethods {
         } else if (tickrange<=1.0){
             tickrange = (float) 1.0 * PApplet.pow(10,x);
         }
-        float lowerbound = tickrange* PApplet.floor(classMin/tickrange);
-        float upperbound = tickrange* PApplet.ceil(classMax/tickrange);
-        while (ub > tickrange * (tick-1)) {
-            tick++;
-        }
-        while (ub < tickrange * (tick-1)){
+        float lowerbound = tickrange* (float) Math.floor(classMin/tickrange);
+//        float upperbound = tickrange* (float) Math.ceil(classMax/tickrange);
+        while (ub <= lowerbound + tickrange * (tick-1)){
             tick--;
         }
+        while (ub > lowerbound + tickrange * (tick-1)) {
+            tick++;
+        }
+        float upperbound =lowerbound + tickrange * (tick-1);
         float[] result = {lowerbound, upperbound, tickrange,tick};
         return result;
     }

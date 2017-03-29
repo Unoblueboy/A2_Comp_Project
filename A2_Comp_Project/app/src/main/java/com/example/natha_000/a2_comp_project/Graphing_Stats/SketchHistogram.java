@@ -56,13 +56,13 @@ public class SketchHistogram extends PApplet {
             freqdens[i] = sclass.freqdensity;
         }
 
-        float[] xresults = GrahphingMethods.scaling(GrahphingMethods.getMin(bounds), GrahphingMethods.getMax(bounds), xtick);
+        float[] xresults = GraphingMethods.scaling(GraphingMethods.getMin(bounds), GraphingMethods.getMax(bounds), xtick);
         xAxisLB = xresults[0];
         xAxisUB = xresults[1];
         xScale = xresults[2];
         xtick = (int) xresults[3];
 
-        float[] yresults = GrahphingMethods.scaling(0, GrahphingMethods.getMax(freqdens), ytick);
+        float[] yresults = GraphingMethods.scaling(0, GraphingMethods.getMax(freqdens), ytick);
         yAxisLB = 0;
         yAxisUB = yresults[1];
         yScale = yresults[2];
@@ -91,7 +91,7 @@ public class SketchHistogram extends PApplet {
             line(tickBegin, relY, tickEnd, relY);
             textSize(14);
             fill(0);
-            text(GrahphingMethods.sigfigs(yAxisUB - yScale*y,2),tickBegin,relY);
+            text(GraphingMethods.sigfigs(yAxisUB - yScale*y,2),tickBegin,relY);
         }
         //xaxis
         textAlign(LEFT, TOP);
@@ -108,7 +108,7 @@ public class SketchHistogram extends PApplet {
             pushMatrix();
             rotate(theta);
             translate(tickBegin*sin(theta) + relX*cos(theta),tickBegin*cos(theta) - relX*sin(theta));
-            text(GrahphingMethods.sigfigs(xAxisLB + xScale*x,2),0,0);
+            text(GraphingMethods.sigfigs(xAxisLB + xScale*x,2),0,0);
             popMatrix();
         }
     }
@@ -140,7 +140,7 @@ public class SketchHistogram extends PApplet {
             pg.line(tickBegin, relY, tickEnd, relY);
             pg.textSize(14);
             pg.fill(0);
-            pg.text(GrahphingMethods.sigfigs(yAxisUB - yScale*y,2),tickBegin,relY);
+            pg.text(GraphingMethods.sigfigs(yAxisUB - yScale*y,2),tickBegin,relY);
         }
         //xaxis
         pg.textAlign(LEFT, TOP);
@@ -156,7 +156,7 @@ public class SketchHistogram extends PApplet {
             pg.pushMatrix();
             pg.rotate(theta);
             pg.translate(tickBegin*sin(theta) + relX*cos(theta),tickBegin*cos(theta) - relX*sin(theta));
-            pg.text(GrahphingMethods.sigfigs(xAxisLB + xScale*x,2),0,0);
+            pg.text(GraphingMethods.sigfigs(xAxisLB + xScale*x,2),0,0);
             pg.popMatrix();
         }
         pg.endDraw();
