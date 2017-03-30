@@ -218,9 +218,12 @@ public class SketchCumFreq extends PApplet {
         endShape();
     }
 
-    public void onDestroyView() {
-        super.onDestroyView();
-        reset();
+    public void setUserVisibleHint(boolean hidden) {
+        Log.i("CumFreq","I've changed visibility my dudes");
+        super.setUserVisibleHint(hidden);
+        if (hidden==false) {
+            redraw();
+        }
     }
 
     public void onStart() {

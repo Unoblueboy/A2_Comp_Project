@@ -216,7 +216,8 @@ public class GraphData {
                 .replaceAll("(e|pi|\\d+(\\.\\d+)?)\\s*(\\w)","$1 * $3")
                 .replaceAll("e",Double.toString(Math.E))
                 .replaceAll("pi",Double.toString(Math.PI))
-                .replaceAll("(^|\\D) \\s* - \\s* (\\w) ","$1 0 - $0");
+                .replaceAll("(^|[a-zA-Z+-.*^()])\\s*-\\s*(\\w)","$1 0 - $2")
+                .trim();
 
     }
 
@@ -231,7 +232,7 @@ public class GraphData {
     public static Function function_creator(String func) throws IOException{
         //This uses the function input and converts it into a string of tokens
         ShuntingYard parser = new ShuntingYard();
-        List<String> tokens = tokenise(func);
+        List<String> tokens = tokenise(format(func));
         List<String> ops = tokenise(parser.shuntingYard(tokens));
 
         //This sets up the variables to be used within the process of parsing the reverse polish notation

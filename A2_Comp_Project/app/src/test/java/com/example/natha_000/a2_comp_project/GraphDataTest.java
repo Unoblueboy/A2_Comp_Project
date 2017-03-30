@@ -158,6 +158,9 @@ public class GraphDataTest {
         String test12= "esin ( 3 / 3 * pi )";
         String test13= "sin ( 2pi + ( y + 1 ) ^ e )";
         String test14= "e     x";
+        String test15= "-x";
+        String test16= "sin(-x)";
+        String test17= "cos(   -   x-y)";
         assertEquals("2.718281828459045",GraphData.format(test1));
         assertEquals("3.141592653589793",GraphData.format(test2));
         assertEquals("2.718281828459045 * x",GraphData.format(test3));
@@ -172,5 +175,8 @@ public class GraphDataTest {
         assertEquals("2.718281828459045 * sin ( 3 / 3 * 3.141592653589793 )",GraphData.format(test12));
         assertEquals("sin ( 2 * 3.141592653589793 + ( y + 1 ) ^ 2.718281828459045 )",GraphData.format(test13));
         assertEquals("2.718281828459045 * x",GraphData.format(test14));
+        assertEquals("0 - x",GraphData.format(test15));
+        assertEquals("sin( 0 - x)",GraphData.format(test16));
+        assertEquals("cos( 0 - x-y)",GraphData.format(test17));
     }
 }

@@ -207,9 +207,11 @@ public class SketchHistogram extends PApplet {
 //            Log.d("MyFragment", "Fragment is not visible.");
 //    }
 
-    public void onDestroyView() {
-        super.onDestroyView();
-        reset();
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden==false) {
+            redraw();
+        }
     }
 
     public void onResume() {
