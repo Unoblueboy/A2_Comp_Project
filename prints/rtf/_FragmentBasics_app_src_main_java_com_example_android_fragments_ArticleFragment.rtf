@@ -1,0 +1,77 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green128\blue0;\red186\green33\blue33;\red0\green0\blue255;\red188\green122\blue0;\red25\green23\blue124;\red64\green128\blue128;\red176\green0\blue64;\red187\green187\blue187;\red0\green0\blue128;\red160\green160\blue0;\red170\green34\blue255;\red136\green136\blue136;\red136\green0\blue0;\red102\green102\blue102;\red187\green102\blue136;\red0\green68\blue221;\red210\green65\blue58;\red255\green0\blue0;\red160\green0\blue0;\red187\green102\blue34;\red0\green160\blue0;\red125\green144\blue41;\red128\green0\blue128;\red153\green153\blue153;}\f0 {\cf14 .}{\chbrdr\chcfpat18 \\}FragmentBasics{\chbrdr\chcfpat18 \\}app{\chbrdr\chcfpat18 \\}src{\chbrdr\chcfpat18 \\}main{\chbrdr\chcfpat18 \\}java{\chbrdr\chcfpat18 \\}com{\chbrdr\chcfpat18 \\}example{\chbrdr\chcfpat18 \\}android{\chbrdr\chcfpat18 \\}fragments{\chbrdr\chcfpat18 \\}ArticleFragment{\cf14 .}{\cf22 java}\par
+{\cf6\i /*\par
+ * Copyright (C) 2012 The Android Open Source Project\par
+ *\par
+ * Licensed under the Apache License, Version 2.0 (the "License");\par
+ * you may not use this file except in compliance with the License.\par
+ * You may obtain a copy of the License at\par
+ *\par
+ *      http://www.apache.org/licenses/LICENSE-2.0\par
+ *\par
+ * Unless required by applicable law or agreed to in writing, software\par
+ * distributed under the License is distributed on an "AS IS" BASIS,\par
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\par
+ * See the License for the specific language governing permissions and\par
+ * limitations under the License.\par
+ */}\par
+{\cf1\b package} {\cf3\b com.example.android.fragments}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b android.support.v4.app.Fragment}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.os.Bundle}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.view.LayoutInflater}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.view.View}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.view.ViewGroup}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.widget.TextView}{\cf14 ;}\par
+\par
+{\cf1\b public} {\cf1\b class} {\cf3\b ArticleFragment} {\cf1\b extends} Fragment {\cf14 \{}\par
+    {\cf1\b final} {\cf1\b static} String ARG_POSITION {\cf14 =} {\cf2 "position"}{\cf14 ;}\par
+    {\cf7 int} mCurrentPosition {\cf14 =} {\cf14 -}{\cf14 1}{\cf14 ;}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} View {\cf3 onCreateView}{\cf14 (}LayoutInflater inflater{\cf14 ,} ViewGroup container{\cf14 ,} \par
+        Bundle savedInstanceState{\cf14 )} {\cf14 \{}\par
+\par
+        {\cf6\i // If activity recreated (such as from screen rotate), restore\par
+}        {\cf6\i // the previous article selection set by onSaveInstanceState().\par
+}        {\cf6\i // This is primarily necessary when in the two-pane layout.\par
+}        {\cf1\b if} {\cf14 (}savedInstanceState {\cf14 !}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+            mCurrentPosition {\cf14 =} savedInstanceState{\cf14 .}{\cf22 getInt}{\cf14 (}ARG_POSITION{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+\par
+        {\cf6\i // Inflate the layout for this fragment\par
+}        {\cf1\b return} inflater{\cf14 .}{\cf22 inflate}{\cf14 (}R{\cf14 .}{\cf22 layout}{\cf14 .}{\cf22 article_view}{\cf14 ,} container{\cf14 ,} {\cf1\b false}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 onStart}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onStart}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // During startup, check if there are arguments passed to the fragment.\par
+}        {\cf6\i // onStart is a good place to do this because the layout has already been\par
+}        {\cf6\i // applied to the fragment at this point so we can safely call the method\par
+}        {\cf6\i // below that sets the article text.\par
+}        Bundle args {\cf14 =} getArguments{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b if} {\cf14 (}args {\cf14 !}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+            {\cf6\i // Set article based on argument passed in\par
+}            updateArticleView{\cf14 (}args{\cf14 .}{\cf22 getInt}{\cf14 (}ARG_POSITION{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b else} {\cf1\b if} {\cf14 (}mCurrentPosition {\cf14 !}{\cf14 =} {\cf14 -}{\cf14 1}{\cf14 )} {\cf14 \{}\par
+            {\cf6\i // Set article based on saved instance state defined during onCreateView\par
+}            updateArticleView{\cf14 (}mCurrentPosition{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 void} {\cf3 updateArticleView}{\cf14 (}{\cf7 int} position{\cf14 )} {\cf14 \{}\par
+        TextView article {\cf14 =} {\cf14 (}TextView{\cf14 )} getActivity{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 findViewById}{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 article}{\cf14 )}{\cf14 ;}\par
+        article{\cf14 .}{\cf22 setText}{\cf14 (}Ipsum{\cf14 .}{\cf22 Articles}{\cf14 [}position{\cf14 ]}{\cf14 )}{\cf14 ;}\par
+        mCurrentPosition {\cf14 =} position{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 onSaveInstanceState}{\cf14 (}Bundle outState{\cf14 )} {\cf14 \{}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onSaveInstanceState}{\cf14 (}outState{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // Save the current article selection in case we need to recreate the fragment\par
+}        outState{\cf14 .}{\cf22 putInt}{\cf14 (}ARG_POSITION{\cf14 ,} mCurrentPosition{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+{\cf14 \}}\par
+}

@@ -1,0 +1,424 @@
+<p style="font-size:14pt;font-family:sans-serif"><strong>.\A2_Comp_Project\app\src\main\java\com\example\natha_000\a2_comp_project\Graphing_3D\Main3DVRActivity.java</strong></p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">package</span> <span style="color: #0000FF; font-weight: bold">com.example.natha_000.a2_comp_project.Graphing_3D</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.content.Context</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.content.Intent</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.opengl.GLES20</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.opengl.Matrix</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.os.Bundle</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.os.Vibrator</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.util.Log</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">com.example.natha_000.a2_comp_project.R</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">com.google.vr.sdk.base.AndroidCompat</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">com.google.vr.sdk.base.Eye</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">com.google.vr.sdk.base.GvrActivity</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">com.google.vr.sdk.base.GvrView</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">com.google.vr.sdk.base.HeadTransform</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">com.google.vr.sdk.base.Viewport</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.io.BufferedReader</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.io.IOException</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.io.InputStream</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.io.InputStreamReader</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.nio.ByteBuffer</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.nio.ByteOrder</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.nio.FloatBuffer</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">javax.microedition.khronos.egl.EGLConfig</span><span style="color: #666666">;</span>
+
+<span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic"> * A class suitable for the drawing of the 3D graph within virtual reality</span>
+<span style="color: #408080; font-style: italic"> */</span>
+<span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Main3DVRActivity</span> <span style="color: #008000; font-weight: bold">extends</span> GvrActivity <span style="color: #008000; font-weight: bold">implements</span> GvrView<span style="color: #666666">.</span><span style="color: #7D9029">StereoRenderer</span> <span style="color: #666666">{</span>
+
+    <span style="color: #008000; font-weight: bold">protected</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> modelCube<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">protected</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> modelPosition<span style="color: #666666">;</span>
+
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #008000; font-weight: bold">final</span> String TAG <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;TreasureHuntActivity&quot;</span><span style="color: #666666">;</span>
+
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #008000; font-weight: bold">final</span> <span style="color: #B00040">float</span> Z_NEAR <span style="color: #666666">=</span> <span style="color: #666666">0.1f;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #008000; font-weight: bold">final</span> <span style="color: #B00040">float</span> Z_FAR <span style="color: #666666">=</span> <span style="color: #666666">100.0f;</span>
+
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #008000; font-weight: bold">final</span> <span style="color: #B00040">float</span> CAMERA_Z <span style="color: #666666">=</span> <span style="color: #666666">0.01f;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #008000; font-weight: bold">final</span> <span style="color: #B00040">float</span> TIME_DELTA <span style="color: #666666">=</span> <span style="color: #666666">0.3f;</span>
+
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #008000; font-weight: bold">final</span> <span style="color: #B00040">float</span> YAW_LIMIT <span style="color: #666666">=</span> <span style="color: #666666">0.12f;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #008000; font-weight: bold">final</span> <span style="color: #B00040">float</span> PITCH_LIMIT <span style="color: #666666">=</span> <span style="color: #666666">0.12f;</span>
+
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #008000; font-weight: bold">final</span> <span style="color: #B00040">int</span> COORDS_PER_VERTEX <span style="color: #666666">=</span> <span style="color: #666666">3;</span>
+
+    <span style="color: #408080; font-style: italic">// The light will be kept in a position just above the user.</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #008000; font-weight: bold">final</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> LIGHT_POS_IN_WORLD_SPACE <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> <span style="color: #666666">{0.0f,</span> <span style="color: #666666">2.0f,</span> <span style="color: #666666">0.0f,</span> <span style="color: #666666">1.0f};</span>
+
+    <span style="color: #408080; font-style: italic">// Convenience vector for extracting the position from a matrix via multiplication.</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #008000; font-weight: bold">final</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> POS_MATRIX_MULTIPLY_VEC <span style="color: #666666">=</span> <span style="color: #666666">{0,</span> <span style="color: #666666">0,</span> <span style="color: #666666">0,</span> <span style="color: #666666">1.0f};</span>
+
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #008000; font-weight: bold">final</span> <span style="color: #B00040">float</span> MIN_MODEL_DISTANCE <span style="color: #666666">=</span> <span style="color: #666666">3.0f;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #008000; font-weight: bold">final</span> <span style="color: #B00040">float</span> MAX_MODEL_DISTANCE <span style="color: #666666">=</span> <span style="color: #666666">7.0f;</span>
+
+
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">final</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> lightPosInEyeSpace <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">float</span><span style="color: #666666">[4];</span>
+
+    <span style="color: #008000; font-weight: bold">private</span> FloatBuffer surfaceVertices<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> FloatBuffer surfaceColors<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> FloatBuffer surfaceNormals<span style="color: #666666">;</span>
+
+    <span style="color: #008000; font-weight: bold">private</span> HeadTransform ht<span style="color: #666666">;</span>
+
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">int</span> surfaceProgram<span style="color: #666666">;</span>
+
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">int</span> surfacePositionParam<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">int</span> surfaceNormalParam<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">int</span> surfaceColorParam<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">int</span> surfaceModelParam<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">int</span> surfaceModelViewParam<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">int</span> surfaceModelViewProjectionParam<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">int</span> surfaceLightPosParam<span style="color: #666666">;</span>
+
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> camera<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> view<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> headView<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> modelViewProjection<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> modelView<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> modelSurface<span style="color: #666666">;</span>
+
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> tempPosition<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> headRotation<span style="color: #666666">;</span>
+
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">float</span> objectDistance <span style="color: #666666">=</span> MAX_MODEL_DISTANCE <span style="color: #666666">/</span> <span style="color: #666666">2.0f;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">float</span> surfaceDepth <span style="color: #666666">=</span> <span style="color: #666666">20</span>f<span style="color: #666666">;</span>
+
+    <span style="color: #008000; font-weight: bold">private</span> Vibrator vibrator<span style="color: #666666">;</span>
+
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * Converts a raw text file, saved as a resource, into an OpenGL ES shader.</span>
+<span style="color: #408080; font-style: italic">     *</span>
+<span style="color: #408080; font-style: italic">     * @param type The type of shader I will be creating.</span>
+<span style="color: #408080; font-style: italic">     * @param resId The resource ID of the raw text file about to be turned into a shader.</span>
+<span style="color: #408080; font-style: italic">     * @return The shader object handler.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">int</span> <span style="color: #0000FF">loadGLShader</span><span style="color: #666666">(</span><span style="color: #B00040">int</span> type<span style="color: #666666">,</span> <span style="color: #B00040">int</span> resId<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        String code <span style="color: #666666">=</span> readRawTextFile<span style="color: #666666">(</span>resId<span style="color: #666666">);</span>
+        <span style="color: #B00040">int</span> shader <span style="color: #666666">=</span> GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glCreateShader</span><span style="color: #666666">(</span>type<span style="color: #666666">);</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glShaderSource</span><span style="color: #666666">(</span>shader<span style="color: #666666">,</span> code<span style="color: #666666">);</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glCompileShader</span><span style="color: #666666">(</span>shader<span style="color: #666666">);</span>
+
+        <span style="color: #408080; font-style: italic">// Get the compilation status.</span>
+        <span style="color: #008000; font-weight: bold">final</span> <span style="color: #B00040">int</span><span style="color: #666666">[]</span> compileStatus <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">int</span><span style="color: #666666">[1];</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glGetShaderiv</span><span style="color: #666666">(</span>shader<span style="color: #666666">,</span> GLES20<span style="color: #666666">.</span><span style="color: #7D9029">GL_COMPILE_STATUS</span><span style="color: #666666">,</span> compileStatus<span style="color: #666666">,</span> <span style="color: #666666">0);</span>
+
+        <span style="color: #408080; font-style: italic">// If the compilation failed, delete the shader.</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>compileStatus<span style="color: #666666">[0]</span> <span style="color: #666666">==</span> <span style="color: #666666">0)</span> <span style="color: #666666">{</span>
+            Log<span style="color: #666666">.</span><span style="color: #7D9029">e</span><span style="color: #666666">(</span>TAG<span style="color: #666666">,</span> <span style="color: #BA2121">&quot;Error compiling shader: &quot;</span> <span style="color: #666666">+</span> GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glGetShaderInfoLog</span><span style="color: #666666">(</span>shader<span style="color: #666666">));</span>
+            GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glDeleteShader</span><span style="color: #666666">(</span>shader<span style="color: #666666">);</span>
+            shader <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+        <span style="color: #666666">}</span>
+
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>shader <span style="color: #666666">==</span> <span style="color: #666666">0)</span> <span style="color: #666666">{</span>
+            <span style="color: #008000; font-weight: bold">throw</span> <span style="color: #008000; font-weight: bold">new</span> RuntimeException<span style="color: #666666">(</span><span style="color: #BA2121">&quot;Error creating shader.&quot;</span><span style="color: #666666">);</span>
+        <span style="color: #666666">}</span>
+
+        <span style="color: #008000; font-weight: bold">return</span> shader<span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * Checks if there&#39;s an error inside of OpenGL ES, and if so what that error is.</span>
+<span style="color: #408080; font-style: italic">     *</span>
+<span style="color: #408080; font-style: italic">     * @param label Label to report in case of error.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">checkGLError</span><span style="color: #666666">(</span>String label<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">int</span> error<span style="color: #666666">;</span>
+        <span style="color: #008000; font-weight: bold">while</span> <span style="color: #666666">((</span>error <span style="color: #666666">=</span> GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glGetError</span><span style="color: #666666">())</span> <span style="color: #666666">!=</span> GLES20<span style="color: #666666">.</span><span style="color: #7D9029">GL_NO_ERROR</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            Log<span style="color: #666666">.</span><span style="color: #7D9029">e</span><span style="color: #666666">(</span>TAG<span style="color: #666666">,</span> label <span style="color: #666666">+</span> <span style="color: #BA2121">&quot;: glError &quot;</span> <span style="color: #666666">+</span> error<span style="color: #666666">);</span>
+            <span style="color: #008000; font-weight: bold">throw</span> <span style="color: #008000; font-weight: bold">new</span> RuntimeException<span style="color: #666666">(</span>label <span style="color: #666666">+</span> <span style="color: #BA2121">&quot;: glError &quot;</span> <span style="color: #666666">+</span> error<span style="color: #666666">);</span>
+        <span style="color: #666666">}</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * Sets the view to our GvrView and initializes the transformation matrices I will use</span>
+<span style="color: #408080; font-style: italic">     * to render the scene.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">protected</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onCreate</span><span style="color: #666666">(</span>Bundle savedInstanceState<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">super</span><span style="color: #666666">.</span><span style="color: #7D9029">onCreate</span><span style="color: #666666">(</span>savedInstanceState<span style="color: #666666">);</span>
+
+        Intent intent <span style="color: #666666">=</span> getIntent<span style="color: #666666">();</span>
+        String message <span style="color: #666666">=</span> intent<span style="color: #666666">.</span><span style="color: #7D9029">getStringExtra</span><span style="color: #666666">(</span>Intemediary3D<span style="color: #666666">.</span><span style="color: #7D9029">EXTRA_MESSAGE</span><span style="color: #666666">);</span>
+
+        <span style="color: #008000; font-weight: bold">try</span> <span style="color: #666666">{</span>
+            WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">setParameters</span><span style="color: #666666">(-10</span>f<span style="color: #666666">,10</span>f<span style="color: #666666">,-10</span>f<span style="color: #666666">,10</span>f<span style="color: #666666">,61,61,10</span>f<span style="color: #666666">);</span>
+            WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">setfunction</span><span style="color: #666666">(</span>message<span style="color: #666666">);</span>
+            WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">generate</span><span style="color: #666666">();</span>
+        <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">catch</span> <span style="color: #666666">(</span>IOException e<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            Log<span style="color: #666666">.</span><span style="color: #7D9029">e</span><span style="color: #666666">(</span><span style="color: #BA2121">&quot;Project: Parameter Data&quot;</span><span style="color: #666666">,</span> e<span style="color: #666666">.</span><span style="color: #7D9029">toString</span><span style="color: #666666">());</span>
+        <span style="color: #666666">}</span>
+
+        initializeGvrView<span style="color: #666666">();</span>
+
+        modelCube <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">float</span><span style="color: #666666">[16];</span>
+        camera <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">float</span><span style="color: #666666">[16];</span>
+        view <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">float</span><span style="color: #666666">[16];</span>
+        modelViewProjection <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">float</span><span style="color: #666666">[16];</span>
+        modelView <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">float</span><span style="color: #666666">[16];</span>
+        modelSurface <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">float</span><span style="color: #666666">[16];</span>
+        tempPosition <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">float</span><span style="color: #666666">[4];</span>
+        <span style="color: #408080; font-style: italic">// Model first appears directly in front of user.</span>
+        modelPosition <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> <span style="color: #666666">{0.0f,</span> <span style="color: #666666">0.0f,</span> <span style="color: #666666">-</span>MAX_MODEL_DISTANCE <span style="color: #666666">/</span> <span style="color: #666666">2.0f};</span>
+        headRotation <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">float</span><span style="color: #666666">[4];</span>
+        headView <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">float</span><span style="color: #666666">[16];</span>
+        vibrator <span style="color: #666666">=</span> <span style="color: #666666">(</span>Vibrator<span style="color: #666666">)</span> getSystemService<span style="color: #666666">(</span>Context<span style="color: #666666">.</span><span style="color: #7D9029">VIBRATOR_SERVICE</span><span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">initializeGvrView</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        setContentView<span style="color: #666666">(</span>R<span style="color: #666666">.</span><span style="color: #7D9029">layout</span><span style="color: #666666">.</span><span style="color: #7D9029">activity_main3dvr</span><span style="color: #666666">);</span>
+
+        GvrView gvrView <span style="color: #666666">=</span> <span style="color: #666666">(</span>GvrView<span style="color: #666666">)</span> findViewById<span style="color: #666666">(</span>R<span style="color: #666666">.</span><span style="color: #7D9029">id</span><span style="color: #666666">.</span><span style="color: #7D9029">gvr_view</span><span style="color: #666666">);</span>
+        gvrView<span style="color: #666666">.</span><span style="color: #7D9029">setEGLConfigChooser</span><span style="color: #666666">(8,</span> <span style="color: #666666">8,</span> <span style="color: #666666">8,</span> <span style="color: #666666">8,</span> <span style="color: #666666">16,</span> <span style="color: #666666">8);</span>
+
+        gvrView<span style="color: #666666">.</span><span style="color: #7D9029">setRenderer</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">);</span>
+        gvrView<span style="color: #666666">.</span><span style="color: #7D9029">setTransitionViewEnabled</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">);</span>
+
+        <span style="color: #408080; font-style: italic">// Enable Cardboard-trigger feedback with Daydream headsets.</span>
+        gvrView<span style="color: #666666">.</span><span style="color: #7D9029">enableCardboardTriggerEmulation</span><span style="color: #666666">();</span>
+
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>gvrView<span style="color: #666666">.</span><span style="color: #7D9029">setAsyncReprojectionEnabled</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">))</span> <span style="color: #666666">{</span>
+            <span style="color: #408080; font-style: italic">// Async reprojection decouples the app framerate from the display framerate,</span>
+            <span style="color: #408080; font-style: italic">// allowing immersive interaction even at the throttled clockrates set by</span>
+            <span style="color: #408080; font-style: italic">// sustained performance mode.</span>
+            AndroidCompat<span style="color: #666666">.</span><span style="color: #7D9029">setSustainedPerformanceMode</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">,</span> <span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">);</span>
+        <span style="color: #666666">}</span>
+
+        setGvrView<span style="color: #666666">(</span>gvrView<span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">protected</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onPause</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">super</span><span style="color: #666666">.</span><span style="color: #7D9029">onPause</span><span style="color: #666666">();</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">protected</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onResume</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">super</span><span style="color: #666666">.</span><span style="color: #7D9029">onResume</span><span style="color: #666666">();</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onRendererShutdown</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">reset</span><span style="color: #666666">();</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onSurfaceChanged</span><span style="color: #666666">(</span><span style="color: #B00040">int</span> width<span style="color: #666666">,</span> <span style="color: #B00040">int</span> height<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+    <span style="color: #666666">}</span>
+
+
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">defineBuffers</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        Log<span style="color: #666666">.</span><span style="color: #7D9029">i</span><span style="color: #666666">(</span>TAG<span style="color: #666666">,</span>Float<span style="color: #666666">.</span><span style="color: #7D9029">toString</span><span style="color: #666666">(</span>WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">SURFACE_COORDS</span><span style="color: #666666">[0])+</span> <span style="color: #BA2121">&quot;, &quot;</span> <span style="color: #666666">+</span> Float<span style="color: #666666">.</span><span style="color: #7D9029">toString</span><span style="color: #666666">(</span>WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">SURFACE_COORDS</span><span style="color: #666666">[1])</span> <span style="color: #666666">+</span> <span style="color: #BA2121">&quot;, &quot;</span> <span style="color: #666666">+</span> Float<span style="color: #666666">.</span><span style="color: #7D9029">toString</span><span style="color: #666666">(</span>WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">SURFACE_COORDS</span><span style="color: #666666">[2]));</span>
+        Log<span style="color: #666666">.</span><span style="color: #7D9029">i</span><span style="color: #666666">(</span>TAG<span style="color: #666666">,</span>Float<span style="color: #666666">.</span><span style="color: #7D9029">toString</span><span style="color: #666666">(</span>WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">getOffset</span><span style="color: #666666">()[0])+</span> <span style="color: #BA2121">&quot;, &quot;</span> <span style="color: #666666">+</span> Float<span style="color: #666666">.</span><span style="color: #7D9029">toString</span><span style="color: #666666">(</span>WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">getOffset</span><span style="color: #666666">()[1])</span> <span style="color: #666666">+</span> <span style="color: #BA2121">&quot;, &quot;</span> <span style="color: #666666">+</span> Float<span style="color: #666666">.</span><span style="color: #7D9029">toString</span><span style="color: #666666">(</span>WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">getOffset</span><span style="color: #666666">()[2]));</span>
+
+        ByteBuffer bbSurfaceVertices <span style="color: #666666">=</span> ByteBuffer<span style="color: #666666">.</span><span style="color: #7D9029">allocateDirect</span><span style="color: #666666">(</span>WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">SURFACE_COORDS</span><span style="color: #666666">.</span><span style="color: #7D9029">length</span> <span style="color: #666666">*</span> <span style="color: #666666">4);</span>
+        bbSurfaceVertices<span style="color: #666666">.</span><span style="color: #7D9029">order</span><span style="color: #666666">(</span>ByteOrder<span style="color: #666666">.</span><span style="color: #7D9029">nativeOrder</span><span style="color: #666666">());</span>
+        surfaceVertices <span style="color: #666666">=</span> bbSurfaceVertices<span style="color: #666666">.</span><span style="color: #7D9029">asFloatBuffer</span><span style="color: #666666">();</span>
+        surfaceVertices<span style="color: #666666">.</span><span style="color: #7D9029">put</span><span style="color: #666666">(</span>WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">SURFACE_COORDS</span><span style="color: #666666">);</span>
+        surfaceVertices<span style="color: #666666">.</span><span style="color: #7D9029">position</span><span style="color: #666666">(0);</span>
+
+        ByteBuffer bbSurfaceNormals <span style="color: #666666">=</span> ByteBuffer<span style="color: #666666">.</span><span style="color: #7D9029">allocateDirect</span><span style="color: #666666">(</span>WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">SURFACE_NORMALS</span><span style="color: #666666">.</span><span style="color: #7D9029">length</span> <span style="color: #666666">*</span> <span style="color: #666666">4);</span>
+        bbSurfaceNormals<span style="color: #666666">.</span><span style="color: #7D9029">order</span><span style="color: #666666">(</span>ByteOrder<span style="color: #666666">.</span><span style="color: #7D9029">nativeOrder</span><span style="color: #666666">());</span>
+        surfaceNormals <span style="color: #666666">=</span> bbSurfaceNormals<span style="color: #666666">.</span><span style="color: #7D9029">asFloatBuffer</span><span style="color: #666666">();</span>
+        surfaceNormals<span style="color: #666666">.</span><span style="color: #7D9029">put</span><span style="color: #666666">(</span>WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">SURFACE_NORMALS</span><span style="color: #666666">);</span>
+        surfaceNormals<span style="color: #666666">.</span><span style="color: #7D9029">position</span><span style="color: #666666">(0);</span>
+
+        ByteBuffer bbSurfaceColors <span style="color: #666666">=</span> ByteBuffer<span style="color: #666666">.</span><span style="color: #7D9029">allocateDirect</span><span style="color: #666666">(</span>WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">SURFACE_COLORS</span><span style="color: #666666">.</span><span style="color: #7D9029">length</span> <span style="color: #666666">*</span> <span style="color: #666666">4);</span>
+        bbSurfaceColors<span style="color: #666666">.</span><span style="color: #7D9029">order</span><span style="color: #666666">(</span>ByteOrder<span style="color: #666666">.</span><span style="color: #7D9029">nativeOrder</span><span style="color: #666666">());</span>
+        surfaceColors <span style="color: #666666">=</span> bbSurfaceColors<span style="color: #666666">.</span><span style="color: #7D9029">asFloatBuffer</span><span style="color: #666666">();</span>
+        surfaceColors<span style="color: #666666">.</span><span style="color: #7D9029">put</span><span style="color: #666666">(</span>WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">SURFACE_COLORS</span><span style="color: #666666">);</span>
+        surfaceColors<span style="color: #666666">.</span><span style="color: #7D9029">position</span><span style="color: #666666">(0);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * Creates the buffers used to store information about the 3D world.</span>
+<span style="color: #408080; font-style: italic">     *</span>
+<span style="color: #408080; font-style: italic">     * OpenGL doesn&#39;t use Java arrays, but rather needs data in a format it can understand.</span>
+<span style="color: #408080; font-style: italic">     * Hence I use ByteBuffers.</span>
+<span style="color: #408080; font-style: italic">     *</span>
+<span style="color: #408080; font-style: italic">     * @param config The EGL configuration used when creating the surface.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onSurfaceCreated</span><span style="color: #666666">(</span>EGLConfig config<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        Log<span style="color: #666666">.</span><span style="color: #7D9029">i</span><span style="color: #666666">(</span>TAG<span style="color: #666666">,</span> <span style="color: #BA2121">&quot;onSurfaceCreated&quot;</span><span style="color: #666666">);</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glClearColor</span><span style="color: #666666">(0.1f,</span> <span style="color: #666666">0.1f,</span> <span style="color: #666666">0.1f,</span> <span style="color: #666666">0.5f);</span> <span style="color: #408080; font-style: italic">// Dark background so text shows up well.</span>
+
+        <span style="color: #408080; font-style: italic">// Defines the buffers responsible for drawing the surface</span>
+        defineBuffers<span style="color: #666666">();</span>
+
+        <span style="color: #B00040">int</span> vertexShader <span style="color: #666666">=</span> loadGLShader<span style="color: #666666">(</span>GLES20<span style="color: #666666">.</span><span style="color: #7D9029">GL_VERTEX_SHADER</span><span style="color: #666666">,</span> R<span style="color: #666666">.</span><span style="color: #7D9029">raw</span><span style="color: #666666">.</span><span style="color: #7D9029">light_vertex</span><span style="color: #666666">);</span>
+        <span style="color: #B00040">int</span> gridShader <span style="color: #666666">=</span> loadGLShader<span style="color: #666666">(</span>GLES20<span style="color: #666666">.</span><span style="color: #7D9029">GL_FRAGMENT_SHADER</span><span style="color: #666666">,</span> R<span style="color: #666666">.</span><span style="color: #7D9029">raw</span><span style="color: #666666">.</span><span style="color: #7D9029">grid_fragment</span><span style="color: #666666">);</span>
+        <span style="color: #B00040">int</span> passthroughShader <span style="color: #666666">=</span> loadGLShader<span style="color: #666666">(</span>GLES20<span style="color: #666666">.</span><span style="color: #7D9029">GL_FRAGMENT_SHADER</span><span style="color: #666666">,</span> R<span style="color: #666666">.</span><span style="color: #7D9029">raw</span><span style="color: #666666">.</span><span style="color: #7D9029">passthrough_fragment</span><span style="color: #666666">);</span>
+
+        surfaceProgram <span style="color: #666666">=</span> GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glCreateProgram</span><span style="color: #666666">();</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glAttachShader</span><span style="color: #666666">(</span>surfaceProgram<span style="color: #666666">,</span> vertexShader<span style="color: #666666">);</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glAttachShader</span><span style="color: #666666">(</span>surfaceProgram<span style="color: #666666">,</span> passthroughShader<span style="color: #666666">);</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glLinkProgram</span><span style="color: #666666">(</span>surfaceProgram<span style="color: #666666">);</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glUseProgram</span><span style="color: #666666">(</span>surfaceProgram<span style="color: #666666">);</span>
+
+        checkGLError<span style="color: #666666">(</span><span style="color: #BA2121">&quot;Surface program&quot;</span><span style="color: #666666">);</span>
+
+        surfaceModelParam <span style="color: #666666">=</span> GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glGetUniformLocation</span><span style="color: #666666">(</span>surfaceProgram<span style="color: #666666">,</span> <span style="color: #BA2121">&quot;u_Model&quot;</span><span style="color: #666666">);</span>
+        surfaceModelViewParam <span style="color: #666666">=</span> GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glGetUniformLocation</span><span style="color: #666666">(</span>surfaceProgram<span style="color: #666666">,</span> <span style="color: #BA2121">&quot;u_MVMatrix&quot;</span><span style="color: #666666">);</span>
+        surfaceModelViewProjectionParam <span style="color: #666666">=</span> GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glGetUniformLocation</span><span style="color: #666666">(</span>surfaceProgram<span style="color: #666666">,</span> <span style="color: #BA2121">&quot;u_MVP&quot;</span><span style="color: #666666">);</span>
+        surfaceLightPosParam <span style="color: #666666">=</span> GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glGetUniformLocation</span><span style="color: #666666">(</span>surfaceProgram<span style="color: #666666">,</span> <span style="color: #BA2121">&quot;u_LightPos&quot;</span><span style="color: #666666">);</span>
+
+        surfacePositionParam <span style="color: #666666">=</span> GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glGetAttribLocation</span><span style="color: #666666">(</span>surfaceProgram<span style="color: #666666">,</span> <span style="color: #BA2121">&quot;a_Position&quot;</span><span style="color: #666666">);</span>
+        surfaceNormalParam <span style="color: #666666">=</span> GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glGetAttribLocation</span><span style="color: #666666">(</span>surfaceProgram<span style="color: #666666">,</span> <span style="color: #BA2121">&quot;a_Normal&quot;</span><span style="color: #666666">);</span>
+        surfaceColorParam <span style="color: #666666">=</span> GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glGetAttribLocation</span><span style="color: #666666">(</span>surfaceProgram<span style="color: #666666">,</span> <span style="color: #BA2121">&quot;a_Color&quot;</span><span style="color: #666666">);</span>
+
+        checkGLError<span style="color: #666666">(</span><span style="color: #BA2121">&quot;Surface program params&quot;</span><span style="color: #666666">);</span>
+
+        Matrix<span style="color: #666666">.</span><span style="color: #7D9029">setIdentityM</span><span style="color: #666666">(</span>modelSurface<span style="color: #666666">,</span> <span style="color: #666666">0);</span>
+        Matrix<span style="color: #666666">.</span><span style="color: #7D9029">translateM</span><span style="color: #666666">(</span>modelSurface<span style="color: #666666">,</span> <span style="color: #666666">0,</span> <span style="color: #666666">0,</span> <span style="color: #666666">-</span>surfaceDepth<span style="color: #666666">,</span> <span style="color: #666666">0);</span> <span style="color: #408080; font-style: italic">// Surface appears below user.</span>
+
+        checkGLError<span style="color: #666666">(</span><span style="color: #BA2121">&quot;onSurfaceCreated&quot;</span><span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * Converts a raw text file into a string.</span>
+<span style="color: #408080; font-style: italic">     *</span>
+<span style="color: #408080; font-style: italic">     * @param resId The resource ID of the raw text file about to be turned into a shader.</span>
+<span style="color: #408080; font-style: italic">     * @return The context of the text file, or null in case of error.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">private</span> String <span style="color: #0000FF">readRawTextFile</span><span style="color: #666666">(</span><span style="color: #B00040">int</span> resId<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        InputStream inputStream <span style="color: #666666">=</span> getResources<span style="color: #666666">().</span><span style="color: #7D9029">openRawResource</span><span style="color: #666666">(</span>resId<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">try</span> <span style="color: #666666">{</span>
+            BufferedReader reader <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> BufferedReader<span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">new</span> InputStreamReader<span style="color: #666666">(</span>inputStream<span style="color: #666666">));</span>
+            StringBuilder sb <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> StringBuilder<span style="color: #666666">();</span>
+            String line<span style="color: #666666">;</span>
+            <span style="color: #008000; font-weight: bold">while</span> <span style="color: #666666">((</span>line <span style="color: #666666">=</span> reader<span style="color: #666666">.</span><span style="color: #7D9029">readLine</span><span style="color: #666666">())</span> <span style="color: #666666">!=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                sb<span style="color: #666666">.</span><span style="color: #7D9029">append</span><span style="color: #666666">(</span>line<span style="color: #666666">).</span><span style="color: #7D9029">append</span><span style="color: #666666">(</span><span style="color: #BA2121">&quot;\n&quot;</span><span style="color: #666666">);</span>
+            <span style="color: #666666">}</span>
+            reader<span style="color: #666666">.</span><span style="color: #7D9029">close</span><span style="color: #666666">();</span>
+            <span style="color: #008000; font-weight: bold">return</span> sb<span style="color: #666666">.</span><span style="color: #7D9029">toString</span><span style="color: #666666">();</span>
+        <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">catch</span> <span style="color: #666666">(</span>IOException e<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            e<span style="color: #666666">.</span><span style="color: #7D9029">printStackTrace</span><span style="color: #666666">();</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * Prepares OpenGL ES before I draw a frame.</span>
+<span style="color: #408080; font-style: italic">     *</span>
+<span style="color: #408080; font-style: italic">     * @param headTransform The head transformation in the new frame.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onNewFrame</span><span style="color: #666666">(</span>HeadTransform headTransform<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+<span style="color: #408080; font-style: italic">//        setCubeRotation();</span>
+<span style="color: #408080; font-style: italic">//        Log.i(TAG, &quot;onNewFrame&quot;);</span>
+        ht <span style="color: #666666">=</span> headTransform<span style="color: #666666">;</span>
+
+
+        <span style="color: #408080; font-style: italic">// Build the camera matrix and apply it to the ModelView.</span>
+        Matrix<span style="color: #666666">.</span><span style="color: #7D9029">setLookAtM</span><span style="color: #666666">(</span>camera<span style="color: #666666">,</span> <span style="color: #666666">0,</span> <span style="color: #666666">0.0f,</span> <span style="color: #666666">0.0f,</span> CAMERA_Z<span style="color: #666666">,</span> <span style="color: #666666">0.0f,</span> <span style="color: #666666">0.0f,</span> <span style="color: #666666">0.0f,</span> <span style="color: #666666">0.0f,</span> <span style="color: #666666">1.0f,</span> <span style="color: #666666">0.0f);</span>
+
+        headTransform<span style="color: #666666">.</span><span style="color: #7D9029">getHeadView</span><span style="color: #666666">(</span>headView<span style="color: #666666">,</span> <span style="color: #666666">0);</span>
+
+        <span style="color: #408080; font-style: italic">// Update the 3d audio engine with the most recent head rotation.</span>
+        headTransform<span style="color: #666666">.</span><span style="color: #7D9029">getQuaternion</span><span style="color: #666666">(</span>headRotation<span style="color: #666666">,</span> <span style="color: #666666">0);</span>
+
+        checkGLError<span style="color: #666666">(</span><span style="color: #BA2121">&quot;onReadyToDraw&quot;</span><span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * Draws a frame for an eye.</span>
+<span style="color: #408080; font-style: italic">     *</span>
+<span style="color: #408080; font-style: italic">     * @param eye The eye to render. Includes all required transformations.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onDrawEye</span><span style="color: #666666">(</span>Eye eye<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">isFlying</span><span style="color: #666666">())</span> <span style="color: #666666">{</span>
+            WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">fly</span><span style="color: #666666">(</span>ht<span style="color: #666666">);</span>
+            <span style="color: #008000; font-weight: bold">try</span> <span style="color: #666666">{</span>
+                WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">generate</span><span style="color: #666666">();</span>
+                defineBuffers<span style="color: #666666">();</span>
+            <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">catch</span> <span style="color: #666666">(</span>IOException e<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                Log<span style="color: #666666">.</span><span style="color: #7D9029">e</span><span style="color: #666666">(</span>TAG<span style="color: #666666">,</span> <span style="color: #BA2121">&quot;An error has occurred trying to generate new co-ordinates&quot;</span><span style="color: #666666">);</span>
+            <span style="color: #666666">}</span>
+        <span style="color: #666666">}</span>
+
+
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glEnable</span><span style="color: #666666">(</span>GLES20<span style="color: #666666">.</span><span style="color: #7D9029">GL_DEPTH_TEST</span><span style="color: #666666">);</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glClear</span><span style="color: #666666">(</span>GLES20<span style="color: #666666">.</span><span style="color: #7D9029">GL_COLOR_BUFFER_BIT</span> <span style="color: #666666">|</span> GLES20<span style="color: #666666">.</span><span style="color: #7D9029">GL_DEPTH_BUFFER_BIT</span><span style="color: #666666">);</span>
+
+        checkGLError<span style="color: #666666">(</span><span style="color: #BA2121">&quot;colorParam&quot;</span><span style="color: #666666">);</span>
+
+        <span style="color: #408080; font-style: italic">// Apply the eye transformation to the camera.</span>
+        Matrix<span style="color: #666666">.</span><span style="color: #7D9029">multiplyMM</span><span style="color: #666666">(</span>view<span style="color: #666666">,</span> <span style="color: #666666">0,</span> eye<span style="color: #666666">.</span><span style="color: #7D9029">getEyeView</span><span style="color: #666666">(),</span> <span style="color: #666666">0,</span> camera<span style="color: #666666">,</span> <span style="color: #666666">0);</span>
+
+        <span style="color: #408080; font-style: italic">// Set the position of the light</span>
+        Matrix<span style="color: #666666">.</span><span style="color: #7D9029">multiplyMV</span><span style="color: #666666">(</span>lightPosInEyeSpace<span style="color: #666666">,</span> <span style="color: #666666">0,</span> view<span style="color: #666666">,</span> <span style="color: #666666">0,</span> LIGHT_POS_IN_WORLD_SPACE<span style="color: #666666">,</span> <span style="color: #666666">0);</span>
+
+        <span style="color: #408080; font-style: italic">// Build the ModelView and ModelViewProjection matrices</span>
+        <span style="color: #408080; font-style: italic">// for calculating cube position and light.</span>
+        <span style="color: #B00040">float</span><span style="color: #666666">[]</span> perspective <span style="color: #666666">=</span> eye<span style="color: #666666">.</span><span style="color: #7D9029">getPerspective</span><span style="color: #666666">(</span>Z_NEAR<span style="color: #666666">,</span> Z_FAR<span style="color: #666666">);</span>
+<span style="color: #408080; font-style: italic">//        Matrix.multiplyMM(modelView, 0, view, 0, modelCube, 0);</span>
+<span style="color: #408080; font-style: italic">//        Matrix.multiplyMM(modelViewProjection, 0, perspective, 0, modelView, 0);</span>
+<span style="color: #408080; font-style: italic">//    drawCube();</span>
+
+        <span style="color: #408080; font-style: italic">// Set modelView for the surface, so I draw surface in the correct location</span>
+        Matrix<span style="color: #666666">.</span><span style="color: #7D9029">multiplyMM</span><span style="color: #666666">(</span>modelView<span style="color: #666666">,</span> <span style="color: #666666">0,</span> view<span style="color: #666666">,</span> <span style="color: #666666">0,</span> modelSurface<span style="color: #666666">,</span> <span style="color: #666666">0);</span>
+        Matrix<span style="color: #666666">.</span><span style="color: #7D9029">multiplyMM</span><span style="color: #666666">(</span>modelViewProjection<span style="color: #666666">,</span> <span style="color: #666666">0,</span> perspective<span style="color: #666666">,</span> <span style="color: #666666">0,</span> modelView<span style="color: #666666">,</span> <span style="color: #666666">0);</span>
+        drawSurface<span style="color: #666666">();</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onFinishFrame</span><span style="color: #666666">(</span>Viewport viewport<span style="color: #666666">)</span> <span style="color: #666666">{}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * Draw the surface.</span>
+<span style="color: #408080; font-style: italic">     *</span>
+<span style="color: #408080; font-style: italic">     * &lt;p&gt;This feeds in data for the surface into the shader. Note that this doesn&#39;t feed in data about</span>
+<span style="color: #408080; font-style: italic">     * position of the light, so if I rewrite our code to draw the surface first, the lighting might</span>
+<span style="color: #408080; font-style: italic">     * look strange.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">drawSurface</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glUseProgram</span><span style="color: #666666">(</span>surfaceProgram<span style="color: #666666">);</span>
+
+        <span style="color: #408080; font-style: italic">// Set ModelView, MVP, position, normals, and color.</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glUniform3fv</span><span style="color: #666666">(</span>surfaceLightPosParam<span style="color: #666666">,</span> <span style="color: #666666">1,</span> lightPosInEyeSpace<span style="color: #666666">,</span> <span style="color: #666666">0);</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glUniformMatrix4fv</span><span style="color: #666666">(</span>surfaceModelParam<span style="color: #666666">,</span> <span style="color: #666666">1,</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">,</span> modelSurface<span style="color: #666666">,</span> <span style="color: #666666">0);</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glUniformMatrix4fv</span><span style="color: #666666">(</span>surfaceModelViewParam<span style="color: #666666">,</span> <span style="color: #666666">1,</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">,</span> modelView<span style="color: #666666">,</span> <span style="color: #666666">0);</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glUniformMatrix4fv</span><span style="color: #666666">(</span>surfaceModelViewProjectionParam<span style="color: #666666">,</span> <span style="color: #666666">1,</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">,</span> modelViewProjection<span style="color: #666666">,</span> <span style="color: #666666">0);</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glVertexAttribPointer</span><span style="color: #666666">(</span>
+                surfacePositionParam<span style="color: #666666">,</span> COORDS_PER_VERTEX<span style="color: #666666">,</span> GLES20<span style="color: #666666">.</span><span style="color: #7D9029">GL_FLOAT</span><span style="color: #666666">,</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">,</span> <span style="color: #666666">0,</span> surfaceVertices<span style="color: #666666">);</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glVertexAttribPointer</span><span style="color: #666666">(</span>surfaceNormalParam<span style="color: #666666">,</span> <span style="color: #666666">3,</span> GLES20<span style="color: #666666">.</span><span style="color: #7D9029">GL_FLOAT</span><span style="color: #666666">,</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">,</span> <span style="color: #666666">0,</span> surfaceNormals<span style="color: #666666">);</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glVertexAttribPointer</span><span style="color: #666666">(</span>surfaceColorParam<span style="color: #666666">,</span> <span style="color: #666666">4,</span> GLES20<span style="color: #666666">.</span><span style="color: #7D9029">GL_FLOAT</span><span style="color: #666666">,</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">,</span> <span style="color: #666666">0,</span> surfaceColors<span style="color: #666666">);</span>
+
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glEnableVertexAttribArray</span><span style="color: #666666">(</span>surfacePositionParam<span style="color: #666666">);</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glEnableVertexAttribArray</span><span style="color: #666666">(</span>surfaceNormalParam<span style="color: #666666">);</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glEnableVertexAttribArray</span><span style="color: #666666">(</span>surfaceColorParam<span style="color: #666666">);</span>
+
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glDrawArrays</span><span style="color: #666666">(</span>GLES20<span style="color: #666666">.</span><span style="color: #7D9029">GL_TRIANGLES</span><span style="color: #666666">,</span> <span style="color: #666666">0,</span> WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">SURFACE_COORDS</span><span style="color: #666666">.</span><span style="color: #7D9029">length</span><span style="color: #666666">/3);</span>
+
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glDisableVertexAttribArray</span><span style="color: #666666">(</span>surfacePositionParam<span style="color: #666666">);</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glDisableVertexAttribArray</span><span style="color: #666666">(</span>surfaceNormalParam<span style="color: #666666">);</span>
+        GLES20<span style="color: #666666">.</span><span style="color: #7D9029">glDisableVertexAttribArray</span><span style="color: #666666">(</span>surfaceColorParam<span style="color: #666666">);</span>
+
+        checkGLError<span style="color: #666666">(</span><span style="color: #BA2121">&quot;drawing surface&quot;</span><span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * Called when the Cardboard trigger is pulled.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onCardboardTrigger</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">toggleFlying</span><span style="color: #666666">();</span>
+<span style="color: #408080; font-style: italic">//        WorldLayoutData.changeResolution();</span>
+        Log<span style="color: #666666">.</span><span style="color: #7D9029">i</span><span style="color: #666666">(</span>TAG<span style="color: #666666">,</span> <span style="color: #BA2121">&quot;onCardboardTrigger: &quot;</span> <span style="color: #666666">+</span> Boolean<span style="color: #666666">.</span><span style="color: #7D9029">toString</span><span style="color: #666666">(</span>WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">isFlying</span><span style="color: #666666">()));</span>
+
+        <span style="color: #408080; font-style: italic">// Always give user feedback.</span>
+        vibrator<span style="color: #666666">.</span><span style="color: #7D9029">vibrate</span><span style="color: #666666">(50);</span>
+    <span style="color: #666666">}</span>
+
+
+<span style="color: #666666">}</span>
+</pre></div>

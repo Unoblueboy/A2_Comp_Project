@@ -1,0 +1,77 @@
+<p style="font-size:14pt;font-family:sans-serif"><strong>.\A2_Comp_Project\app\build\intermediates\manifests\instant-run\debug\AndroidManifest.xml</strong></p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #BC7A00">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;manifest</span> <span style="color: #7D9029">xmlns:android=</span><span style="color: #BA2121">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span style="color: #7D9029">package=</span><span style="color: #BA2121">&quot;com.example.natha_000.a2_comp_project&quot;</span>
+    <span style="color: #7D9029">android:versionCode=</span><span style="color: #BA2121">&quot;1&quot;</span>
+    <span style="color: #7D9029">android:versionName=</span><span style="color: #BA2121">&quot;1.0&quot;</span> <span style="color: #008000; font-weight: bold">&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;uses-sdk</span>
+        <span style="color: #7D9029">android:minSdkVersion=</span><span style="color: #BA2121">&quot;19&quot;</span>
+        <span style="color: #7D9029">android:targetSdkVersion=</span><span style="color: #BA2121">&quot;24&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;uses-permission</span> <span style="color: #7D9029">android:name=</span><span style="color: #BA2121">&quot;android.permission.INTERNET&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;uses-feature</span>
+        <span style="color: #7D9029">android:glEsVersion=</span><span style="color: #BA2121">&quot;0x00020000&quot;</span>
+        <span style="color: #7D9029">android:required=</span><span style="color: #BA2121">&quot;true&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;uses-permission</span> <span style="color: #7D9029">android:name=</span><span style="color: #BA2121">&quot;android.permission.NFC&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;uses-permission</span> <span style="color: #7D9029">android:name=</span><span style="color: #BA2121">&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;uses-permission</span> <span style="color: #7D9029">android:name=</span><span style="color: #BA2121">&quot;android.permission.READ_PHONE_STATE&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;uses-permission</span> <span style="color: #7D9029">android:name=</span><span style="color: #BA2121">&quot;android.permission.READ_EXTERNAL_STORAGE&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;uses-feature</span>
+        <span style="color: #7D9029">android:glEsVersion=</span><span style="color: #BA2121">&quot;0x00020000&quot;</span>
+        <span style="color: #7D9029">android:required=</span><span style="color: #BA2121">&quot;true&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;supports-gl-texture</span> <span style="color: #7D9029">android:name=</span><span style="color: #BA2121">&quot;GL_OES_compressed_ETC1_RGB8_texture&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;supports-gl-texture</span> <span style="color: #7D9029">android:name=</span><span style="color: #BA2121">&quot;GL_OES_compressed_paletted_texture&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+    <span style="color: #408080; font-style: italic">&lt;!-- Indicates use of Android&#39;s VR-mode, available only on Android N+. --&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;uses-feature</span>
+        <span style="color: #7D9029">android:name=</span><span style="color: #BA2121">&quot;android.software.vr.mode&quot;</span>
+        <span style="color: #7D9029">android:required=</span><span style="color: #BA2121">&quot;false&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span> <span style="color: #408080; font-style: italic">&lt;!-- Indicates use of VR features that are available only on Daydream-ready devices. --&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;uses-feature</span>
+        <span style="color: #7D9029">android:name=</span><span style="color: #BA2121">&quot;android.hardware.vr.high_performance&quot;</span>
+        <span style="color: #7D9029">android:required=</span><span style="color: #BA2121">&quot;false&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;application</span>
+        <span style="color: #7D9029">android:name=</span><span style="color: #BA2121">&quot;com.android.tools.fd.runtime.BootstrapApplication&quot;</span>
+        <span style="color: #7D9029">android:allowBackup=</span><span style="color: #BA2121">&quot;true&quot;</span>
+        <span style="color: #7D9029">android:icon=</span><span style="color: #BA2121">&quot;@mipmap/mathspepe&quot;</span>
+        <span style="color: #7D9029">android:label=</span><span style="color: #BA2121">&quot;@string/app_name&quot;</span>
+        <span style="color: #7D9029">android:supportsRtl=</span><span style="color: #BA2121">&quot;true&quot;</span>
+        <span style="color: #7D9029">android:theme=</span><span style="color: #BA2121">&quot;@style/AppTheme&quot;</span> <span style="color: #008000; font-weight: bold">&gt;</span>
+        <span style="color: #008000; font-weight: bold">&lt;activity</span>
+            <span style="color: #7D9029">android:name=</span><span style="color: #BA2121">&quot;com.example.natha_000.a2_comp_project.MainActivity&quot;</span>
+            <span style="color: #7D9029">android:label=</span><span style="color: #BA2121">&quot;@string/app_name&quot;</span>
+            <span style="color: #7D9029">android:theme=</span><span style="color: #BA2121">&quot;@style/AppTheme.NoActionBar&quot;</span> <span style="color: #008000; font-weight: bold">&gt;</span>
+            <span style="color: #008000; font-weight: bold">&lt;intent-filter&gt;</span>
+                <span style="color: #008000; font-weight: bold">&lt;action</span> <span style="color: #7D9029">android:name=</span><span style="color: #BA2121">&quot;android.intent.action.MAIN&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+                <span style="color: #008000; font-weight: bold">&lt;category</span> <span style="color: #7D9029">android:name=</span><span style="color: #BA2121">&quot;android.intent.category.LAUNCHER&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+            <span style="color: #008000; font-weight: bold">&lt;/intent-filter&gt;</span>
+        <span style="color: #008000; font-weight: bold">&lt;/activity&gt;</span>
+        <span style="color: #008000; font-weight: bold">&lt;activity</span>
+            <span style="color: #7D9029">android:name=</span><span style="color: #BA2121">&quot;com.example.natha_000.a2_comp_project.Main2DActivity&quot;</span>
+            <span style="color: #7D9029">android:configChanges=</span><span style="color: #BA2121">&quot;orientation|screenSize|keyboardHidden&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+        <span style="color: #008000; font-weight: bold">&lt;activity</span>
+            <span style="color: #7D9029">android:name=</span><span style="color: #BA2121">&quot;com.example.natha_000.a2_comp_project.Main3DActivity&quot;</span>
+            <span style="color: #7D9029">android:screenOrientation=</span><span style="color: #BA2121">&quot;landscape&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+        <span style="color: #008000; font-weight: bold">&lt;activity</span>
+            <span style="color: #7D9029">android:name=</span><span style="color: #BA2121">&quot;com.example.natha_000.a2_comp_project.MainStatsActivity&quot;</span>
+            <span style="color: #7D9029">android:configChanges=</span><span style="color: #BA2121">&quot;orientation|screenSize|keyboardHidden&quot;</span>
+            <span style="color: #7D9029">android:label=</span><span style="color: #BA2121">&quot;@string/title_activity_main_stats&quot;</span>
+            <span style="color: #7D9029">android:theme=</span><span style="color: #BA2121">&quot;@style/AppTheme.NoActionBar&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+        <span style="color: #008000; font-weight: bold">&lt;activity</span>
+            <span style="color: #7D9029">android:name=</span><span style="color: #BA2121">&quot;com.example.natha_000.a2_comp_project.Main3DVRActivity&quot;</span>
+            <span style="color: #7D9029">android:configChanges=</span><span style="color: #BA2121">&quot;orientation|keyboardHidden|screenSize&quot;</span>
+            <span style="color: #7D9029">android:label=</span><span style="color: #BA2121">&quot;@string/title_activity_main3_dvr&quot;</span>
+            <span style="color: #7D9029">android:theme=</span><span style="color: #BA2121">&quot;@style/FullscreenTheme&quot;</span> <span style="color: #008000; font-weight: bold">&gt;</span>
+            <span style="color: #008000; font-weight: bold">&lt;intent-filter&gt;</span>
+                <span style="color: #008000; font-weight: bold">&lt;category</span> <span style="color: #7D9029">android:name=</span><span style="color: #BA2121">&quot;com.google.intent.category.CARDBOARD&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+            <span style="color: #008000; font-weight: bold">&lt;/intent-filter&gt;</span>
+        <span style="color: #008000; font-weight: bold">&lt;/activity&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;/application&gt;</span>
+
+<span style="color: #008000; font-weight: bold">&lt;/manifest&gt;</span>
+</pre></div>

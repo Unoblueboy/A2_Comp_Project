@@ -1,0 +1,296 @@
+<p style="font-size:14pt;font-family:sans-serif"><strong>.\A2_Comp_Project\app\src\main\java\com\example\natha_000\a2_comp_project\Graphing_3D\WorldLayoutData.java</strong></p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">package</span> <span style="color: #0000FF; font-weight: bold">com.example.natha_000.a2_comp_project.Graphing_3D</span><span style="color: #666666">;</span>
+
+<span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic"> * Created by Natha_000 on 02/01/2017.</span>
+<span style="color: #408080; font-style: italic"> */</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">com.google.vr.sdk.base.HeadTransform</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.io.IOException</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.util.ArrayList</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.util.List</span><span style="color: #666666">;</span>
+<span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic"> * This class is used to generate the class data that will be used for the</span>
+<span style="color: #408080; font-style: italic"> * Plotting of the 3D graphs</span>
+<span style="color: #408080; font-style: italic">*/</span>
+<span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">WorldLayoutData</span> <span style="color: #666666">{</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">float</span> minX<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">float</span> maxX<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">float</span> minY<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">float</span> maxY<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">int</span> cols<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">int</span> rows<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">float</span> scl<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">float</span> w<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">float</span> h<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> offset <span style="color: #666666">=</span> <span style="color: #666666">{0,0,0};</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> List<span style="color: #666666">&lt;</span><span style="color: #B00040">float</span><span style="color: #666666">[]&gt;</span> values<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> SURFACE_COORDS<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> SURFACE_NORMALS<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> SURFACE_COLORS<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> eulerAngles <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">float</span><span style="color: #666666">[3];</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">float</span> flySpeed <span style="color: #666666">=</span> <span style="color: #666666">0.1f;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">boolean</span> flying <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function a<span style="color: #666666">;</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * This is used to change the parameters used in generating the coordinate of the landscape</span>
+<span style="color: #408080; font-style: italic">     * @param xMin</span>
+<span style="color: #408080; font-style: italic">    */</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">setParameters</span><span style="color: #666666">(</span><span style="color: #B00040">float</span> xMin<span style="color: #666666">,</span> <span style="color: #B00040">float</span> xMax<span style="color: #666666">,</span>
+                              <span style="color: #B00040">float</span> yMin<span style="color: #666666">,</span> <span style="color: #B00040">float</span> yMax<span style="color: #666666">,</span>
+                              <span style="color: #B00040">int</span> col<span style="color: #666666">,</span> <span style="color: #B00040">int</span> row<span style="color: #666666">,</span> <span style="color: #B00040">float</span> sl<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        minX <span style="color: #666666">=</span> xMin<span style="color: #666666">;</span>
+        maxX <span style="color: #666666">=</span> xMax<span style="color: #666666">;</span>
+        minY <span style="color: #666666">=</span> yMin<span style="color: #666666">;</span>
+        maxY <span style="color: #666666">=</span> yMax<span style="color: #666666">;</span>
+        cols <span style="color: #666666">=</span> col<span style="color: #666666">;</span>
+        rows <span style="color: #666666">=</span> row<span style="color: #666666">;</span>
+        scl <span style="color: #666666">=</span> sl<span style="color: #666666">;</span>
+
+        <span style="color: #408080; font-style: italic">// Find the distance between consecutive x values</span>
+        w <span style="color: #666666">=</span> <span style="color: #666666">(</span>maxX <span style="color: #666666">-</span> minX<span style="color: #666666">)/(</span>cols<span style="color: #666666">-1);</span>
+        <span style="color: #408080; font-style: italic">// Find the distance between consecutive y values</span>
+        h <span style="color: #666666">=</span> <span style="color: #666666">(</span>maxY <span style="color: #666666">-</span> minY<span style="color: #666666">)/(</span>rows<span style="color: #666666">-1);</span>
+
+        <span style="color: #408080; font-style: italic">// Calculate the size of the necessary arrays and instantiate arrays of the appropriate size</span>
+        SURFACE_COORDS <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">float</span><span style="color: #666666">[(</span>cols<span style="color: #666666">-1)*(</span>rows<span style="color: #666666">-1)*6*3];</span>
+        SURFACE_NORMALS <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">float</span><span style="color: #666666">[</span>SURFACE_COORDS<span style="color: #666666">.</span><span style="color: #7D9029">length</span><span style="color: #666666">];</span>
+        SURFACE_COLORS <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">float</span><span style="color: #666666">[4</span> <span style="color: #666666">*</span> SURFACE_COORDS<span style="color: #666666">.</span><span style="color: #7D9029">length</span> <span style="color: #666666">/</span> <span style="color: #666666">3];</span>
+    <span style="color: #666666">}</span>
+
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * Toggles to indicate whether the user is moving through the space or not.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">toggleFlying</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>flying <span style="color: #666666">=</span> <span style="color: #666666">!</span>flying<span style="color: #666666">;}</span>
+
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * Used to obtain whether the user is flying from outside of the class.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">boolean</span> <span style="color: #0000FF">isFlying</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">return</span> flying<span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * Used to reset the class once the activity has finished using it.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">reset</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        offset<span style="color: #666666">[0]</span> <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+        offset<span style="color: #666666">[1]</span> <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+        offset<span style="color: #666666">[2]</span> <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">changeResolution</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>cols <span style="color: #666666">==</span> <span style="color: #666666">61)</span> <span style="color: #666666">{</span>
+            WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">setParameters</span><span style="color: #666666">(-10</span>f<span style="color: #666666">,10</span>f<span style="color: #666666">,-10</span>f<span style="color: #666666">,10</span>f<span style="color: #666666">,41,41,10</span>f<span style="color: #666666">);</span>
+        <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #666666">{</span>
+            WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">setParameters</span><span style="color: #666666">(-10</span>f<span style="color: #666666">,10</span>f<span style="color: #666666">,-10</span>f<span style="color: #666666">,10</span>f<span style="color: #666666">,61,61,10</span>f<span style="color: #666666">);</span>
+        <span style="color: #666666">}</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * Used to obtain whether the x,y, and z offset from outside of the class.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> <span style="color: #0000FF">getOffset</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">return</span> offset<span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * The purpose of this function is to use the rotation of the user to emulate</span>
+<span style="color: #408080; font-style: italic">     * the feeling of flight via the changing of the relative x,y, and z offset.</span>
+<span style="color: #408080; font-style: italic">     * @param hT the relative position of the head, from the Google VR class</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">fly</span><span style="color: #666666">(</span>HeadTransform hT<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        hT<span style="color: #666666">.</span><span style="color: #7D9029">getEulerAngles</span><span style="color: #666666">(</span>eulerAngles<span style="color: #666666">,</span> <span style="color: #666666">0);</span>
+        offset<span style="color: #666666">[0]</span> <span style="color: #666666">=</span> offset<span style="color: #666666">[0]</span> <span style="color: #666666">-</span> flySpeed<span style="color: #666666">*(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">sin</span><span style="color: #666666">(</span> <span style="color: #666666">(</span><span style="color: #B00040">double</span><span style="color: #666666">)</span> eulerAngles<span style="color: #666666">[1])*</span>
+                <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">cos</span><span style="color: #666666">(</span> <span style="color: #666666">(</span><span style="color: #B00040">double</span><span style="color: #666666">)</span> eulerAngles<span style="color: #666666">[0]);</span>
+        offset<span style="color: #666666">[1]</span> <span style="color: #666666">=</span> offset<span style="color: #666666">[1]</span> <span style="color: #666666">-</span> flySpeed<span style="color: #666666">*(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">cos</span><span style="color: #666666">(</span> <span style="color: #666666">(</span><span style="color: #B00040">double</span><span style="color: #666666">)</span> eulerAngles<span style="color: #666666">[1])*</span>
+                <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">cos</span><span style="color: #666666">(</span> <span style="color: #666666">(</span><span style="color: #B00040">double</span><span style="color: #666666">)</span> eulerAngles<span style="color: #666666">[0]);</span>
+        offset<span style="color: #666666">[2]</span> <span style="color: #666666">=</span> offset<span style="color: #666666">[2]</span> <span style="color: #666666">-</span> flySpeed<span style="color: #666666">*(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">sin</span><span style="color: #666666">(</span> <span style="color: #666666">(</span><span style="color: #B00040">double</span><span style="color: #666666">)</span> eulerAngles<span style="color: #666666">[0]);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * The purpose of this function is to use the rotation of the user to emulate</span>
+<span style="color: #408080; font-style: italic">     * the feeling of flight via the changing of the relative x,y, and z offset.</span>
+<span style="color: #408080; font-style: italic">     * @param eulerAngle the relative rotation of the user, given by an array of length 2 or 3</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">fly</span><span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">[]</span> eulerAngle<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        offset<span style="color: #666666">[0]</span> <span style="color: #666666">=</span> offset<span style="color: #666666">[0]</span> <span style="color: #666666">+</span> flySpeed<span style="color: #666666">*(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">sin</span><span style="color: #666666">(</span> <span style="color: #666666">(</span><span style="color: #B00040">double</span><span style="color: #666666">)</span> eulerAngle<span style="color: #666666">[1])*</span>
+                <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">cos</span><span style="color: #666666">(</span> <span style="color: #666666">(</span><span style="color: #B00040">double</span><span style="color: #666666">)</span> eulerAngle<span style="color: #666666">[0]);</span>
+        offset<span style="color: #666666">[1]</span> <span style="color: #666666">=</span> offset<span style="color: #666666">[1]</span> <span style="color: #666666">-</span> flySpeed<span style="color: #666666">*(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">cos</span><span style="color: #666666">(</span> <span style="color: #666666">(</span><span style="color: #B00040">double</span><span style="color: #666666">)</span> eulerAngle<span style="color: #666666">[1])*</span>
+                <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">cos</span><span style="color: #666666">(</span> <span style="color: #666666">(</span><span style="color: #B00040">double</span><span style="color: #666666">)</span> eulerAngle<span style="color: #666666">[0]);</span>
+        offset<span style="color: #666666">[2]</span> <span style="color: #666666">=</span> offset<span style="color: #666666">[2]</span> <span style="color: #666666">-</span> flySpeed<span style="color: #666666">*(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">sin</span><span style="color: #666666">(</span> <span style="color: #666666">(</span><span style="color: #B00040">double</span><span style="color: #666666">)</span> eulerAngle<span style="color: #666666">[0]);</span>
+    <span style="color: #666666">}</span>
+
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * The purpose of this function is to parse the functext to generate a mathematical formula</span>
+<span style="color: #408080; font-style: italic">     * That can be used in the rest of this activity.</span>
+<span style="color: #408080; font-style: italic">     * @param functext is the text that represents the main function</span>
+<span style="color: #408080; font-style: italic">     * @throws IOException If the function is invalid</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">setfunction</span><span style="color: #666666">(</span>String functext<span style="color: #666666">)</span> <span style="color: #008000; font-weight: bold">throws</span> IOException<span style="color: #666666">{</span>
+        a <span style="color: #666666">=</span> GraphData<span style="color: #666666">.</span><span style="color: #7D9029">function_creator</span><span style="color: #666666">(</span>functext<span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * Converts Hue, saturation, lightness into red, green, blue</span>
+<span style="color: #408080; font-style: italic">     * @param h Hue between 0 and 360 degrees</span>
+<span style="color: #408080; font-style: italic">     * @param s Saturation between 0 and 1l</span>
+<span style="color: #408080; font-style: italic">     * @param l lightness between 0 and 1</span>
+<span style="color: #408080; font-style: italic">    */</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> <span style="color: #0000FF">hslTorgb</span><span style="color: #666666">(</span><span style="color: #B00040">float</span> h<span style="color: #666666">,</span> <span style="color: #B00040">float</span> s<span style="color: #666666">,</span> <span style="color: #B00040">float</span> l<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> C <span style="color: #666666">=</span> <span style="color: #666666">(1</span> <span style="color: #666666">-</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">abs</span><span style="color: #666666">(2*</span>l <span style="color: #666666">-</span> <span style="color: #666666">1))</span> <span style="color: #666666">*</span> s<span style="color: #666666">;</span>
+        <span style="color: #B00040">float</span> X <span style="color: #666666">=</span> C<span style="color: #666666">*(1-</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">abs</span><span style="color: #666666">(((</span>h<span style="color: #666666">/60)%2)</span> <span style="color: #666666">-</span> <span style="color: #666666">1));</span>
+        <span style="color: #B00040">float</span> m <span style="color: #666666">=</span> l<span style="color: #666666">-</span>C<span style="color: #666666">/2;</span>
+        <span style="color: #B00040">float</span> H <span style="color: #666666">=</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">max</span><span style="color: #666666">(0,</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">min</span><span style="color: #666666">(</span>h<span style="color: #666666">/60,6));</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>H<span style="color: #666666">&lt;=1)</span> <span style="color: #666666">{</span>
+            <span style="color: #B00040">float</span><span style="color: #666666">[]</span> result <span style="color: #666666">=</span> <span style="color: #666666">{</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">round</span><span style="color: #666666">((</span>C<span style="color: #666666">+</span>m<span style="color: #666666">)*255),</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">round</span><span style="color: #666666">((</span>X<span style="color: #666666">+</span>m<span style="color: #666666">)*255),</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">round</span><span style="color: #666666">((0+</span>m<span style="color: #666666">)*255)};</span>
+            <span style="color: #008000; font-weight: bold">return</span> result<span style="color: #666666">;</span>
+        <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>H<span style="color: #666666">&lt;=2)</span> <span style="color: #666666">{</span>
+            <span style="color: #B00040">float</span><span style="color: #666666">[]</span> result <span style="color: #666666">=</span> <span style="color: #666666">{</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">round</span><span style="color: #666666">((</span>X<span style="color: #666666">+</span>m<span style="color: #666666">)*255),</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">round</span><span style="color: #666666">((</span>C<span style="color: #666666">+</span>m<span style="color: #666666">)*255),</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">round</span><span style="color: #666666">((0+</span>m<span style="color: #666666">)*255)};</span>
+            <span style="color: #008000; font-weight: bold">return</span> result<span style="color: #666666">;</span>
+        <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>H<span style="color: #666666">&lt;=3)</span> <span style="color: #666666">{</span>
+            <span style="color: #B00040">float</span><span style="color: #666666">[]</span> result <span style="color: #666666">=</span> <span style="color: #666666">{</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">round</span><span style="color: #666666">((0+</span>m<span style="color: #666666">)*255),</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">round</span><span style="color: #666666">((</span>C<span style="color: #666666">+</span>m<span style="color: #666666">)*255),</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">round</span><span style="color: #666666">((</span>X<span style="color: #666666">+</span>m<span style="color: #666666">)*255)};</span>
+            <span style="color: #008000; font-weight: bold">return</span> result<span style="color: #666666">;</span>
+        <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>H<span style="color: #666666">&lt;=4)</span> <span style="color: #666666">{</span>
+            <span style="color: #B00040">float</span><span style="color: #666666">[]</span> result <span style="color: #666666">=</span> <span style="color: #666666">{</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">round</span><span style="color: #666666">((0+</span>m<span style="color: #666666">)*255),</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">round</span><span style="color: #666666">((</span>X<span style="color: #666666">+</span>m<span style="color: #666666">)*255),</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">round</span><span style="color: #666666">((</span>C<span style="color: #666666">+</span>m<span style="color: #666666">)*255)};</span>
+            <span style="color: #008000; font-weight: bold">return</span> result<span style="color: #666666">;</span>
+        <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>H<span style="color: #666666">&lt;=5)</span> <span style="color: #666666">{</span>
+            <span style="color: #B00040">float</span><span style="color: #666666">[]</span> result <span style="color: #666666">=</span> <span style="color: #666666">{</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">round</span><span style="color: #666666">((</span>X<span style="color: #666666">+</span>m<span style="color: #666666">)*255),</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">round</span><span style="color: #666666">((0+</span>m<span style="color: #666666">)*255),</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">round</span><span style="color: #666666">((</span>C<span style="color: #666666">+</span>m<span style="color: #666666">)*255)};</span>
+            <span style="color: #008000; font-weight: bold">return</span> result<span style="color: #666666">;</span>
+        <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #666666">{</span>
+            <span style="color: #B00040">float</span><span style="color: #666666">[]</span> result <span style="color: #666666">=</span> <span style="color: #666666">{</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">round</span><span style="color: #666666">((</span>C<span style="color: #666666">+</span>m<span style="color: #666666">)*255),</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">round</span><span style="color: #666666">((0+</span>m<span style="color: #666666">)*255),</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">round</span><span style="color: #666666">((</span>X<span style="color: #666666">+</span>m<span style="color: #666666">)*255)};</span>
+            <span style="color: #008000; font-weight: bold">return</span> result<span style="color: #666666">;</span>
+        <span style="color: #666666">}</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * This is a convenience method so that I can call func(x,y) instead of</span>
+<span style="color: #408080; font-style: italic">     * a.evalfunc(x,y)</span>
+<span style="color: #408080; font-style: italic">    */</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">float</span> <span style="color: #0000FF">func</span><span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #008000; font-weight: bold">throws</span> IOException <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">return</span> a<span style="color: #666666">.</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">(</span>x<span style="color: #666666">,</span>y<span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * Calculates the crossproduct of 2 vectors</span>
+<span style="color: #408080; font-style: italic">     * @param v1 The first vector</span>
+<span style="color: #408080; font-style: italic">     * @param v2 The second vector</span>
+<span style="color: #408080; font-style: italic">     * @return A 1D array of size 3, Representing a 3D vector</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> <span style="color: #0000FF">crossproduct</span><span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">[]</span> v1<span style="color: #666666">,</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> v2<span style="color: #666666">){</span>
+        <span style="color: #B00040">float</span><span style="color: #666666">[]</span> cp <span style="color: #666666">=</span> <span style="color: #666666">{</span>v1<span style="color: #666666">[1]*</span>v2<span style="color: #666666">[2]</span> <span style="color: #666666">-</span> v1<span style="color: #666666">[2]*</span>v2<span style="color: #666666">[1],</span>
+                v1<span style="color: #666666">[2]*</span>v2<span style="color: #666666">[0]</span> <span style="color: #666666">-</span> v1<span style="color: #666666">[0]*</span>v2<span style="color: #666666">[2],</span>
+                v1<span style="color: #666666">[0]*</span>v2<span style="color: #666666">[1]</span> <span style="color: #666666">-</span> v1<span style="color: #666666">[1]*</span>v2<span style="color: #666666">[0]};</span>
+        <span style="color: #008000; font-weight: bold">return</span> cp<span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * normalise a 3D vector</span>
+<span style="color: #408080; font-style: italic">     * @param v1 A vector to be normalised</span>
+<span style="color: #408080; font-style: italic">     * @return The vector v1 normalised</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> <span style="color: #0000FF">normalise</span><span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">[]</span> v1<span style="color: #666666">){</span>
+        <span style="color: #B00040">float</span> mag <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">sqrt</span><span style="color: #666666">(</span>v1<span style="color: #666666">[0]*</span>v1<span style="color: #666666">[0]</span> <span style="color: #666666">+</span> v1<span style="color: #666666">[1]*</span>v1<span style="color: #666666">[1]</span> <span style="color: #666666">+</span> v1<span style="color: #666666">[2]*</span>v1<span style="color: #666666">[2]);</span>
+        <span style="color: #B00040">float</span><span style="color: #666666">[]</span> resvec <span style="color: #666666">=</span> <span style="color: #666666">{</span>v1<span style="color: #666666">[0]/</span>mag<span style="color: #666666">,</span> v1<span style="color: #666666">[1]/</span>mag<span style="color: #666666">,</span> v1<span style="color: #666666">[2]/</span>mag<span style="color: #666666">};</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>mag<span style="color: #666666">==0){</span>
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">float</span><span style="color: #666666">[]{0,0,0};</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">return</span> resvec<span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * Responsible for generating the values for the floor coords, floor colour, and floor normals.</span>
+<span style="color: #408080; font-style: italic">     * @throws IOException if an invalid function is used.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">generate</span><span style="color: #666666">()</span> <span style="color: #008000; font-weight: bold">throws</span> IOException <span style="color: #666666">{</span>
+        values <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> ArrayList<span style="color: #666666">&lt;</span><span style="color: #B00040">float</span><span style="color: #666666">[]&gt;();</span>
+        <span style="color: #B00040">int</span> x<span style="color: #666666">=0;</span>
+        <span style="color: #008000; font-weight: bold">while</span> <span style="color: #666666">(</span>x <span style="color: #666666">&lt;</span> cols<span style="color: #666666">){</span>
+            <span style="color: #B00040">int</span> y <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+            <span style="color: #008000; font-weight: bold">while</span> <span style="color: #666666">(</span>y <span style="color: #666666">&lt;</span> rows<span style="color: #666666">){</span>
+                <span style="color: #B00040">float</span><span style="color: #666666">[]</span> value <span style="color: #666666">=</span> <span style="color: #666666">{</span>   <span style="color: #666666">(</span>minX <span style="color: #666666">+</span> x<span style="color: #666666">*</span>w<span style="color: #666666">)*</span>scl<span style="color: #666666">,</span>
+                                    <span style="color: #666666">(</span>func<span style="color: #666666">(</span>  minX <span style="color: #666666">+</span> x<span style="color: #666666">*</span>w <span style="color: #666666">+</span> offset<span style="color: #666666">[0],</span>
+                                            minY <span style="color: #666666">+</span> y<span style="color: #666666">*</span>h <span style="color: #666666">+</span> offset<span style="color: #666666">[1])</span> <span style="color: #666666">+</span> offset<span style="color: #666666">[2])*</span>scl<span style="color: #666666">,</span>
+                                    <span style="color: #666666">(</span>minY <span style="color: #666666">+</span> y<span style="color: #666666">*</span>h<span style="color: #666666">)*</span>scl<span style="color: #666666">};</span>
+                values<span style="color: #666666">.</span><span style="color: #7D9029">add</span><span style="color: #666666">(</span>value<span style="color: #666666">);</span>
+                y<span style="color: #666666">++;</span>
+            <span style="color: #666666">}</span>
+            x<span style="color: #666666">++;</span>
+        <span style="color: #666666">}</span>
+
+
+
+        x<span style="color: #666666">=0;</span>
+        <span style="color: #B00040">int</span> counter <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+        <span style="color: #008000; font-weight: bold">while</span> <span style="color: #666666">(</span>x <span style="color: #666666">&lt;</span> cols<span style="color: #666666">-1){</span>
+            <span style="color: #B00040">int</span> y <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+            <span style="color: #008000; font-weight: bold">while</span> <span style="color: #666666">(</span>y <span style="color: #666666">&lt;</span> rows<span style="color: #666666">-1){</span>
+                <span style="color: #B00040">float</span><span style="color: #666666">[]</span> p00 <span style="color: #666666">=</span> values<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>x<span style="color: #666666">*</span>rows     <span style="color: #666666">+</span> y  <span style="color: #666666">);</span>
+                <span style="color: #B00040">float</span><span style="color: #666666">[]</span> p01 <span style="color: #666666">=</span> values<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>x<span style="color: #666666">*</span>rows     <span style="color: #666666">+</span> y<span style="color: #666666">+1);</span>
+                <span style="color: #B00040">float</span><span style="color: #666666">[]</span> p10 <span style="color: #666666">=</span> values<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">((</span>x<span style="color: #666666">+1)*</span>rows <span style="color: #666666">+</span> y  <span style="color: #666666">);</span>
+                <span style="color: #B00040">float</span><span style="color: #666666">[]</span> p11 <span style="color: #666666">=</span> values<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">((</span>x<span style="color: #666666">+1)*</span>rows <span style="color: #666666">+</span> y<span style="color: #666666">+1);</span>
+                <span style="color: #408080; font-style: italic">//  poo po1 p1o po1 p11 p10</span>
+                <span style="color: #408080; font-style: italic">//kill me</span>
+                SURFACE_COORDS<span style="color: #666666">[</span>counter<span style="color: #666666">*18]</span>    <span style="color: #666666">=</span> p00<span style="color: #666666">[0];</span>
+                SURFACE_COORDS<span style="color: #666666">[</span>counter<span style="color: #666666">*18+1]</span>  <span style="color: #666666">=</span> p00<span style="color: #666666">[1];</span>
+                SURFACE_COORDS<span style="color: #666666">[</span>counter<span style="color: #666666">*18+2]</span>  <span style="color: #666666">=</span> p00<span style="color: #666666">[2];</span>
+                SURFACE_COORDS<span style="color: #666666">[</span>counter<span style="color: #666666">*18+3]</span>  <span style="color: #666666">=</span> p01<span style="color: #666666">[0];</span>
+                SURFACE_COORDS<span style="color: #666666">[</span>counter<span style="color: #666666">*18+4]</span>  <span style="color: #666666">=</span> p01<span style="color: #666666">[1];</span>
+                SURFACE_COORDS<span style="color: #666666">[</span>counter<span style="color: #666666">*18+5]</span>  <span style="color: #666666">=</span> p01<span style="color: #666666">[2];</span>
+                SURFACE_COORDS<span style="color: #666666">[</span>counter<span style="color: #666666">*18+6]</span>  <span style="color: #666666">=</span> p10<span style="color: #666666">[0];</span>
+                SURFACE_COORDS<span style="color: #666666">[</span>counter<span style="color: #666666">*18+7]</span>  <span style="color: #666666">=</span> p10<span style="color: #666666">[1];</span>
+                SURFACE_COORDS<span style="color: #666666">[</span>counter<span style="color: #666666">*18+8]</span>  <span style="color: #666666">=</span> p10<span style="color: #666666">[2];</span>
+                SURFACE_COORDS<span style="color: #666666">[</span>counter<span style="color: #666666">*18+9]</span>  <span style="color: #666666">=</span> p01<span style="color: #666666">[0];</span>
+                SURFACE_COORDS<span style="color: #666666">[</span>counter<span style="color: #666666">*18+10]</span> <span style="color: #666666">=</span> p01<span style="color: #666666">[1];</span>
+                SURFACE_COORDS<span style="color: #666666">[</span>counter<span style="color: #666666">*18+11]</span> <span style="color: #666666">=</span> p01<span style="color: #666666">[2];</span>
+                SURFACE_COORDS<span style="color: #666666">[</span>counter<span style="color: #666666">*18+12]</span> <span style="color: #666666">=</span> p11<span style="color: #666666">[0];</span>
+                SURFACE_COORDS<span style="color: #666666">[</span>counter<span style="color: #666666">*18+13]</span> <span style="color: #666666">=</span> p11<span style="color: #666666">[1];</span>
+                SURFACE_COORDS<span style="color: #666666">[</span>counter<span style="color: #666666">*18+14]</span> <span style="color: #666666">=</span> p11<span style="color: #666666">[2];</span>
+                SURFACE_COORDS<span style="color: #666666">[</span>counter<span style="color: #666666">*18+15]</span> <span style="color: #666666">=</span> p10<span style="color: #666666">[0];</span>
+                SURFACE_COORDS<span style="color: #666666">[</span>counter<span style="color: #666666">*18+16]</span> <span style="color: #666666">=</span> p10<span style="color: #666666">[1];</span>
+                SURFACE_COORDS<span style="color: #666666">[</span>counter<span style="color: #666666">*18+17]</span> <span style="color: #666666">=</span> p10<span style="color: #666666">[2];</span>
+
+                <span style="color: #B00040">float</span><span style="color: #666666">[]</span> v1 <span style="color: #666666">=</span> <span style="color: #666666">{</span>p00<span style="color: #666666">[0]-</span>p01<span style="color: #666666">[0],</span>p00<span style="color: #666666">[1]-</span>p01<span style="color: #666666">[1],</span>p00<span style="color: #666666">[2]-</span>p01<span style="color: #666666">[2]};</span>
+                <span style="color: #B00040">float</span><span style="color: #666666">[]</span> v2 <span style="color: #666666">=</span> <span style="color: #666666">{</span>p00<span style="color: #666666">[0]-</span>p10<span style="color: #666666">[0],</span>p00<span style="color: #666666">[1]-</span>p10<span style="color: #666666">[1],</span>p00<span style="color: #666666">[2]-</span>p10<span style="color: #666666">[2]};</span>
+                <span style="color: #B00040">float</span><span style="color: #666666">[]</span> v3 <span style="color: #666666">=</span> <span style="color: #666666">{</span>p01<span style="color: #666666">[0]-</span>p11<span style="color: #666666">[0],</span>p01<span style="color: #666666">[1]-</span>p11<span style="color: #666666">[1],</span>p01<span style="color: #666666">[2]-</span>p11<span style="color: #666666">[2]};</span>
+                <span style="color: #B00040">float</span><span style="color: #666666">[]</span> v4 <span style="color: #666666">=</span> <span style="color: #666666">{</span>p01<span style="color: #666666">[0]-</span>p10<span style="color: #666666">[0],</span>p01<span style="color: #666666">[1]-</span>p10<span style="color: #666666">[1],</span>p01<span style="color: #666666">[2]-</span>p10<span style="color: #666666">[2]};</span>
+                <span style="color: #B00040">float</span><span style="color: #666666">[]</span> cp1 <span style="color: #666666">=</span> normalise<span style="color: #666666">(</span>crossproduct<span style="color: #666666">(</span>v1<span style="color: #666666">,</span>v2<span style="color: #666666">));</span>
+                <span style="color: #B00040">float</span><span style="color: #666666">[]</span> cp2 <span style="color: #666666">=</span> normalise<span style="color: #666666">(</span>crossproduct<span style="color: #666666">(</span>v3<span style="color: #666666">,</span>v4<span style="color: #666666">));</span>
+
+                <span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span><span style="color: #B00040">int</span> i <span style="color: #666666">=</span> <span style="color: #666666">0;</span> i <span style="color: #666666">&lt;</span> <span style="color: #666666">9;</span> i<span style="color: #666666">++)</span> <span style="color: #666666">{</span>
+                    SURFACE_NORMALS<span style="color: #666666">[</span>counter<span style="color: #666666">*18+</span> i<span style="color: #666666">]</span> <span style="color: #666666">=</span> cp1<span style="color: #666666">[</span>i<span style="color: #666666">%3];</span>
+                <span style="color: #666666">}</span>
+                <span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span><span style="color: #B00040">int</span> i <span style="color: #666666">=</span> <span style="color: #666666">0;</span> i <span style="color: #666666">&lt;</span> <span style="color: #666666">9;</span> i<span style="color: #666666">++)</span> <span style="color: #666666">{</span>
+                    SURFACE_NORMALS<span style="color: #666666">[</span>counter<span style="color: #666666">*18+</span> <span style="color: #666666">9</span> <span style="color: #666666">+</span> i<span style="color: #666666">]</span> <span style="color: #666666">=</span> cp2<span style="color: #666666">[</span>i<span style="color: #666666">%3];</span>
+                <span style="color: #666666">}</span>
+
+                counter<span style="color: #666666">++;</span>
+                y<span style="color: #666666">++;</span>
+            <span style="color: #666666">}</span>
+            x<span style="color: #666666">++;</span>
+        <span style="color: #666666">}</span>
+
+        <span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span><span style="color: #B00040">int</span> i<span style="color: #666666">=0;</span> i<span style="color: #666666">&lt;</span>SURFACE_COLORS<span style="color: #666666">.</span><span style="color: #7D9029">length</span><span style="color: #666666">/4;</span> i<span style="color: #666666">++)</span> <span style="color: #666666">{</span>
+<span style="color: #408080; font-style: italic">//            Uncoomment for colour based on height</span>
+<span style="color: #408080; font-style: italic">//            float zvalue = SURFACE_COORDS[i*3+1];</span>
+<span style="color: #408080; font-style: italic">//            float mapZValue = 360/200*(4*zvalue+100);</span>
+<span style="color: #408080; font-style: italic">//            float[] rgbvalue = hslTorgb(mapZValue, 1.0f, 0.5f);</span>
+<span style="color: #408080; font-style: italic">//            SURFACE_COLORS[i*4] = rgbvalue[0]/255;</span>
+<span style="color: #408080; font-style: italic">//            SURFACE_COLORS[i*4+1] = rgbvalue[1]/255;</span>
+<span style="color: #408080; font-style: italic">//            SURFACE_COLORS[i*4+2] = rgbvalue[2]/255;</span>
+<span style="color: #408080; font-style: italic">//            SURFACE_COLORS[i*4+3] = 1.0f;</span>
+            SURFACE_COLORS<span style="color: #666666">[</span>i<span style="color: #666666">*4]</span> <span style="color: #666666">=</span> <span style="color: #666666">0.5f;</span>
+            SURFACE_COLORS<span style="color: #666666">[</span>i<span style="color: #666666">*4+1]</span> <span style="color: #666666">=</span> <span style="color: #666666">0.5f;</span>
+            SURFACE_COLORS<span style="color: #666666">[</span>i<span style="color: #666666">*4+2]</span> <span style="color: #666666">=</span> <span style="color: #666666">0.5f;</span>
+            SURFACE_COLORS<span style="color: #666666">[</span>i<span style="color: #666666">*4+3]</span> <span style="color: #666666">=</span> <span style="color: #666666">1.0f;</span>
+        <span style="color: #666666">}</span>
+
+    <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre></div>

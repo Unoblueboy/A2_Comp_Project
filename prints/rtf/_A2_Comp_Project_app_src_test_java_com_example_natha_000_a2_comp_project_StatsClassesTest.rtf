@@ -1,0 +1,220 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green128\blue0;\red186\green33\blue33;\red0\green0\blue255;\red188\green122\blue0;\red25\green23\blue124;\red64\green128\blue128;\red176\green0\blue64;\red187\green187\blue187;\red0\green0\blue128;\red160\green160\blue0;\red170\green34\blue255;\red136\green136\blue136;\red136\green0\blue0;\red102\green102\blue102;\red187\green102\blue136;\red0\green68\blue221;\red210\green65\blue58;\red255\green0\blue0;\red160\green0\blue0;\red187\green102\blue34;\red0\green160\blue0;\red125\green144\blue41;\red128\green0\blue128;\red153\green153\blue153;}\f0 {\cf14 .}{\chbrdr\chcfpat18 \\}A2_Comp_Project{\chbrdr\chcfpat18 \\}app{\chbrdr\chcfpat18 \\}src{\chbrdr\chcfpat18 \\}test{\chbrdr\chcfpat18 \\}java{\chbrdr\chcfpat18 \\}com{\chbrdr\chcfpat18 \\}example{\chbrdr\chcfpat18 \\}natha_000{\chbrdr\chcfpat18 \\}a2_comp_project{\chbrdr\chcfpat18 \\}StatsClassesTest{\cf14 .}{\cf22 java}\par
+{\cf1\b package} {\cf3\b com.example.natha_000.a2_comp_project}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b com.example.natha_000.a2_comp_project.Graphing_Stats.StatsClasses}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b org.junit.Test}{\cf14 ;}\par
+\par
+{\cf1\b import static} {\cf3\b junit.framework.Assert.assertEquals}{\cf14 ;}\par
+\par
+{\cf6\i /**\par
+ * To work on unit tests, switch the Test Artifact in the Build Variants view.\par
+ */}\par
+{\cf1\b public} {\cf1\b class} {\cf3\b StatsClassesTest} {\cf14 \{}\par
+    {\cf11 @Test}\par
+    {\cf1\b public} {\cf7 void} {\cf3 contains_isCorrect}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        StatsClasses testClass {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 0}{\cf14 ,}{\cf14 10}{\cf14 ,}{\cf14 3}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i //contains(float bound)\par
+}        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,}testClass{\cf14 .}{\cf22 contains}{\cf14 (}{\cf14 1}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,}testClass{\cf14 .}{\cf22 contains}{\cf14 (}{\cf14 5}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,}testClass{\cf14 .}{\cf22 contains}{\cf14 (}{\cf14 9}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,}testClass{\cf14 .}{\cf22 contains}{\cf14 (}{\cf14 10}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,}testClass{\cf14 .}{\cf22 contains}{\cf14 (}{\cf14 0}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,}testClass{\cf14 .}{\cf22 contains}{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,}testClass{\cf14 .}{\cf22 contains}{\cf14 (}{\cf14 11}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i //contains(float lb, float ub)\par
+}        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,} testClass{\cf14 .}{\cf22 contains}{\cf14 (}{\cf14 1}{\cf14 ,}{\cf14 9}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,} testClass{\cf14 .}{\cf22 contains}{\cf14 (}{\cf14 2}{\cf14 ,}{\cf14 8}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,} testClass{\cf14 .}{\cf22 contains}{\cf14 (}{\cf14 0}{\cf14 ,}{\cf14 10}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,} testClass{\cf14 .}{\cf22 contains}{\cf14 (}{\cf14 5}{\cf14 ,}{\cf14 11}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,} testClass{\cf14 .}{\cf22 contains}{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 ,}{\cf14 9}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,} testClass{\cf14 .}{\cf22 contains}{\cf14 (}{\cf14 11}{\cf14 ,}{\cf14 20}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,} testClass{\cf14 .}{\cf22 contains}{\cf14 (}{\cf14 -}{\cf14 10}{\cf14 ,}{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // contains(StatsClasses class_)\par
+}        StatsClasses c1 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 1}{\cf14 ,}{\cf14 9}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c2 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 2}{\cf14 ,}{\cf14 8}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c3 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 0}{\cf14 ,}{\cf14 10}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c4 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 5}{\cf14 ,}{\cf14 11}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c5 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 ,}{\cf14 9}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c6 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 11}{\cf14 ,}{\cf14 20}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c7 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 -}{\cf14 10}{\cf14 ,}{\cf14 -}{\cf14 1}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,} testClass{\cf14 .}{\cf22 contains}{\cf14 (}c1{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,} testClass{\cf14 .}{\cf22 contains}{\cf14 (}c2{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,} testClass{\cf14 .}{\cf22 contains}{\cf14 (}c3{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,} testClass{\cf14 .}{\cf22 contains}{\cf14 (}c4{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,} testClass{\cf14 .}{\cf22 contains}{\cf14 (}c5{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,} testClass{\cf14 .}{\cf22 contains}{\cf14 (}c6{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,} testClass{\cf14 .}{\cf22 contains}{\cf14 (}c7{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+        StatsClasses{\cf14 .}{\cf22 reset}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Test}\par
+    {\cf1\b public} {\cf7 void} {\cf3 surrounds_iscorrect}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        StatsClasses testClass {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 0}{\cf14 ,}{\cf14 10}{\cf14 ,}{\cf14 3}{\cf14 )}{\cf14 ;}\par
+        {\cf6\i //surrounds(float lb, float ub)\par
+}        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,}testClass{\cf14 .}{\cf22 surrounds}{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 ,}{\cf14 11}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,}testClass{\cf14 .}{\cf22 surrounds}{\cf14 (}{\cf14 0}{\cf14 ,}{\cf14 10}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,}testClass{\cf14 .}{\cf22 surrounds}{\cf14 (}{\cf14 -}{\cf14 10}{\cf14 ,}{\cf14 20}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,}testClass{\cf14 .}{\cf22 surrounds}{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 ,}{\cf14 5}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,}testClass{\cf14 .}{\cf22 surrounds}{\cf14 (}{\cf14 5}{\cf14 ,}{\cf14 11}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,}testClass{\cf14 .}{\cf22 surrounds}{\cf14 (}{\cf14 1}{\cf14 ,}{\cf14 11}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,}testClass{\cf14 .}{\cf22 surrounds}{\cf14 (}{\cf14 1}{\cf14 ,}{\cf14 9}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i //surrounds(StatsClasses other_)\par
+}        StatsClasses c1 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 ,}{\cf14 11}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c2 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 0}{\cf14 ,}{\cf14 10}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c3 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 -}{\cf14 10}{\cf14 ,}{\cf14 20}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c4 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 ,}{\cf14 5}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c5 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 5}{\cf14 ,}{\cf14 11}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c6 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 1}{\cf14 ,}{\cf14 11}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c7 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 1}{\cf14 ,}{\cf14 9}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,}testClass{\cf14 .}{\cf22 surrounds}{\cf14 (}c1{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,}testClass{\cf14 .}{\cf22 surrounds}{\cf14 (}c2{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,}testClass{\cf14 .}{\cf22 surrounds}{\cf14 (}c3{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,}testClass{\cf14 .}{\cf22 surrounds}{\cf14 (}c4{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,}testClass{\cf14 .}{\cf22 surrounds}{\cf14 (}c5{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,}testClass{\cf14 .}{\cf22 surrounds}{\cf14 (}c6{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,}testClass{\cf14 .}{\cf22 surrounds}{\cf14 (}c7{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+        StatsClasses{\cf14 .}{\cf22 reset}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Test}\par
+    {\cf1\b public} {\cf7 void} {\cf3 validBound_isCorrect}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        {\cf6\i //Set up a model class\par
+}        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 0}{\cf14 ,}{\cf14 10}{\cf14 ,}{\cf14 5}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 10}{\cf14 ,}{\cf14 20}{\cf14 ,}{\cf14 10}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 20}{\cf14 ,}{\cf14 40}{\cf14 ,}{\cf14 15}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 40}{\cf14 ,}{\cf14 55}{\cf14 ,}{\cf14 10}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 55}{\cf14 ,}{\cf14 100}{\cf14 ,}{\cf14 7}{\cf14 )}{\cf14 ;}\par
+\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 validBound}{\cf14 (}{\cf14 0}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 validBound}{\cf14 (}{\cf14 100}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 validBound}{\cf14 (}{\cf14 55}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 validBound}{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 validBound}{\cf14 (}{\cf14 -}{\cf14 150}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 validBound}{\cf14 (}{\cf14 5}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 validBound}{\cf14 (}{\cf14 90}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 validBound}{\cf14 (}{\cf14 41}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+        StatsClasses{\cf14 .}{\cf22 reset}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Test}\par
+    {\cf1\b public} {\cf7 void} {\cf3 validBounds_isCorrect}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        {\cf6\i //Set up a model class\par
+}        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 0}{\cf14 ,}{\cf14 10}{\cf14 ,}{\cf14 5}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 10}{\cf14 ,}{\cf14 20}{\cf14 ,}{\cf14 10}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 20}{\cf14 ,}{\cf14 40}{\cf14 ,}{\cf14 15}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 40}{\cf14 ,}{\cf14 55}{\cf14 ,}{\cf14 10}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 55}{\cf14 ,}{\cf14 100}{\cf14 ,}{\cf14 7}{\cf14 )}{\cf14 ;}\par
+\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 validBounds}{\cf14 (}{\cf14 -}{\cf14 10}{\cf14 ,}{\cf14 0}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 validBounds}{\cf14 (}{\cf14 100}{\cf14 ,}{\cf14 150}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 validBounds}{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 ,}{\cf14 0}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b true}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 validBounds}{\cf14 (}{\cf14 -}{\cf14 150}{\cf14 ,}{\cf14 0}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 validBounds}{\cf14 (}{\cf14 5}{\cf14 ,}{\cf14 15}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 validBounds}{\cf14 (}{\cf14 55}{\cf14 ,}{\cf14 100}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 validBounds}{\cf14 (}{\cf14 0}{\cf14 ,}{\cf14 100}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b false}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 validBounds}{\cf14 (}{\cf14 45}{\cf14 ,}{\cf14 60}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+        StatsClasses{\cf14 .}{\cf22 reset}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Test}\par
+    {\cf1\b public} {\cf7 void} {\cf3 findClassIndexById_isCorrect}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        StatsClasses c1 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 0}{\cf14 ,}{\cf14 10}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c2 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 10}{\cf14 ,}{\cf14 20}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c3 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 20}{\cf14 ,}{\cf14 30}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c4 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 30}{\cf14 ,}{\cf14 40}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c5 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 40}{\cf14 ,}{\cf14 50}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c6 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 50}{\cf14 ,}{\cf14 60}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c7 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 60}{\cf14 ,}{\cf14 70}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c8 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 70}{\cf14 ,}{\cf14 80}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+\par
+        assertEquals{\cf14 (}{\cf14 2}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 findClassIndexById}{\cf14 (}c3{\cf14 .}{\cf22 id}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 7}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 findClassIndexById}{\cf14 (}c8{\cf14 .}{\cf22 id}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 findClassIndexById}{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        c4{\cf14 .}{\cf22 delete}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 2}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 findClassIndexById}{\cf14 (}c3{\cf14 .}{\cf22 id}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 6}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 findClassIndexById}{\cf14 (}c8{\cf14 .}{\cf22 id}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 findClassIndexById}{\cf14 (}c4{\cf14 .}{\cf22 id}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 findClassIndexById}{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+        StatsClasses{\cf14 .}{\cf22 reset}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Test}\par
+    {\cf1\b public} {\cf7 void} {\cf3 getClassById_isCorrect}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        StatsClasses c1 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 0}{\cf14 ,}{\cf14 10}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c2 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 10}{\cf14 ,}{\cf14 20}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c3 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 20}{\cf14 ,}{\cf14 30}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c4 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 30}{\cf14 ,}{\cf14 40}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c5 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 40}{\cf14 ,}{\cf14 50}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c6 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 50}{\cf14 ,}{\cf14 60}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c7 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 60}{\cf14 ,}{\cf14 70}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c8 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 70}{\cf14 ,}{\cf14 80}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+\par
+        assertEquals{\cf14 (}c3{\cf14 ,}StatsClasses{\cf14 .}{\cf22 getClassById}{\cf14 (}c3{\cf14 .}{\cf22 id}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}c8{\cf14 ,}StatsClasses{\cf14 .}{\cf22 getClassById}{\cf14 (}c8{\cf14 .}{\cf22 id}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b null}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 getClassById}{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        c4{\cf14 .}{\cf22 delete}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}c3{\cf14 ,}StatsClasses{\cf14 .}{\cf22 getClassById}{\cf14 (}c3{\cf14 .}{\cf22 id}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}c8{\cf14 ,}StatsClasses{\cf14 .}{\cf22 getClassById}{\cf14 (}c8{\cf14 .}{\cf22 id}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b null}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 getClassById}{\cf14 (}c4{\cf14 .}{\cf22 id}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b null}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 getClassById}{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+        StatsClasses{\cf14 .}{\cf22 reset}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Test}\par
+    {\cf1\b public} {\cf7 void} {\cf3 findClassIndexByLb_isCorrect}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        StatsClasses c1 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 0}{\cf14 ,}{\cf14 10}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c2 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 10}{\cf14 ,}{\cf14 20}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c3 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 20}{\cf14 ,}{\cf14 30}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c4 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 30}{\cf14 ,}{\cf14 40}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c5 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 40}{\cf14 ,}{\cf14 50}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c6 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 50}{\cf14 ,}{\cf14 60}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c7 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 60}{\cf14 ,}{\cf14 70}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c8 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 70}{\cf14 ,}{\cf14 80}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+\par
+        assertEquals{\cf14 (}{\cf14 2}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 findClassIndexByLb}{\cf14 (}c3{\cf14 .}{\cf22 lowerbound}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 7}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 findClassIndexByLb}{\cf14 (}c8{\cf14 .}{\cf22 lowerbound}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 findClassIndexByLb}{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        c4{\cf14 .}{\cf22 delete}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 2}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 findClassIndexByLb}{\cf14 (}c3{\cf14 .}{\cf22 lowerbound}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 6}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 findClassIndexByLb}{\cf14 (}c8{\cf14 .}{\cf22 lowerbound}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 findClassIndexByLb}{\cf14 (}c4{\cf14 .}{\cf22 lowerbound}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 findClassIndexByLb}{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+        StatsClasses{\cf14 .}{\cf22 reset}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Test}\par
+    {\cf1\b public} {\cf7 void} {\cf3 getClassByLb_isCorrect}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        StatsClasses c1 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 0}{\cf14 ,}{\cf14 10}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c2 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 10}{\cf14 ,}{\cf14 20}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c3 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 20}{\cf14 ,}{\cf14 30}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c4 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 30}{\cf14 ,}{\cf14 40}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c5 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 40}{\cf14 ,}{\cf14 50}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c6 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 50}{\cf14 ,}{\cf14 60}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c7 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 60}{\cf14 ,}{\cf14 70}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        StatsClasses c8 {\cf14 =} {\cf1\b new} StatsClasses{\cf14 (}{\cf14 70}{\cf14 ,}{\cf14 80}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+\par
+        assertEquals{\cf14 (}c3{\cf14 ,}StatsClasses{\cf14 .}{\cf22 getClassByLb}{\cf14 (}c3{\cf14 .}{\cf22 lowerbound}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}c8{\cf14 ,}StatsClasses{\cf14 .}{\cf22 getClassByLb}{\cf14 (}c8{\cf14 .}{\cf22 lowerbound}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b null}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 getClassByLb}{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        c4{\cf14 .}{\cf22 delete}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}c3{\cf14 ,}StatsClasses{\cf14 .}{\cf22 getClassByLb}{\cf14 (}c3{\cf14 .}{\cf22 lowerbound}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}c8{\cf14 ,}StatsClasses{\cf14 .}{\cf22 getClassByLb}{\cf14 (}c8{\cf14 .}{\cf22 lowerbound}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b null}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 getClassByLb}{\cf14 (}c4{\cf14 .}{\cf22 lowerbound}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf1\b null}{\cf14 ,}StatsClasses{\cf14 .}{\cf22 getClassByLb}{\cf14 (}{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+        StatsClasses{\cf14 .}{\cf22 reset}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+{\cf14 \}}\par
+}

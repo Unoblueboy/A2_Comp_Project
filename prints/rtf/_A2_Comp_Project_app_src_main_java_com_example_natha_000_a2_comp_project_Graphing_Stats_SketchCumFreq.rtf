@@ -1,0 +1,365 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green128\blue0;\red186\green33\blue33;\red0\green0\blue255;\red188\green122\blue0;\red25\green23\blue124;\red64\green128\blue128;\red176\green0\blue64;\red187\green187\blue187;\red0\green0\blue128;\red160\green160\blue0;\red170\green34\blue255;\red136\green136\blue136;\red136\green0\blue0;\red102\green102\blue102;\red187\green102\blue136;\red0\green68\blue221;\red210\green65\blue58;\red255\green0\blue0;\red160\green0\blue0;\red187\green102\blue34;\red0\green160\blue0;\red125\green144\blue41;\red128\green0\blue128;\red153\green153\blue153;}\f0 {\cf14 .}{\chbrdr\chcfpat18 \\}A2_Comp_Project{\chbrdr\chcfpat18 \\}app{\chbrdr\chcfpat18 \\}src{\chbrdr\chcfpat18 \\}main{\chbrdr\chcfpat18 \\}java{\chbrdr\chcfpat18 \\}com{\chbrdr\chcfpat18 \\}example{\chbrdr\chcfpat18 \\}natha_000{\chbrdr\chcfpat18 \\}a2_comp_project{\chbrdr\chcfpat18 \\}Graphing_Stats{\chbrdr\chcfpat18 \\}SketchCumFreq{\cf14 .}{\cf22 java}\par
+{\cf1\b package} {\cf3\b com.example.natha_000.a2_comp_project.Graphing_Stats}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b android.util.Log}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.widget.Toast}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b java.io.File}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.util.ArrayList}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.util.List}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.util.Locale}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b processing.core.PApplet}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b processing.core.PGraphics}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b processing.core.PImage}{\cf14 ;}\par
+\par
+{\cf6\i /**\par
+ * Created by Natha_000 on 05/02/2017.\par
+ */}\par
+\par
+{\cf1\b public} {\cf1\b class} {\cf3\b SketchCumFreq} {\cf1\b extends} PApplet {\cf14 \{}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} lmargin {\cf14 =} {\cf14 0.15f}{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} rmargin {\cf14 =} {\cf14 0.1f}{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} tmargin {\cf14 =} {\cf14 0.1f}{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} bmargin {\cf14 =} {\cf14 0.15f}{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} ticklength {\cf14 =} {\cf14 0.15f}{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 int} xtick {\cf14 =} {\cf14 6}{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 int} ytick {\cf14 =} {\cf14 10}{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} ytickdist{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} xtickdist{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} xAxisLB{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} xAxisUB{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} xScale{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} yAxisLB{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} yAxisUB{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} yScale{\cf14 ;}\par
+{\cf6\i //    private static float[] cumfreq;\par
+}    {\cf1\b private} {\cf1\b static} List{\cf14 <}StatsClasses{\cf14 >} sClasses{\cf14 ;}\par
+    {\cf1\b public} {\cf1\b static} List{\cf14 <}StatsClasses{\cf14 >} {\cf3 sortedClasses}{\cf14 (}{\cf14 )}{\cf14 \{}\par
+        List{\cf14 <}StatsClasses{\cf14 >} c {\cf14 =} StatsClasses{\cf14 .}{\cf22 classes}{\cf14 ;}\par
+        {\cf1\b return} mergeSort{\cf14 (}c{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf1\b static} {\cf7 void} {\cf3 reset}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        ytickdist{\cf14 =}{\cf14 0f}{\cf14 ;}\par
+        xtickdist{\cf14 =}{\cf14 0f}{\cf14 ;}\par
+        xAxisLB{\cf14 =}{\cf14 0f}{\cf14 ;}\par
+        xAxisUB{\cf14 =}{\cf14 0f}{\cf14 ;}\par
+        xScale{\cf14 =}{\cf14 0f}{\cf14 ;}\par
+        yAxisLB{\cf14 =}{\cf14 0f}{\cf14 ;}\par
+        yAxisUB{\cf14 =}{\cf14 0f}{\cf14 ;}\par
+        yScale{\cf14 =}{\cf14 0f}{\cf14 ;}\par
+{\cf6\i //        cumfreq = new float[0];\par
+}    {\cf14 \}}\par
+\par
+    {\cf1\b private} {\cf1\b static} List{\cf14 <}StatsClasses{\cf14 >} {\cf3 mergeSort}{\cf14 (}List{\cf14 <}StatsClasses{\cf14 >} classes{\cf14 )} {\cf14 \{}\par
+        {\cf7 int} n {\cf14 =} classes{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b if} {\cf14 (}n {\cf14 =}{\cf14 =} {\cf14 1}{\cf14 )}{\cf14 \{}\par
+            {\cf1\b return} classes{\cf14 ;}\par
+        {\cf14 \}}\par
+        List{\cf14 <}StatsClasses{\cf14 >} l1 {\cf14 =} mergeSort{\cf14 (}classes{\cf14 .}{\cf22 subList}{\cf14 (}{\cf14 0}{\cf14 ,}floor{\cf14 (}n{\cf14 /}{\cf14 2}{\cf14 )}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        List{\cf14 <}StatsClasses{\cf14 >} l2 {\cf14 =} mergeSort{\cf14 (}classes{\cf14 .}{\cf22 subList}{\cf14 (}floor{\cf14 (}n{\cf14 /}{\cf14 2}{\cf14 )}{\cf14 ,}n{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+\par
+        {\cf1\b return} merge{\cf14 (}l1{\cf14 ,}l2{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b private} {\cf1\b static} List{\cf14 <}StatsClasses{\cf14 >} {\cf3 merge}{\cf14 (}List{\cf14 <}StatsClasses{\cf14 >} l1{\cf14 ,} List{\cf14 <}StatsClasses{\cf14 >} l2{\cf14 )}{\cf14 \{}\par
+        List{\cf14 <}StatsClasses{\cf14 >} l3 {\cf14 =} {\cf1\b new} ArrayList{\cf14 <}StatsClasses{\cf14 >}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf7 int} l1counter {\cf14 =} {\cf14 0}{\cf14 ;}\par
+        {\cf7 int} l2counter {\cf14 =} {\cf14 0}{\cf14 ;}\par
+        {\cf1\b while} {\cf14 (}l1counter{\cf14 !}{\cf14 =}l1{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )} {\cf14 &}{\cf14 &} l2counter{\cf14 !}{\cf14 =}l2{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )}{\cf14 )} {\cf14 \{}\par
+            {\cf1\b if} {\cf14 (}l1{\cf14 .}{\cf22 get}{\cf14 (}l1counter{\cf14 )}{\cf14 .}{\cf22 lowerbound}{\cf14 >}l2{\cf14 .}{\cf22 get}{\cf14 (}l2counter{\cf14 )}{\cf14 .}{\cf22 lowerbound}{\cf14 )} {\cf14 \{}\par
+                l3{\cf14 .}{\cf22 add}{\cf14 (}l2{\cf14 .}{\cf22 get}{\cf14 (}l2counter{\cf14 )}{\cf14 )}{\cf14 ;}\par
+                l2counter{\cf14 +}{\cf14 +}{\cf14 ;}\par
+            {\cf14 \}} {\cf1\b else} {\cf14 \{}\par
+                l3{\cf14 .}{\cf22 add}{\cf14 (}l1{\cf14 .}{\cf22 get}{\cf14 (}l1counter{\cf14 )}{\cf14 )}{\cf14 ;}\par
+                l1counter{\cf14 +}{\cf14 +}{\cf14 ;}\par
+            {\cf14 \}}\par
+        {\cf14 \}}\par
+\par
+        {\cf1\b while} {\cf14 (}l1counter{\cf14 !}{\cf14 =}l1{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )}{\cf14 )} {\cf14 \{}\par
+            l3{\cf14 .}{\cf22 add}{\cf14 (}l1{\cf14 .}{\cf22 get}{\cf14 (}l1counter{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            l1counter{\cf14 +}{\cf14 +}{\cf14 ;}\par
+        {\cf14 \}}\par
+\par
+        {\cf1\b while} {\cf14 (}l2counter{\cf14 !}{\cf14 =}l2{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )}{\cf14 )} {\cf14 \{}\par
+            l3{\cf14 .}{\cf22 add}{\cf14 (}l2{\cf14 .}{\cf22 get}{\cf14 (}l2counter{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            l2counter{\cf14 +}{\cf14 +}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b return} l3{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf1\b static} String {\cf3 sigfigs}{\cf14 (}{\cf7 float} num{\cf14 ,} {\cf7 int} sf{\cf14 )} {\cf14 \{}\par
+        String test {\cf14 =} String{\cf14 .}{\cf22 format}{\cf14 (}{\cf2 "%."}{\cf14 +}sf{\cf14 +}{\cf2 "G"}{\cf14 ,}num{\cf14 )}{\cf14 ;}\par
+        {\cf1\b if} {\cf14 (}test{\cf14 .}{\cf22 contains}{\cf14 (}{\cf2 "E+"}{\cf14 )}{\cf14 )} {\cf14 \{}\par
+            test {\cf14 =} String{\cf14 .}{\cf22 format}{\cf14 (}Locale{\cf14 .}{\cf22 US}{\cf14 ,} {\cf2 "%.0f"}{\cf14 ,} Double{\cf14 .}{\cf22 valueOf}{\cf14 (}String{\cf14 .}{\cf22 format}{\cf14 (}{\cf2 "%."}{\cf14 +}sf{\cf14 +}{\cf2 "G"}{\cf14 ,}num{\cf14 )}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b return} test{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} {\cf3 getMin}{\cf14 (}{\cf7 float}{\cf14 [}{\cf14 ]} array{\cf14 )} {\cf14 \{}\par
+        {\cf7 float} min {\cf14 =} array{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 ;}\par
+        {\cf1\b for} {\cf14 (}{\cf7 float} ele{\cf14 :} array{\cf14 )} {\cf14 \{}\par
+            {\cf1\b if} {\cf14 (}ele{\cf14 <}min{\cf14 )} {\cf14 \{}\par
+                min {\cf14 =} ele{\cf14 ;}\par
+            {\cf14 \}}\par
+        {\cf14 \}}\par
+        {\cf1\b return} min{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} {\cf3 getMax}{\cf14 (}{\cf7 float}{\cf14 [}{\cf14 ]} array{\cf14 )} {\cf14 \{}\par
+        {\cf7 float} max {\cf14 =} array{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 ;}\par
+        {\cf1\b for} {\cf14 (}{\cf7 float} ele{\cf14 :} array{\cf14 )} {\cf14 \{}\par
+            {\cf1\b if} {\cf14 (}ele{\cf14 >}max{\cf14 )} {\cf14 \{}\par
+                max {\cf14 =} ele{\cf14 ;}\par
+            {\cf14 \}}\par
+        {\cf14 \}}\par
+        {\cf1\b return} max{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float}{\cf14 [}{\cf14 ]} {\cf3 scaling}{\cf14 (}{\cf7 float} lb{\cf14 ,} {\cf7 float} ub{\cf14 ,} {\cf7 int} tick{\cf14 )} {\cf14 \{}\par
+\par
+        {\cf7 float} classMin {\cf14 =} lb{\cf14 ;}\par
+        {\cf7 float} classMax {\cf14 =} ub{\cf14 ;}\par
+        {\cf7 float} range {\cf14 =} classMax{\cf14 -}classMin{\cf14 ;}\par
+        {\cf7 float} tickrange {\cf14 =} range{\cf14 /}tick{\cf14 ;}\par
+        {\cf7 int} x {\cf14 =} {\cf14 0}{\cf14 ;}\par
+        {\cf1\b while} {\cf14 (}tickrange {\cf14 >} {\cf14 1} {\cf14 |}{\cf14 |} tickrange {\cf14 <} {\cf14 0.1}{\cf14 )} {\cf14 \{}\par
+            {\cf1\b if} {\cf14 (}tickrange {\cf14 <} {\cf14 0.1}{\cf14 )} {\cf14 \{}\par
+                tickrange {\cf14 =} tickrange{\cf14 *}{\cf14 10}{\cf14 ;}\par
+                x{\cf14 -}{\cf14 -}{\cf14 ;}\par
+            {\cf14 \}}\par
+            {\cf1\b else} {\cf14 \{}\par
+                tickrange {\cf14 =} tickrange{\cf14 /}{\cf14 10}{\cf14 ;}\par
+                x{\cf14 +}{\cf14 +}{\cf14 ;}\par
+            {\cf14 \}}\par
+        {\cf14 \}}\par
+        {\cf1\b if} {\cf14 (}tickrange{\cf14 =}{\cf14 =}{\cf14 0.1}{\cf14 )}{\cf14 \{}\par
+            tickrange {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} {\cf14 0.1} {\cf14 *} pow{\cf14 (}{\cf14 10}{\cf14 ,}x{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b else} {\cf1\b if} {\cf14 (}tickrange{\cf14 <}{\cf14 =}{\cf14 0.2}{\cf14 )}{\cf14 \{}\par
+            tickrange {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} {\cf14 0.2} {\cf14 *} pow{\cf14 (}{\cf14 10}{\cf14 ,}x{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b else} {\cf1\b if} {\cf14 (}tickrange{\cf14 <}{\cf14 =}{\cf14 0.25}{\cf14 )}{\cf14 \{}\par
+            tickrange {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} {\cf14 0.25} {\cf14 *} pow{\cf14 (}{\cf14 10}{\cf14 ,}x{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b else} {\cf1\b if} {\cf14 (}tickrange{\cf14 <}{\cf14 =}{\cf14 0.4}{\cf14 )}{\cf14 \{}\par
+            tickrange {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} {\cf14 0.4} {\cf14 *} pow{\cf14 (}{\cf14 10}{\cf14 ,}x{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b else} {\cf1\b if} {\cf14 (}tickrange{\cf14 <}{\cf14 =}{\cf14 0.5}{\cf14 )}{\cf14 \{}\par
+            tickrange {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} {\cf14 0.5} {\cf14 *} pow{\cf14 (}{\cf14 10}{\cf14 ,}x{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b else} {\cf1\b if} {\cf14 (}tickrange{\cf14 <}{\cf14 =}{\cf14 0.75}{\cf14 )}{\cf14 \{}\par
+            tickrange {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} {\cf14 0.75} {\cf14 *} pow{\cf14 (}{\cf14 10}{\cf14 ,}x{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b else} {\cf1\b if} {\cf14 (}tickrange{\cf14 <}{\cf14 =}{\cf14 0.8}{\cf14 )}{\cf14 \{}\par
+            tickrange {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} {\cf14 0.8} {\cf14 *} pow{\cf14 (}{\cf14 10}{\cf14 ,}x{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b else} {\cf1\b if} {\cf14 (}tickrange{\cf14 <}{\cf14 =}{\cf14 1.0}{\cf14 )}{\cf14 \{}\par
+            tickrange {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} {\cf14 1.0} {\cf14 *} pow{\cf14 (}{\cf14 10}{\cf14 ,}x{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf7 float} lowerbound {\cf14 =} tickrange{\cf14 *}floor{\cf14 (}classMin{\cf14 /}tickrange{\cf14 )}{\cf14 ;}\par
+        {\cf7 float} upperbound {\cf14 =} tickrange{\cf14 *}ceil{\cf14 (}classMax{\cf14 /}tickrange{\cf14 )}{\cf14 ;}\par
+        {\cf7 float}{\cf14 [}{\cf14 ]} result {\cf14 =} {\cf14 \{}lowerbound{\cf14 ,} upperbound{\cf14 ,} tickrange{\cf14 \}}{\cf14 ;}\par
+        {\cf1\b return} result{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 void} {\cf3 settings}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        size{\cf14 (}displayWidth{\cf14 ,}displayHeight{\cf14 -}{\cf14 60}{\cf14 )}{\cf14 ;}\par
+        startUp{\cf14 (}displayWidth{\cf14 ,}displayHeight{\cf14 -}{\cf14 60}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 void} {\cf3 startUp}{\cf14 (}{\cf7 int} w{\cf14 ,} {\cf7 int} h{\cf14 )} {\cf14 \{}\par
+        {\cf7 float}{\cf14 [}{\cf14 ]} bounds {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}StatsClasses{\cf14 .}{\cf22 noOfClasses}{\cf14 *}{\cf14 2}{\cf14 ]}{\cf14 ;}\par
+        {\cf7 float}{\cf14 [}{\cf14 ]} freqdens {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}StatsClasses{\cf14 .}{\cf22 noOfClasses}{\cf14 ]}{\cf14 ;}\par
+        {\cf1\b for} {\cf14 (}{\cf7 int} i {\cf14 =} {\cf14 0}{\cf14 ;} i{\cf14 <}StatsClasses{\cf14 .}{\cf22 noOfClasses}{\cf14 ;} i{\cf14 +}{\cf14 +}{\cf14 )} {\cf14 \{}\par
+            StatsClasses sclass {\cf14 =} StatsClasses{\cf14 .}{\cf22 classes}{\cf14 .}{\cf22 get}{\cf14 (}i{\cf14 )}{\cf14 ;}\par
+            bounds{\cf14 [}i{\cf14 *}{\cf14 2}{\cf14 ]} {\cf14 =} sclass{\cf14 .}{\cf22 lowerbound}{\cf14 ;}\par
+            bounds{\cf14 [}i{\cf14 *}{\cf14 2}{\cf14 +}{\cf14 1}{\cf14 ]} {\cf14 =} sclass{\cf14 .}{\cf22 upperbound}{\cf14 ;}\par
+            freqdens{\cf14 [}i{\cf14 ]} {\cf14 =} sclass{\cf14 .}{\cf22 frequency}{\cf14 ;}\par
+        {\cf14 \}}\par
+        sClasses {\cf14 =} sortedClasses{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf7 float}{\cf14 [}{\cf14 ]} cumfreq {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}sClasses{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )}{\cf14 *}{\cf14 2}{\cf14 ]}{\cf14 ;}\par
+        {\cf1\b for} {\cf14 (}{\cf7 int} i{\cf14 =}{\cf14 0}{\cf14 ;} i{\cf14 <}sClasses{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )}{\cf14 ;}i{\cf14 +}{\cf14 +}{\cf14 )} {\cf14 \{}\par
+            cumfreq{\cf14 [}i{\cf14 *}{\cf14 2}{\cf14 ]} {\cf14 =} {\cf14 (}i{\cf14 =}{\cf14 =}{\cf14 0}{\cf14 )} {\cf14 ?} {\cf14 0} {\cf14 :} cumfreq{\cf14 [}{\cf14 (}i{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 *}{\cf14 2}{\cf14 ]}{\cf14 +}sClasses{\cf14 .}{\cf22 get}{\cf14 (}i{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 .}{\cf22 frequency}{\cf14 ;}\par
+            cumfreq{\cf14 [}i{\cf14 *}{\cf14 2}{\cf14 +}{\cf14 1}{\cf14 ]} {\cf14 =} cumfreq{\cf14 [}{\cf14 (}i{\cf14 )}{\cf14 *}{\cf14 2}{\cf14 ]}{\cf14 +}sClasses{\cf14 .}{\cf22 get}{\cf14 (}i{\cf14 )}{\cf14 .}{\cf22 frequency}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf7 float}{\cf14 [}{\cf14 ]} xresults {\cf14 =} scaling{\cf14 (}getMin{\cf14 (}bounds{\cf14 )}{\cf14 ,} getMax{\cf14 (}bounds{\cf14 )}{\cf14 ,} xtick{\cf14 )}{\cf14 ;}\par
+        xAxisLB {\cf14 =} xresults{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 ;}\par
+        xAxisUB {\cf14 =} xresults{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 ;}\par
+        xScale {\cf14 =} xresults{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 ;}\par
+        {\cf1\b while} {\cf14 (}xAxisUB {\cf14 >} xScale {\cf14 *} {\cf14 (}xtick{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 )} {\cf14 \{}\par
+            xtick{\cf14 +}{\cf14 +}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b while} {\cf14 (}xAxisUB {\cf14 <} xScale {\cf14 *} {\cf14 (}xtick{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 )}{\cf14 \{}\par
+            xtick{\cf14 -}{\cf14 -}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf7 float}{\cf14 [}{\cf14 ]} yresults {\cf14 =} scaling{\cf14 (}{\cf14 0}{\cf14 ,} getMax{\cf14 (}cumfreq{\cf14 )}{\cf14 ,} ytick{\cf14 )}{\cf14 ;}\par
+        yAxisLB {\cf14 =} {\cf14 0}{\cf14 ;}\par
+        yAxisUB {\cf14 =} yresults{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 ;}\par
+        yScale {\cf14 =} yresults{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 ;}\par
+        {\cf1\b while} {\cf14 (}yAxisUB {\cf14 >} yScale {\cf14 *} {\cf14 (}ytick{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 )} {\cf14 \{}\par
+            ytick{\cf14 +}{\cf14 +}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b while} {\cf14 (}yAxisUB {\cf14 <} yScale {\cf14 *} {\cf14 (}ytick{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 )}{\cf14 \{}\par
+            ytick{\cf14 -}{\cf14 -}{\cf14 ;}\par
+        {\cf14 \}}\par
+        xtickdist {\cf14 =} w{\cf14 *}{\cf14 (}{\cf14 1} {\cf14 -} rmargin {\cf14 -} lmargin{\cf14 )}{\cf14 /}{\cf14 (}xtick{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        ytickdist {\cf14 =} h{\cf14 *}{\cf14 (}{\cf14 1} {\cf14 -} tmargin {\cf14 -} bmargin{\cf14 )}{\cf14 /}{\cf14 (}ytick{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 void} {\cf3 draw}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        {\cf1\b try} {\cf14 \{}\par
+            background{\cf14 (}{\cf14 255}{\cf14 )}{\cf14 ;}\par
+            drawAxis{\cf14 (}{\cf14 )}{\cf14 ;}\par
+            drawLines{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b catch} {\cf14 (}Exception e{\cf14 )} {\cf14 \{}\par
+            Toast{\cf14 .}{\cf22 makeText}{\cf14 (}getActivity{\cf14 (}{\cf14 )}{\cf14 ,} {\cf2 "please Enter Valid Data"}{\cf14 ,} Toast{\cf14 .}{\cf22 LENGTH_SHORT}{\cf14 )}{\cf14 .}{\cf22 show}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+        noLoop{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 void} {\cf3 export}{\cf14 (}{\cf7 int} w{\cf14 ,}{\cf7 int} h{\cf14 ,} File folder{\cf14 )} {\cf14 \{}\par
+        PGraphics cumuFreq {\cf14 =} createGraphics{\cf14 (}w{\cf14 ,}h{\cf14 )}{\cf14 ;}\par
+        startUp{\cf14 (}w{\cf14 ,}h{\cf14 )}{\cf14 ;}\par
+        cumuFreq{\cf14 .}{\cf22 beginDraw}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        cumuFreq{\cf14 .}{\cf22 background}{\cf14 (}{\cf14 255}{\cf14 )}{\cf14 ;}\par
+        cumuFreq{\cf14 .}{\cf22 endDraw}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        drawAxis{\cf14 (}cumuFreq{\cf14 )}{\cf14 ;}\par
+        drawLines{\cf14 (}cumuFreq{\cf14 )}{\cf14 ;}\par
+        PImage result {\cf14 =} cumuFreq{\cf14 .}{\cf22 get}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        result{\cf14 .}{\cf22 save}{\cf14 (}folder{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )} {\cf14 +} File{\cf14 .}{\cf22 separator} {\cf14 +} {\cf2 "CumulativeFrequency.jpg"}{\cf14 )}{\cf14 ;}\par
+{\cf6\i //        Toast.makeText(getActivity(), "Saved :P", Toast.LENGTH_SHORT).show();\par
+}    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 void} {\cf3 drawAxis}{\cf14 (}PGraphics pg{\cf14 )} {\cf14 \{}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: SketchCumFreq"}{\cf14 ,} {\cf2 "Draw Axis, with PGraphic"}{\cf14 )}{\cf14 ;}\par
+        pg{\cf14 .}{\cf22 beginDraw}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        pg{\cf14 .}{\cf22 line}{\cf14 (}pg{\cf14 .}{\cf22 width} {\cf14 *} lmargin{\cf14 ,} pg{\cf14 .}{\cf22 height} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} bmargin{\cf14 )}{\cf14 ,} pg{\cf14 .}{\cf22 width} {\cf14 *} lmargin{\cf14 ,} pg{\cf14 .}{\cf22 height} {\cf14 *} tmargin{\cf14 )}{\cf14 ;}\par
+        pg{\cf14 .}{\cf22 line}{\cf14 (}pg{\cf14 .}{\cf22 width} {\cf14 *} lmargin{\cf14 ,} pg{\cf14 .}{\cf22 height} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} bmargin{\cf14 )}{\cf14 ,} pg{\cf14 .}{\cf22 width} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} rmargin{\cf14 )}{\cf14 ,} pg{\cf14 .}{\cf22 height} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} bmargin{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        {\cf6\i //yaxis\par
+}        pg{\cf14 .}{\cf22 textAlign}{\cf14 (}RIGHT{\cf14 ,} CENTER{\cf14 )}{\cf14 ;}\par
+        {\cf1\b for} {\cf14 (}{\cf7 int} y {\cf14 =} {\cf14 0}{\cf14 ;} y {\cf14 <} ytick{\cf14 ;} y{\cf14 +}{\cf14 +}{\cf14 )} {\cf14 \{}\par
+            {\cf7 float} relY {\cf14 =} pg{\cf14 .}{\cf22 height} {\cf14 *} tmargin {\cf14 +} ytickdist {\cf14 *} y{\cf14 ;}\par
+            {\cf7 float} tickBegin {\cf14 =} {\cf14 (}{\cf14 1} {\cf14 -} ticklength{\cf14 )} {\cf14 *} pg{\cf14 .}{\cf22 width} {\cf14 *} lmargin{\cf14 ;}\par
+            {\cf7 float} tickEnd {\cf14 =} pg{\cf14 .}{\cf22 width} {\cf14 *} lmargin{\cf14 ;}\par
+            pg{\cf14 .}{\cf22 line}{\cf14 (}tickBegin{\cf14 ,} relY{\cf14 ,} tickEnd{\cf14 ,} relY{\cf14 )}{\cf14 ;}\par
+            pg{\cf14 .}{\cf22 textSize}{\cf14 (}{\cf14 14}{\cf14 )}{\cf14 ;}\par
+            pg{\cf14 .}{\cf22 fill}{\cf14 (}{\cf14 0}{\cf14 )}{\cf14 ;}\par
+            pg{\cf14 .}{\cf22 text}{\cf14 (}sigfigs{\cf14 (}yAxisUB {\cf14 -} yScale {\cf14 *} y{\cf14 ,} {\cf14 3}{\cf14 )}{\cf14 ,} tickBegin{\cf14 ,} relY{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf6\i //xaxis\par
+}        pg{\cf14 .}{\cf22 textAlign}{\cf14 (}LEFT{\cf14 ,} TOP{\cf14 )}{\cf14 ;}\par
+        {\cf7 float} theta {\cf14 =} PI {\cf14 /} {\cf14 3}{\cf14 ;}\par
+        {\cf1\b for} {\cf14 (}{\cf7 int} x {\cf14 =} {\cf14 0}{\cf14 ;} x {\cf14 <} xtick{\cf14 ;} x{\cf14 +}{\cf14 +}{\cf14 )} {\cf14 \{}\par
+            {\cf7 float} relX {\cf14 =} pg{\cf14 .}{\cf22 width} {\cf14 *} lmargin {\cf14 +} xtickdist {\cf14 *} x{\cf14 ;}\par
+            {\cf7 float} tickBegin {\cf14 =} pg{\cf14 .}{\cf22 height} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} bmargin {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} ticklength{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            {\cf7 float} tickEnd {\cf14 =} pg{\cf14 .}{\cf22 height} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} bmargin{\cf14 )}{\cf14 ;}\par
+            pg{\cf14 .}{\cf22 line}{\cf14 (}relX{\cf14 ,} tickBegin{\cf14 ,} relX{\cf14 ,} tickEnd{\cf14 )}{\cf14 ;}\par
+\par
+            pg{\cf14 .}{\cf22 textSize}{\cf14 (}{\cf14 14}{\cf14 )}{\cf14 ;}\par
+            pg{\cf14 .}{\cf22 fill}{\cf14 (}{\cf14 0}{\cf14 )}{\cf14 ;}\par
+            {\cf6\i //relX,pg.height*(1-bmargin*(1-ticklength))\par
+}            pg{\cf14 .}{\cf22 pushMatrix}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+            pg{\cf14 .}{\cf22 rotate}{\cf14 (}theta{\cf14 )}{\cf14 ;}\par
+            pg{\cf14 .}{\cf22 translate}{\cf14 (}tickBegin {\cf14 *} sin{\cf14 (}theta{\cf14 )} {\cf14 +} relX {\cf14 *} cos{\cf14 (}theta{\cf14 )}{\cf14 ,} tickBegin {\cf14 *} cos{\cf14 (}theta{\cf14 )} {\cf14 -} relX {\cf14 *} sin{\cf14 (}theta{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            pg{\cf14 .}{\cf22 text}{\cf14 (}sigfigs{\cf14 (}xAxisLB {\cf14 +} xScale {\cf14 *} x{\cf14 ,} {\cf14 3}{\cf14 )}{\cf14 ,} {\cf14 0}{\cf14 ,} {\cf14 0}{\cf14 )}{\cf14 ;}\par
+            pg{\cf14 .}{\cf22 popMatrix}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+        pg{\cf14 .}{\cf22 endDraw}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 void} {\cf3 drawAxis}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: SketchCumFreq"}{\cf14 ,} {\cf2 "Draw Axis, no PGraphic"}{\cf14 )}{\cf14 ;}\par
+        line{\cf14 (}sketchWidth{\cf14 (}{\cf14 )} {\cf14 *} lmargin{\cf14 ,} sketchHeight{\cf14 (}{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} bmargin{\cf14 )}{\cf14 ,} sketchWidth{\cf14 (}{\cf14 )} {\cf14 *} lmargin{\cf14 ,} sketchHeight{\cf14 (}{\cf14 )} {\cf14 *} tmargin{\cf14 )}{\cf14 ;}\par
+        line{\cf14 (}sketchWidth{\cf14 (}{\cf14 )} {\cf14 *} lmargin{\cf14 ,} sketchHeight{\cf14 (}{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} bmargin{\cf14 )}{\cf14 ,} sketchWidth{\cf14 (}{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} rmargin{\cf14 )}{\cf14 ,} sketchHeight{\cf14 (}{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} bmargin{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        {\cf6\i //yaxis\par
+}        textAlign{\cf14 (}RIGHT{\cf14 ,} CENTER{\cf14 )}{\cf14 ;}\par
+        {\cf1\b for} {\cf14 (}{\cf7 int} y {\cf14 =} {\cf14 0}{\cf14 ;} y {\cf14 <} ytick{\cf14 ;} y{\cf14 +}{\cf14 +}{\cf14 )} {\cf14 \{}\par
+            {\cf7 float} relY {\cf14 =} sketchHeight{\cf14 (}{\cf14 )} {\cf14 *} tmargin {\cf14 +} ytickdist {\cf14 *} y{\cf14 ;}\par
+            {\cf7 float} tickBegin {\cf14 =} {\cf14 (}{\cf14 1} {\cf14 -} ticklength{\cf14 )} {\cf14 *} sketchWidth{\cf14 (}{\cf14 )} {\cf14 *} lmargin{\cf14 ;}\par
+            {\cf7 float} tickEnd {\cf14 =} sketchWidth{\cf14 (}{\cf14 )} {\cf14 *} lmargin{\cf14 ;}\par
+            line{\cf14 (}tickBegin{\cf14 ,} relY{\cf14 ,} tickEnd{\cf14 ,} relY{\cf14 )}{\cf14 ;}\par
+            textSize{\cf14 (}{\cf14 14}{\cf14 )}{\cf14 ;}\par
+            fill{\cf14 (}{\cf14 0}{\cf14 )}{\cf14 ;}\par
+            text{\cf14 (}sigfigs{\cf14 (}yAxisUB {\cf14 -} yScale {\cf14 *} y{\cf14 ,} {\cf14 3}{\cf14 )}{\cf14 ,} tickBegin{\cf14 ,} relY{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf6\i //xaxis\par
+}        textAlign{\cf14 (}LEFT{\cf14 ,} TOP{\cf14 )}{\cf14 ;}\par
+        {\cf7 float} theta {\cf14 =} PI {\cf14 /} {\cf14 3}{\cf14 ;}\par
+        {\cf1\b for} {\cf14 (}{\cf7 int} x {\cf14 =} {\cf14 0}{\cf14 ;} x {\cf14 <} xtick{\cf14 ;} x{\cf14 +}{\cf14 +}{\cf14 )} {\cf14 \{}\par
+            {\cf7 float} relX {\cf14 =} sketchWidth{\cf14 (}{\cf14 )} {\cf14 *} lmargin {\cf14 +} xtickdist {\cf14 *} x{\cf14 ;}\par
+            {\cf7 float} tickBegin {\cf14 =} sketchHeight{\cf14 (}{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} bmargin {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} ticklength{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            {\cf7 float} tickEnd {\cf14 =} sketchHeight{\cf14 (}{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} bmargin{\cf14 )}{\cf14 ;}\par
+            line{\cf14 (}relX{\cf14 ,} tickBegin{\cf14 ,} relX{\cf14 ,} tickEnd{\cf14 )}{\cf14 ;}\par
+\par
+            textSize{\cf14 (}{\cf14 14}{\cf14 )}{\cf14 ;}\par
+            fill{\cf14 (}{\cf14 0}{\cf14 )}{\cf14 ;}\par
+            {\cf6\i //relX,sketchHeight()*(1-bmargin*(1-ticklength))\par
+}            pushMatrix{\cf14 (}{\cf14 )}{\cf14 ;}\par
+            rotate{\cf14 (}theta{\cf14 )}{\cf14 ;}\par
+            translate{\cf14 (}tickBegin {\cf14 *} sin{\cf14 (}theta{\cf14 )} {\cf14 +} relX {\cf14 *} cos{\cf14 (}theta{\cf14 )}{\cf14 ,} tickBegin {\cf14 *} cos{\cf14 (}theta{\cf14 )} {\cf14 -} relX {\cf14 *} sin{\cf14 (}theta{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            text{\cf14 (}sigfigs{\cf14 (}xAxisLB {\cf14 +} xScale {\cf14 *} x{\cf14 ,} {\cf14 3}{\cf14 )}{\cf14 ,} {\cf14 0}{\cf14 ,} {\cf14 0}{\cf14 )}{\cf14 ;}\par
+            popMatrix{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 void} {\cf3 drawLines}{\cf14 (}PGraphics pg{\cf14 )} {\cf14 \{}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: SketchCumFreq"}{\cf14 ,} {\cf2 "Draw Lines, with PGraphic"}{\cf14 )}{\cf14 ;}\par
+        pg{\cf14 .}{\cf22 beginDraw}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        pg{\cf14 .}{\cf22 noFill}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf7 float} cumFreq {\cf14 =} {\cf14 0}{\cf14 ;}\par
+        pg{\cf14 .}{\cf22 beginShape}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b for} {\cf14 (}StatsClasses class_ {\cf14 :} sClasses{\cf14 )} {\cf14 \{}\par
+            {\cf7 float} freq {\cf14 =} pg{\cf14 .}{\cf22 height} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} bmargin{\cf14 )} {\cf14 -} pg{\cf14 .}{\cf22 height} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} tmargin {\cf14 -} bmargin{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 (}cumFreq {\cf14 -} yAxisLB{\cf14 )} {\cf14 /} {\cf14 (}yAxisUB {\cf14 -} yAxisLB{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            {\cf7 float} bound {\cf14 =} pg{\cf14 .}{\cf22 width} {\cf14 *} lmargin {\cf14 +} pg{\cf14 .}{\cf22 width} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} rmargin {\cf14 -} lmargin{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 (}class_{\cf14 .}{\cf22 lowerbound} {\cf14 -} xAxisLB{\cf14 )} {\cf14 /} {\cf14 (}xAxisUB {\cf14 -} xAxisLB{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            pg{\cf14 .}{\cf22 vertex}{\cf14 (}bound{\cf14 ,} freq{\cf14 )}{\cf14 ;}\par
+            cumFreq {\cf14 +}{\cf14 =} class_{\cf14 .}{\cf22 frequency}{\cf14 ;}\par
+            freq {\cf14 =} pg{\cf14 .}{\cf22 height} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} bmargin{\cf14 )} {\cf14 -} pg{\cf14 .}{\cf22 height} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} tmargin {\cf14 -} bmargin{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 (}cumFreq {\cf14 -} yAxisLB{\cf14 )} {\cf14 /} {\cf14 (}yAxisUB {\cf14 -} yAxisLB{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            bound {\cf14 =} pg{\cf14 .}{\cf22 width} {\cf14 *} lmargin {\cf14 +} pg{\cf14 .}{\cf22 width} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} rmargin {\cf14 -} lmargin{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 (}class_{\cf14 .}{\cf22 upperbound} {\cf14 -} xAxisLB{\cf14 )} {\cf14 /} {\cf14 (}xAxisUB {\cf14 -} xAxisLB{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            pg{\cf14 .}{\cf22 vertex}{\cf14 (}bound{\cf14 ,} freq{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+        pg{\cf14 .}{\cf22 endShape}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        pg{\cf14 .}{\cf22 endDraw}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 void} {\cf3 drawLines}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: SketchCumFreq"}{\cf14 ,} {\cf2 "Draw Lines, no PGraphic"}{\cf14 )}{\cf14 ;}\par
+        noFill{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf7 float} cumFreq {\cf14 =} {\cf14 0}{\cf14 ;}\par
+        beginShape{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b for} {\cf14 (}StatsClasses class_ {\cf14 :} sClasses{\cf14 )} {\cf14 \{}\par
+            {\cf7 float} freq {\cf14 =} sketchHeight{\cf14 (}{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} bmargin{\cf14 )} {\cf14 -} sketchHeight{\cf14 (}{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} tmargin {\cf14 -} bmargin{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 (}cumFreq {\cf14 -} yAxisLB{\cf14 )} {\cf14 /} {\cf14 (}yAxisUB {\cf14 -} yAxisLB{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            {\cf7 float} bound {\cf14 =} sketchWidth{\cf14 (}{\cf14 )} {\cf14 *} lmargin {\cf14 +} sketchWidth{\cf14 (}{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} rmargin {\cf14 -} lmargin{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 (}class_{\cf14 .}{\cf22 lowerbound} {\cf14 -} xAxisLB{\cf14 )} {\cf14 /} {\cf14 (}xAxisUB {\cf14 -} xAxisLB{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            vertex{\cf14 (}bound{\cf14 ,} freq{\cf14 )}{\cf14 ;}\par
+            cumFreq {\cf14 +}{\cf14 =} class_{\cf14 .}{\cf22 frequency}{\cf14 ;}\par
+            freq {\cf14 =} sketchHeight{\cf14 (}{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} bmargin{\cf14 )} {\cf14 -} sketchHeight{\cf14 (}{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} tmargin {\cf14 -} bmargin{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 (}cumFreq {\cf14 -} yAxisLB{\cf14 )} {\cf14 /} {\cf14 (}yAxisUB {\cf14 -} yAxisLB{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            bound {\cf14 =} sketchWidth{\cf14 (}{\cf14 )} {\cf14 *} lmargin {\cf14 +} sketchWidth{\cf14 (}{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 1} {\cf14 -} rmargin {\cf14 -} lmargin{\cf14 )} {\cf14 *} {\cf14 (}{\cf14 (}class_{\cf14 .}{\cf22 upperbound} {\cf14 -} xAxisLB{\cf14 )} {\cf14 /} {\cf14 (}xAxisUB {\cf14 -} xAxisLB{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            vertex{\cf14 (}bound{\cf14 ,} freq{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+        endShape{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 void} {\cf3 onDestroyView}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onDestroyView}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        reset{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 void} {\cf3 onStart}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "CumFreq"}{\cf14 ,}{\cf2 "OnStart"}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onStart}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        redraw{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+{\cf6\i //    @Override\par
+}{\cf6\i //    public void setUserVisibleHint(boolean isVisibleToUser) \{\par
+}{\cf6\i //        super.setUserVisibleHint(isVisibleToUser);\par
+}{\cf6\i //\par
+}{\cf6\i //        if (isVisibleToUser)\par
+}{\cf6\i //            Log.d("MyFragment", "Fragment is visible.");\par
+}{\cf6\i //        else\par
+}{\cf6\i //            Log.d("MyFragment", "Fragment is not visible.");\par
+}{\cf6\i //    \}\par
+}\par
+    {\cf1\b public} {\cf7 void} {\cf3 onResume}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "CumFreq"}{\cf14 ,}{\cf2 "OnResume"}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onResume}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        redraw{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+{\cf14 \}}\par
+}

@@ -1,0 +1,29 @@
+<p style="font-size:14pt;font-family:sans-serif"><strong>.\A2_Comp_Project\app\src\main\java\com\example\natha_000\a2_comp_project\Graphing_2D\Main2DActivity.java</strong></p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">package</span> <span style="color: #0000FF; font-weight: bold">com.example.natha_000.a2_comp_project.Graphing_2D</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.os.Bundle</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.support.v7.app.AppCompatActivity</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.webkit.WebSettings</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.webkit.WebView</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">com.example.natha_000.a2_comp_project.R</span><span style="color: #666666">;</span>
+
+<span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic"> * This contains the activity responsible for the plotting of the 2D</span>
+<span style="color: #408080; font-style: italic"> * graph using the Desmos API</span>
+<span style="color: #408080; font-style: italic">*/</span>
+<span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Main2DActivity</span> <span style="color: #008000; font-weight: bold">extends</span> AppCompatActivity<span style="color: #666666">{</span>
+
+    <span style="color: #408080; font-style: italic">// Sets up the general start up of the activity</span>
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">protected</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onCreate</span><span style="color: #666666">(</span>Bundle savedInstanceState<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">super</span><span style="color: #666666">.</span><span style="color: #7D9029">onCreate</span><span style="color: #666666">(</span>savedInstanceState<span style="color: #666666">);</span>
+        setContentView<span style="color: #666666">(</span>R<span style="color: #666666">.</span><span style="color: #7D9029">layout</span><span style="color: #666666">.</span><span style="color: #7D9029">activity_main_2d</span><span style="color: #666666">);</span>
+
+        <span style="color: #408080; font-style: italic">// Get the webview and Load the Desmos API into it</span>
+        WebView myWebView <span style="color: #666666">=</span> <span style="color: #666666">(</span>WebView<span style="color: #666666">)</span> findViewById<span style="color: #666666">(</span>R<span style="color: #666666">.</span><span style="color: #7D9029">id</span><span style="color: #666666">.</span><span style="color: #7D9029">webView</span><span style="color: #666666">);</span>
+        WebSettings webSettings <span style="color: #666666">=</span> myWebView<span style="color: #666666">.</span><span style="color: #7D9029">getSettings</span><span style="color: #666666">();</span>
+        webSettings<span style="color: #666666">.</span><span style="color: #7D9029">setJavaScriptEnabled</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">);</span>
+        myWebView<span style="color: #666666">.</span><span style="color: #7D9029">loadUrl</span><span style="color: #666666">(</span><span style="color: #BA2121">&quot;file:///android_asset/Desmos.html&quot;</span><span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre></div>

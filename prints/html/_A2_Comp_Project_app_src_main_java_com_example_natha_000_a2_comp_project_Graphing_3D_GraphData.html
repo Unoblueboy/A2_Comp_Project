@@ -1,0 +1,497 @@
+<p style="font-size:14pt;font-family:sans-serif"><strong>.\A2_Comp_Project\app\src\main\java\com\example\natha_000\a2_comp_project\Graphing_3D\GraphData.java</strong></p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">package</span> <span style="color: #0000FF; font-weight: bold">com.example.natha_000.a2_comp_project.Graphing_3D</span><span style="color: #666666">;</span>
+
+<span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic"> * Created by Natha_000 on 02/01/2017.</span>
+<span style="color: #408080; font-style: italic"> */</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.io.IOException</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.io.StreamTokenizer</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.io.StringReader</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.util.ArrayList</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.util.Deque</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.util.HashMap</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.util.LinkedList</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.util.List</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.util.Map</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.util.Objects</span><span style="color: #666666">;</span>
+
+<span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic"> * This class is used to generate an evaluatable function from a string function</span>
+<span style="color: #408080; font-style: italic"> * It uses the Function interface to allow for easy composition of functions.</span>
+<span style="color: #408080; font-style: italic">*/</span>
+<span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">GraphData</span> <span style="color: #666666">{</span>
+
+    <span style="color: #408080; font-style: italic">//The following code defines a large array of simple arithmetic functions</span>
+
+    <span style="color: #408080; font-style: italic">//This defines the arithmetic operation of addition</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function add <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> x<span style="color: #666666">+</span>y<span style="color: #666666">;</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This defines the arithmetic operation of subtraction</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function sub <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> x<span style="color: #666666">-</span>y<span style="color: #666666">;</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This defines the arithmetic operation of multiplication</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function mul <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> x<span style="color: #666666">*</span>y<span style="color: #666666">;</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This defines the arithmetic operation of Division</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function div <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> x<span style="color: #666666">/</span>y<span style="color: #666666">;</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This defines the arithmetic operation of exponentiation</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function power <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">pow</span><span style="color: #666666">(</span>x<span style="color: #666666">,</span>y<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>z<span style="color: #666666">!=</span>z<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #666666">0;</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This calculates the sine of the first input</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function sin <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">sin</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This calculates the cosine of the first input</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function cos <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">cos</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This calculates the tangent of the first input</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function tan <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">tan</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This calculates the cosecant (=1/sine) of the first input</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function cosec <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">sin</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #666666">1/</span>z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This calculates the secant (=1/cosine) of the first input</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function sec <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">cos</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #666666">1/</span>z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This calculates the cotangent (=1/tangent) of the first input</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function cot <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">tan</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #666666">1/</span>z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This calculates the hyperbolic sine of the first input</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function sinh <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">sinh</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This calculates the hyperbolic cosine of the first input</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function cosh <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">cosh</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This calculates the hyperbolic tangent of the first input</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function tanh <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">tanh</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This calculates the inverse sine of the first input</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function asin <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">asin</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This calculates the inverse cosine of the first input</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function acos <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">acos</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This calculates the inverse tangent of the first input</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function atan <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">atan</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This calculates the greatest integer less than or equal to the first input</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function floor <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">floor</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This calculates the least integer greater than or equal to the first input</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function ceil <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">ceil</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This calculates the natural logarithm of the first input</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function ln <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">log</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span> <span style="color: #408080; font-style: italic">//log</span>
+
+    <span style="color: #408080; font-style: italic">//This calculates the logarithm base 10 of the first input</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function log <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">log10</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span> <span style="color: #408080; font-style: italic">//log10</span>
+
+    <span style="color: #408080; font-style: italic">//This rounds the first input to the nearest integer</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function round <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">round</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This calculates the sign of the first input(positive = 1, negative = -1, zero = 0)</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function signum <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">signum</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This calculates the absolute value of the first input</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function abs <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">abs</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This calculates the square root of the first input</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Function sqrt <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> Math<span style="color: #666666">.</span><span style="color: #7D9029">sqrt</span><span style="color: #666666">(</span>x<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+    <span style="color: #666666">};</span>
+
+    <span style="color: #408080; font-style: italic">//This maps all of the functions to corresponding strings</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> Map<span style="color: #666666">&lt;</span>String<span style="color: #666666">,</span> Function<span style="color: #666666">&gt;</span> ops_func <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> HashMap<span style="color: #666666">&lt;</span>String<span style="color: #666666">,</span> Function<span style="color: #666666">&gt;(){{</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;+&quot;</span><span style="color: #666666">,</span>add<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;-&quot;</span><span style="color: #666666">,</span>sub<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;*&quot;</span><span style="color: #666666">,</span>mul<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;/&quot;</span><span style="color: #666666">,</span>div<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;^&quot;</span><span style="color: #666666">,</span>power<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;sin&quot;</span><span style="color: #666666">,</span>sin<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;cos&quot;</span><span style="color: #666666">,</span>cos<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;tan&quot;</span><span style="color: #666666">,</span>tan<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;cosec&quot;</span><span style="color: #666666">,</span>cosec<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;csc&quot;</span><span style="color: #666666">,</span>cosec<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;sec&quot;</span><span style="color: #666666">,</span>sec<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;cot&quot;</span><span style="color: #666666">,</span>cot<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;sinh&quot;</span><span style="color: #666666">,</span>sinh<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;cosh&quot;</span><span style="color: #666666">,</span>cosh<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;tanh&quot;</span><span style="color: #666666">,</span>tanh<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;asin&quot;</span><span style="color: #666666">,</span>asin<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;arcsin&quot;</span><span style="color: #666666">,</span>asin<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;acos&quot;</span><span style="color: #666666">,</span>acos<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;arccos&quot;</span><span style="color: #666666">,</span>acos<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;atan&quot;</span><span style="color: #666666">,</span>atan<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;arctan&quot;</span><span style="color: #666666">,</span>atan<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;floor&quot;</span><span style="color: #666666">,</span>floor<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;ceil&quot;</span><span style="color: #666666">,</span>ceil<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;ln&quot;</span><span style="color: #666666">,</span>ln<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;log&quot;</span><span style="color: #666666">,</span>log<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;round&quot;</span><span style="color: #666666">,</span>round<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;signum&quot;</span><span style="color: #666666">,</span>signum<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;abs&quot;</span><span style="color: #666666">,</span>abs<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;sqrt&quot;</span><span style="color: #666666">,</span>sqrt<span style="color: #666666">);</span>
+        put<span style="color: #666666">(</span><span style="color: #BA2121">&quot;√&quot;</span><span style="color: #666666">,</span>sqrt<span style="color: #666666">);</span>
+    <span style="color: #666666">}};</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> String <span style="color: #0000FF">format</span><span style="color: #666666">(</span>String func<span style="color: #666666">){</span>
+        <span style="color: #008000; font-weight: bold">return</span> func<span style="color: #666666">.</span><span style="color: #7D9029">replaceAll</span><span style="color: #666666">(</span><span style="color: #BA2121">&quot;(\\d+(\\.\\d+)?)\\s*(e|pi)&quot;</span><span style="color: #666666">,</span><span style="color: #BA2121">&quot;$1 * $3&quot;</span><span style="color: #666666">)</span>
+                <span style="color: #666666">.</span><span style="color: #7D9029">replaceAll</span><span style="color: #666666">(</span><span style="color: #BA2121">&quot;(e|pi)\\s*(e|pi)&quot;</span><span style="color: #666666">,</span><span style="color: #BA2121">&quot;$1 * $2&quot;</span><span style="color: #666666">)</span>
+                <span style="color: #666666">.</span><span style="color: #7D9029">replaceAll</span><span style="color: #666666">(</span><span style="color: #BA2121">&quot;(e|pi|\\d+(\\.\\d+)?)\\s*(\\w)&quot;</span><span style="color: #666666">,</span><span style="color: #BA2121">&quot;$1 * $3&quot;</span><span style="color: #666666">)</span>
+                <span style="color: #666666">.</span><span style="color: #7D9029">replaceAll</span><span style="color: #666666">(</span><span style="color: #BA2121">&quot;e&quot;</span><span style="color: #666666">,</span>Double<span style="color: #666666">.</span><span style="color: #7D9029">toString</span><span style="color: #666666">(</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">E</span><span style="color: #666666">))</span>
+                <span style="color: #666666">.</span><span style="color: #7D9029">replaceAll</span><span style="color: #666666">(</span><span style="color: #BA2121">&quot;pi&quot;</span><span style="color: #666666">,</span>Double<span style="color: #666666">.</span><span style="color: #7D9029">toString</span><span style="color: #666666">(</span>Math<span style="color: #666666">.</span><span style="color: #7D9029">PI</span><span style="color: #666666">))</span>
+                <span style="color: #666666">.</span><span style="color: #7D9029">replaceAll</span><span style="color: #666666">(</span><span style="color: #BA2121">&quot;(^|\\D) \\s* - \\s* (\\w) &quot;</span><span style="color: #666666">,</span><span style="color: #BA2121">&quot;$1 0 - $0&quot;</span><span style="color: #666666">);</span>
+
+    <span style="color: #666666">}</span>
+
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * This creates a mathematical function into which a value of x and y</span>
+<span style="color: #408080; font-style: italic">     * can be entered.</span>
+<span style="color: #408080; font-style: italic">     * @param func A string which represents the function to be evaluated</span>
+<span style="color: #408080; font-style: italic">     * @return a Function object which can be used to evaluate the function for</span>
+<span style="color: #408080; font-style: italic">     * different x and y</span>
+<span style="color: #408080; font-style: italic">    */</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> Function <span style="color: #0000FF">function_creator</span><span style="color: #666666">(</span>String func<span style="color: #666666">)</span> <span style="color: #008000; font-weight: bold">throws</span> IOException<span style="color: #666666">{</span>
+        <span style="color: #408080; font-style: italic">//This uses the function input and converts it into a string of tokens</span>
+        ShuntingYard parser <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> ShuntingYard<span style="color: #666666">();</span>
+        List<span style="color: #666666">&lt;</span>String<span style="color: #666666">&gt;</span> tokens <span style="color: #666666">=</span> tokenise<span style="color: #666666">(</span>func<span style="color: #666666">);</span>
+        List<span style="color: #666666">&lt;</span>String<span style="color: #666666">&gt;</span> ops <span style="color: #666666">=</span> tokenise<span style="color: #666666">(</span>parser<span style="color: #666666">.</span><span style="color: #7D9029">shuntingYard</span><span style="color: #666666">(</span>tokens<span style="color: #666666">));</span>
+
+        <span style="color: #408080; font-style: italic">//This sets up the variables to be used within the process of parsing the reverse polish notation</span>
+        StringBuilder output <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> StringBuilder<span style="color: #666666">();</span>
+        Deque<span style="color: #666666">&lt;</span>Object<span style="color: #666666">&gt;</span> stack  <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> LinkedList<span style="color: #666666">&lt;&gt;();</span>
+
+        <span style="color: #408080; font-style: italic">//For each of the inputs in the token list</span>
+        <span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span>String token <span style="color: #666666">:</span> ops<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            <span style="color: #408080; font-style: italic">//If the token is a number or a variable add it to the stack</span>
+            <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>parser<span style="color: #666666">.</span><span style="color: #7D9029">isAlgebraic</span><span style="color: #666666">(</span>token<span style="color: #666666">))</span> <span style="color: #666666">{</span>
+                <span style="color: #008000; font-weight: bold">try</span> <span style="color: #666666">{</span>
+                    stack<span style="color: #666666">.</span><span style="color: #7D9029">push</span><span style="color: #666666">(</span> Float<span style="color: #666666">.</span><span style="color: #7D9029">parseFloat</span><span style="color: #666666">(</span>token<span style="color: #666666">));</span>
+                <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">catch</span> <span style="color: #666666">(</span>Exception e<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                    stack<span style="color: #666666">.</span><span style="color: #7D9029">push</span><span style="color: #666666">(</span>token<span style="color: #666666">);</span>
+                <span style="color: #666666">}</span>
+
+            <span style="color: #408080; font-style: italic">//The token is an operator</span>
+            <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #666666">{</span>
+                <span style="color: #408080; font-style: italic">/* If the operator takes two arguments</span>
+<span style="color: #408080; font-style: italic">                   pop two functions from the stack,</span>
+<span style="color: #408080; font-style: italic">                   evaluate the operator with the arguments as the two functions,</span>
+<span style="color: #408080; font-style: italic">                   and push the result to the stack. */</span>
+                <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>ShuntingYard<span style="color: #666666">.</span><span style="color: #7D9029">ops_2_arg</span><span style="color: #666666">.</span><span style="color: #7D9029">containsKey</span><span style="color: #666666">(</span>token<span style="color: #666666">))</span> <span style="color: #666666">{</span>
+                    Object arg2 <span style="color: #666666">=</span> <span style="color: #666666">(</span>Object<span style="color: #666666">)</span> stack<span style="color: #666666">.</span><span style="color: #7D9029">pop</span><span style="color: #666666">();</span>
+                    Object arg1 <span style="color: #666666">=</span> <span style="color: #666666">(</span>Object<span style="color: #666666">)</span> stack<span style="color: #666666">.</span><span style="color: #7D9029">pop</span><span style="color: #666666">();</span>
+
+                    <span style="color: #408080; font-style: italic">/* Case 1:</span>
+<span style="color: #408080; font-style: italic">                        The first argument is a float</span>
+<span style="color: #408080; font-style: italic">                        The second argument is a float</span>
+<span style="color: #408080; font-style: italic">                    */</span>
+                    <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>arg2 <span style="color: #008000; font-weight: bold">instanceof</span> Float <span style="color: #666666">&amp;&amp;</span> arg1 <span style="color: #008000; font-weight: bold">instanceof</span> Float<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                        <span style="color: #B00040">float</span> v1 <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> arg1<span style="color: #666666">;</span>
+                        <span style="color: #B00040">float</span> v2 <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> arg2<span style="color: #666666">;</span>
+                        Function a <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+                            <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> ops_func<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>token<span style="color: #666666">).</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">(</span>v1<span style="color: #666666">,</span>v2<span style="color: #666666">);</span>
+                            <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+                        <span style="color: #666666">};</span>
+                        stack<span style="color: #666666">.</span><span style="color: #7D9029">push</span><span style="color: #666666">(</span>a<span style="color: #666666">);</span>
+                    <span style="color: #666666">}</span>
+
+                    <span style="color: #408080; font-style: italic">/* Case 2:</span>
+<span style="color: #408080; font-style: italic">                    The first argument is a float</span>
+<span style="color: #408080; font-style: italic">                    The second argument is a function</span>
+<span style="color: #408080; font-style: italic">                    */</span>
+                    <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>arg2 <span style="color: #008000; font-weight: bold">instanceof</span> Function <span style="color: #666666">&amp;&amp;</span> arg1 <span style="color: #008000; font-weight: bold">instanceof</span> Float<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                        <span style="color: #B00040">float</span> v1 <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> arg1<span style="color: #666666">;</span>
+                        Function f1 <span style="color: #666666">=</span> <span style="color: #666666">(</span>Function<span style="color: #666666">)</span> arg2<span style="color: #666666">;</span>
+                        Function a <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+                            <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> ops_func<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>token<span style="color: #666666">).</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">(</span>v1<span style="color: #666666">,</span>f1<span style="color: #666666">.</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">(</span>x<span style="color: #666666">,</span>y<span style="color: #666666">));</span>
+                            <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+                        <span style="color: #666666">};</span>
+                        stack<span style="color: #666666">.</span><span style="color: #7D9029">push</span><span style="color: #666666">(</span>a<span style="color: #666666">);</span>
+                    <span style="color: #666666">}</span>
+
+                    <span style="color: #408080; font-style: italic">/* Case 3:</span>
+<span style="color: #408080; font-style: italic">                    The first argument is a function</span>
+<span style="color: #408080; font-style: italic">                    The second argument is a float</span>
+<span style="color: #408080; font-style: italic">                    */</span>
+                    <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>arg1 <span style="color: #008000; font-weight: bold">instanceof</span> Function <span style="color: #666666">&amp;&amp;</span> arg2 <span style="color: #008000; font-weight: bold">instanceof</span> Float<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                        <span style="color: #B00040">float</span> v1 <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> arg2<span style="color: #666666">;</span>
+                        Function f1 <span style="color: #666666">=</span> <span style="color: #666666">(</span>Function<span style="color: #666666">)</span> arg1<span style="color: #666666">;</span>
+                        Function a <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+                            <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> ops_func<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>token<span style="color: #666666">).</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">(</span>f1<span style="color: #666666">.</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">(</span>x<span style="color: #666666">,</span>y<span style="color: #666666">),</span>v1<span style="color: #666666">);</span>
+                            <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+                        <span style="color: #666666">};</span>
+                        stack<span style="color: #666666">.</span><span style="color: #7D9029">push</span><span style="color: #666666">(</span>a<span style="color: #666666">);</span>
+                    <span style="color: #666666">}</span>
+
+                    <span style="color: #408080; font-style: italic">/* Case 4:</span>
+<span style="color: #408080; font-style: italic">                    The first argument is a function</span>
+<span style="color: #408080; font-style: italic">                    The second argument is a function</span>
+<span style="color: #408080; font-style: italic">                    */</span>
+                    <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>arg1 <span style="color: #008000; font-weight: bold">instanceof</span> Function <span style="color: #666666">&amp;&amp;</span> arg2 <span style="color: #008000; font-weight: bold">instanceof</span> Function<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                        Function f2 <span style="color: #666666">=</span> <span style="color: #666666">(</span>Function<span style="color: #666666">)</span> arg2<span style="color: #666666">;</span>
+                        Function f1 <span style="color: #666666">=</span> <span style="color: #666666">(</span>Function<span style="color: #666666">)</span> arg1<span style="color: #666666">;</span>
+                        Function a <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+                            <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> ops_func<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>token<span style="color: #666666">).</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">(</span>f1<span style="color: #666666">.</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">(</span>x<span style="color: #666666">,</span>y<span style="color: #666666">),</span>
+                                                                   f2<span style="color: #666666">.</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">(</span>x<span style="color: #666666">,</span>y<span style="color: #666666">));</span>
+                            <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+                        <span style="color: #666666">};</span>
+                        stack<span style="color: #666666">.</span><span style="color: #7D9029">push</span><span style="color: #666666">(</span>a<span style="color: #666666">);</span>
+                    <span style="color: #666666">}</span>
+
+                    <span style="color: #408080; font-style: italic">/* Case 5:</span>
+<span style="color: #408080; font-style: italic">                    The first argument is a variable</span>
+<span style="color: #408080; font-style: italic">                    The second argument is a variable</span>
+<span style="color: #408080; font-style: italic">                    */</span>
+                    <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>arg1 <span style="color: #008000; font-weight: bold">instanceof</span> String <span style="color: #666666">&amp;&amp;</span> arg2 <span style="color: #008000; font-weight: bold">instanceof</span> String<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                        String v2 <span style="color: #666666">=</span> <span style="color: #666666">(</span>String<span style="color: #666666">)</span> arg2<span style="color: #666666">;</span>
+                        String v1 <span style="color: #666666">=</span> <span style="color: #666666">(</span>String<span style="color: #666666">)</span> arg1<span style="color: #666666">;</span>
+                        Function a <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+                            <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> ops_func<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>token<span style="color: #666666">).</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">((</span>Objects<span style="color: #666666">.</span><span style="color: #7D9029">equals</span><span style="color: #666666">(</span>v1<span style="color: #666666">,</span><span style="color: #BA2121">&quot;x&quot;</span><span style="color: #666666">))</span> <span style="color: #666666">?</span> x <span style="color: #666666">:</span> y<span style="color: #666666">,</span>
+                                                                   <span style="color: #666666">(</span>Objects<span style="color: #666666">.</span><span style="color: #7D9029">equals</span><span style="color: #666666">(</span>v2<span style="color: #666666">,</span><span style="color: #BA2121">&quot;x&quot;</span><span style="color: #666666">))</span> <span style="color: #666666">?</span> x <span style="color: #666666">:</span> y<span style="color: #666666">);</span>
+                            <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+                        <span style="color: #666666">};</span>
+                        stack<span style="color: #666666">.</span><span style="color: #7D9029">push</span><span style="color: #666666">(</span>a<span style="color: #666666">);</span>
+                    <span style="color: #666666">}</span>
+
+                    <span style="color: #408080; font-style: italic">/* Case 6:</span>
+<span style="color: #408080; font-style: italic">                    The first argument is a variable</span>
+<span style="color: #408080; font-style: italic">                    The second argument is a float</span>
+<span style="color: #408080; font-style: italic">                    */</span>
+                    <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>arg1 <span style="color: #008000; font-weight: bold">instanceof</span> String <span style="color: #666666">&amp;&amp;</span> arg2 <span style="color: #008000; font-weight: bold">instanceof</span> Float<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                        <span style="color: #B00040">float</span> v2 <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> arg2<span style="color: #666666">;</span>
+                        String v1 <span style="color: #666666">=</span> <span style="color: #666666">(</span>String<span style="color: #666666">)</span> arg1<span style="color: #666666">;</span>
+                        Function a <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+                            <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> ops_func<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>token<span style="color: #666666">).</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">((</span>Objects<span style="color: #666666">.</span><span style="color: #7D9029">equals</span><span style="color: #666666">(</span>v1<span style="color: #666666">,</span><span style="color: #BA2121">&quot;x&quot;</span><span style="color: #666666">))</span> <span style="color: #666666">?</span> x <span style="color: #666666">:</span> y<span style="color: #666666">,</span>v2<span style="color: #666666">);</span>
+                            <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+                        <span style="color: #666666">};</span>
+                        stack<span style="color: #666666">.</span><span style="color: #7D9029">push</span><span style="color: #666666">(</span>a<span style="color: #666666">);</span>
+                    <span style="color: #666666">}</span>
+
+                    <span style="color: #408080; font-style: italic">/* Case 7:</span>
+<span style="color: #408080; font-style: italic">                    The first argument is a float</span>
+<span style="color: #408080; font-style: italic">                    The second argument is a variable</span>
+<span style="color: #408080; font-style: italic">                    */</span>
+                    <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>arg2 <span style="color: #008000; font-weight: bold">instanceof</span> String <span style="color: #666666">&amp;&amp;</span> arg1 <span style="color: #008000; font-weight: bold">instanceof</span> Float<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                        <span style="color: #B00040">float</span> v2 <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> arg1<span style="color: #666666">;</span>
+                        String v1 <span style="color: #666666">=</span> <span style="color: #666666">(</span>String<span style="color: #666666">)</span> arg2<span style="color: #666666">;</span>
+                        Function a <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+                            <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> ops_func<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>token<span style="color: #666666">).</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">(</span>v2<span style="color: #666666">,</span> <span style="color: #666666">(</span>Objects<span style="color: #666666">.</span><span style="color: #7D9029">equals</span><span style="color: #666666">(</span>v1<span style="color: #666666">,</span><span style="color: #BA2121">&quot;x&quot;</span><span style="color: #666666">))</span> <span style="color: #666666">?</span> x <span style="color: #666666">:</span> y<span style="color: #666666">);</span>
+                            <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+                        <span style="color: #666666">};</span>
+                        stack<span style="color: #666666">.</span><span style="color: #7D9029">push</span><span style="color: #666666">(</span>a<span style="color: #666666">);</span>
+                    <span style="color: #666666">}</span>
+
+                    <span style="color: #408080; font-style: italic">/* Case 8:</span>
+<span style="color: #408080; font-style: italic">                    The first argument is a variable</span>
+<span style="color: #408080; font-style: italic">                    The second argument is a function</span>
+<span style="color: #408080; font-style: italic">                    */</span>
+                    <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>arg1 <span style="color: #008000; font-weight: bold">instanceof</span> String <span style="color: #666666">&amp;&amp;</span> arg2 <span style="color: #008000; font-weight: bold">instanceof</span> Function<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                        Function v2 <span style="color: #666666">=</span> <span style="color: #666666">(</span>Function<span style="color: #666666">)</span> arg2<span style="color: #666666">;</span>
+                        String v1 <span style="color: #666666">=</span> <span style="color: #666666">(</span>String<span style="color: #666666">)</span> arg1<span style="color: #666666">;</span>
+                        Function a <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+                            <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> ops_func<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>token<span style="color: #666666">).</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">((</span>Objects<span style="color: #666666">.</span><span style="color: #7D9029">equals</span><span style="color: #666666">(</span>v1<span style="color: #666666">,</span><span style="color: #BA2121">&quot;x&quot;</span><span style="color: #666666">))</span> <span style="color: #666666">?</span> x <span style="color: #666666">:</span> y<span style="color: #666666">,</span> v2<span style="color: #666666">.</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">(</span>x<span style="color: #666666">,</span>y<span style="color: #666666">));</span>
+                            <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+                        <span style="color: #666666">};</span>
+                        stack<span style="color: #666666">.</span><span style="color: #7D9029">push</span><span style="color: #666666">(</span>a<span style="color: #666666">);</span>
+                    <span style="color: #666666">}</span>
+
+                    <span style="color: #408080; font-style: italic">/* Case 9:</span>
+<span style="color: #408080; font-style: italic">                    The first argument is a function</span>
+<span style="color: #408080; font-style: italic">                    The second argument is a variable</span>
+<span style="color: #408080; font-style: italic">                    */</span>
+                    <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>arg2 <span style="color: #008000; font-weight: bold">instanceof</span> String <span style="color: #666666">&amp;&amp;</span> arg1 <span style="color: #008000; font-weight: bold">instanceof</span> Function<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                        Function v2 <span style="color: #666666">=</span> <span style="color: #666666">(</span>Function<span style="color: #666666">)</span> arg1<span style="color: #666666">;</span>
+                        String v1 <span style="color: #666666">=</span> <span style="color: #666666">(</span>String<span style="color: #666666">)</span> arg2<span style="color: #666666">;</span>
+                        Function a <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+                            <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> ops_func<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>token<span style="color: #666666">).</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">(</span>v2<span style="color: #666666">.</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">(</span>x<span style="color: #666666">,</span>y<span style="color: #666666">),</span> <span style="color: #666666">(</span>Objects<span style="color: #666666">.</span><span style="color: #7D9029">equals</span><span style="color: #666666">(</span>v1<span style="color: #666666">,</span><span style="color: #BA2121">&quot;x&quot;</span><span style="color: #666666">))</span> <span style="color: #666666">?</span> x <span style="color: #666666">:</span> y<span style="color: #666666">);</span>
+                            <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+                        <span style="color: #666666">};</span>
+                        stack<span style="color: #666666">.</span><span style="color: #7D9029">push</span><span style="color: #666666">(</span>a<span style="color: #666666">);</span>
+                    <span style="color: #666666">}</span>
+
+                <span style="color: #408080; font-style: italic">/* If the operator takes one argument</span>
+<span style="color: #408080; font-style: italic">                   pop one function from the stack,</span>
+<span style="color: #408080; font-style: italic">                   evaluate the operator with the argument as the function,</span>
+<span style="color: #408080; font-style: italic">                   and push the result to the stack. */</span>
+                <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #666666">{</span>
+                    Object arg1 <span style="color: #666666">=</span> <span style="color: #666666">(</span>Object<span style="color: #666666">)</span> stack<span style="color: #666666">.</span><span style="color: #7D9029">pop</span><span style="color: #666666">();</span>
+
+                    <span style="color: #408080; font-style: italic">/* Case 1:</span>
+<span style="color: #408080; font-style: italic">                    The argument is a float</span>
+<span style="color: #408080; font-style: italic">                    */</span>
+                    <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>arg1 <span style="color: #008000; font-weight: bold">instanceof</span> Float<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                        <span style="color: #B00040">float</span> v1 <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> arg1<span style="color: #666666">;</span>
+                        Function a <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+                            <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> ops_func<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>token<span style="color: #666666">).</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">(</span>v1<span style="color: #666666">,0.0f);</span>
+                            <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+                        <span style="color: #666666">};</span>
+                        stack<span style="color: #666666">.</span><span style="color: #7D9029">push</span><span style="color: #666666">(</span>a<span style="color: #666666">);</span>
+                    <span style="color: #666666">}</span>
+
+                    <span style="color: #408080; font-style: italic">/* Case 2:</span>
+<span style="color: #408080; font-style: italic">                    The argument is a variable</span>
+<span style="color: #408080; font-style: italic">                    */</span>
+                    <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>arg1 <span style="color: #008000; font-weight: bold">instanceof</span> String<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                        String v1 <span style="color: #666666">=</span> <span style="color: #666666">(</span>String<span style="color: #666666">)</span> arg1<span style="color: #666666">;</span>
+                        Function a <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+                            <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> ops_func<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>token<span style="color: #666666">).</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">((</span>Objects<span style="color: #666666">.</span><span style="color: #7D9029">equals</span><span style="color: #666666">(</span>v1<span style="color: #666666">,</span><span style="color: #BA2121">&quot;x&quot;</span><span style="color: #666666">))</span> <span style="color: #666666">?</span> x <span style="color: #666666">:</span> y<span style="color: #666666">,</span> <span style="color: #666666">0.0f);</span>
+                            <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+                        <span style="color: #666666">};</span>
+                        stack<span style="color: #666666">.</span><span style="color: #7D9029">push</span><span style="color: #666666">(</span>a<span style="color: #666666">);</span>
+                    <span style="color: #666666">}</span>
+
+                    <span style="color: #408080; font-style: italic">/* Case 3:</span>
+<span style="color: #408080; font-style: italic">                    The argument is a function</span>
+<span style="color: #408080; font-style: italic">                    */</span>
+                    <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>arg1 <span style="color: #008000; font-weight: bold">instanceof</span> Function<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                        Function f1 <span style="color: #666666">=</span> <span style="color: #666666">(</span>Function<span style="color: #666666">)</span> arg1<span style="color: #666666">;</span>
+                        Function a <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+                            <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> ops_func<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>token<span style="color: #666666">).</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">(</span>f1<span style="color: #666666">.</span><span style="color: #7D9029">evalfunc</span><span style="color: #666666">(</span>x<span style="color: #666666">,</span>y<span style="color: #666666">),0.0f);</span>
+                            <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+                        <span style="color: #666666">};</span>
+                        stack<span style="color: #666666">.</span><span style="color: #7D9029">push</span><span style="color: #666666">(</span>a<span style="color: #666666">);</span>
+                    <span style="color: #666666">}</span>
+                <span style="color: #666666">}</span>
+            <span style="color: #666666">}</span>
+        <span style="color: #666666">}</span>
+
+        <span style="color: #408080; font-style: italic">//The only object left in the stack should now be the final function</span>
+        Object end <span style="color: #666666">=</span> stack<span style="color: #666666">.</span><span style="color: #7D9029">pop</span><span style="color: #666666">();</span>
+
+        <span style="color: #408080; font-style: italic">/* Case 1:</span>
+<span style="color: #408080; font-style: italic">        The final function is a function</span>
+<span style="color: #408080; font-style: italic">        */</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>end <span style="color: #008000; font-weight: bold">instanceof</span> Function<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #666666">(</span>Function<span style="color: #666666">)</span> end<span style="color: #666666">;</span>
+        <span style="color: #666666">}</span>
+
+        <span style="color: #408080; font-style: italic">/* Case 2:</span>
+<span style="color: #408080; font-style: italic">        The final function is a float</span>
+<span style="color: #408080; font-style: italic">        */</span>
+        <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>end <span style="color: #008000; font-weight: bold">instanceof</span> Float<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            Function a <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+                <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span> end<span style="color: #666666">;</span>
+                <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+            <span style="color: #666666">};</span>
+            <span style="color: #008000; font-weight: bold">return</span> a<span style="color: #666666">;</span>
+        <span style="color: #666666">}</span>
+
+        <span style="color: #408080; font-style: italic">/* Case 3:</span>
+<span style="color: #408080; font-style: italic">        The final function is a variable</span>
+<span style="color: #408080; font-style: italic">        */</span>
+        <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>end <span style="color: #008000; font-weight: bold">instanceof</span> String<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            Function a <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span> x<span style="color: #666666">,</span> <span style="color: #B00040">float</span> y<span style="color: #666666">)</span> <span style="color: #666666">-&gt;</span> <span style="color: #666666">{</span>
+                <span style="color: #B00040">float</span> z <span style="color: #666666">=</span> <span style="color: #666666">(</span>Objects<span style="color: #666666">.</span><span style="color: #7D9029">equals</span><span style="color: #666666">(</span>end<span style="color: #666666">,</span><span style="color: #BA2121">&quot;x&quot;</span><span style="color: #666666">))</span> <span style="color: #666666">?</span> x <span style="color: #666666">:</span> y<span style="color: #666666">;</span>
+                <span style="color: #008000; font-weight: bold">return</span> z<span style="color: #666666">;</span>
+            <span style="color: #666666">};</span>
+            <span style="color: #008000; font-weight: bold">return</span> a<span style="color: #666666">;</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #666666">(</span>Function<span style="color: #666666">)</span> stack<span style="color: #666666">.</span><span style="color: #7D9029">pop</span><span style="color: #666666">();</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * This takes in a string and breaks it up into it&#39;s constituent tokens</span>
+<span style="color: #408080; font-style: italic">     * @param s A string that is going to be tokenised</span>
+<span style="color: #408080; font-style: italic">     * @return a list of string tokens in the order in which they appeared in s</span>
+<span style="color: #408080; font-style: italic">    */</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> List<span style="color: #666666">&lt;</span>String<span style="color: #666666">&gt;</span> <span style="color: #0000FF">tokenise</span><span style="color: #666666">(</span>String s<span style="color: #666666">)</span> <span style="color: #008000; font-weight: bold">throws</span> IOException <span style="color: #666666">{</span>
+        StreamTokenizer tokenizer <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> StreamTokenizer<span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">new</span> StringReader<span style="color: #666666">(</span>s<span style="color: #666666">));</span>
+        tokenizer<span style="color: #666666">.</span><span style="color: #7D9029">ordinaryChar</span><span style="color: #666666">(</span><span style="color: #BA2121">&#39;-&#39;</span><span style="color: #666666">);</span> <span style="color: #408080; font-style: italic">// Don&#39;t parse minus as part of numbers.</span>
+        tokenizer<span style="color: #666666">.</span><span style="color: #7D9029">ordinaryChar</span><span style="color: #666666">(</span><span style="color: #BA2121">&#39;/&#39;</span><span style="color: #666666">);</span> <span style="color: #408080; font-style: italic">// Don&#39;t parse / as a special character</span>
+        List<span style="color: #666666">&lt;</span>String<span style="color: #666666">&gt;</span> tokBuf <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> ArrayList<span style="color: #666666">&lt;</span>String<span style="color: #666666">&gt;();</span>
+        <span style="color: #408080; font-style: italic">// While the final token has not been reached</span>
+        <span style="color: #008000; font-weight: bold">while</span> <span style="color: #666666">(</span>tokenizer<span style="color: #666666">.</span><span style="color: #7D9029">nextToken</span><span style="color: #666666">()</span> <span style="color: #666666">!=</span> StreamTokenizer<span style="color: #666666">.</span><span style="color: #7D9029">TT_EOF</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            <span style="color: #408080; font-style: italic">/* Make sure all of the items that are added to the list are of type</span>
+<span style="color: #408080; font-style: italic">            string */</span>
+            <span style="color: #008000; font-weight: bold">switch</span><span style="color: #666666">(</span>tokenizer<span style="color: #666666">.</span><span style="color: #7D9029">ttype</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                <span style="color: #008000; font-weight: bold">case</span> StreamTokenizer<span style="color: #666666">.</span><span style="color: #7D9029">TT_NUMBER</span><span style="color: #666666">:</span>
+                    tokBuf<span style="color: #666666">.</span><span style="color: #7D9029">add</span><span style="color: #666666">(</span>String<span style="color: #666666">.</span><span style="color: #7D9029">valueOf</span><span style="color: #666666">(</span>tokenizer<span style="color: #666666">.</span><span style="color: #7D9029">nval</span><span style="color: #666666">));</span>
+                    <span style="color: #008000; font-weight: bold">break</span><span style="color: #666666">;</span>
+                <span style="color: #008000; font-weight: bold">case</span> StreamTokenizer<span style="color: #666666">.</span><span style="color: #7D9029">TT_WORD</span><span style="color: #666666">:</span>
+                    tokBuf<span style="color: #666666">.</span><span style="color: #7D9029">add</span><span style="color: #666666">(</span>tokenizer<span style="color: #666666">.</span><span style="color: #7D9029">sval</span><span style="color: #666666">);</span>
+                    <span style="color: #008000; font-weight: bold">break</span><span style="color: #666666">;</span>
+                <span style="color: #008000; font-weight: bold">default</span><span style="color: #666666">:</span>  <span style="color: #408080; font-style: italic">// operator</span>
+                    tokBuf<span style="color: #666666">.</span><span style="color: #7D9029">add</span><span style="color: #666666">(</span>String<span style="color: #666666">.</span><span style="color: #7D9029">valueOf</span><span style="color: #666666">((</span><span style="color: #B00040">char</span><span style="color: #666666">)</span> tokenizer<span style="color: #666666">.</span><span style="color: #7D9029">ttype</span><span style="color: #666666">));</span>
+            <span style="color: #666666">}</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">return</span> tokBuf<span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre></div>

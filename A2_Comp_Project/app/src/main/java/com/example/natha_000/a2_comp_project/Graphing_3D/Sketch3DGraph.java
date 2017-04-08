@@ -3,11 +3,14 @@ package com.example.natha_000.a2_comp_project.Graphing_3D;
 /**
  * Created by Natha_000 on 22/12/2016.
  */
+import android.content.Intent;
 import android.util.Log;
 
 import java.io.IOException;
 
 import processing.core.PApplet;
+
+import static com.example.natha_000.a2_comp_project.Graphing_3D.Intemediary3D.ERROR_MESSAGE;
 
 public class Sketch3DGraph extends PApplet {
     // This variable is used to store the parent activity of this fragment
@@ -49,7 +52,14 @@ public class Sketch3DGraph extends PApplet {
             WorldLayoutData.setParameters(-10f,10f,-10f,10f,51,51,100f);
             WorldLayoutData.setfunction(funcText);
             WorldLayoutData.generate();
-        } catch (IOException e) {}
+        } catch (IOException e) {
+            Intent intent = new Intent(getActivity(), Intemediary3D.class);
+
+            String message = "Error";
+            intent.putExtra(ERROR_MESSAGE, message);
+
+            startActivity(intent);
+        }
         floorVertices = WorldLayoutData.SURFACE_COORDS;
         floorColors[0] = WorldLayoutData.SURFACE_COLORS[0];
         floorColors[1] = WorldLayoutData.SURFACE_COLORS[1];

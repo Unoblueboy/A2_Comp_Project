@@ -1,0 +1,222 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green128\blue0;\red186\green33\blue33;\red0\green0\blue255;\red188\green122\blue0;\red25\green23\blue124;\red64\green128\blue128;\red176\green0\blue64;\red187\green187\blue187;\red0\green0\blue128;\red160\green160\blue0;\red170\green34\blue255;\red136\green136\blue136;\red136\green0\blue0;\red102\green102\blue102;\red187\green102\blue136;\red0\green68\blue221;\red210\green65\blue58;\red255\green0\blue0;\red160\green0\blue0;\red187\green102\blue34;\red0\green160\blue0;\red125\green144\blue41;\red128\green0\blue128;\red153\green153\blue153;}\f0 {\cf14 .}{\chbrdr\chcfpat18 \\}A2_Comp_Project{\chbrdr\chcfpat18 \\}app{\chbrdr\chcfpat18 \\}src{\chbrdr\chcfpat18 \\}main{\chbrdr\chcfpat18 \\}java{\chbrdr\chcfpat18 \\}com{\chbrdr\chcfpat18 \\}example{\chbrdr\chcfpat18 \\}natha_000{\chbrdr\chcfpat18 \\}a2_comp_project{\chbrdr\chcfpat18 \\}Graphing_Stats{\chbrdr\chcfpat18 \\}StatsDataTable{\cf14 .}{\cf22 java}\par
+{\cf1\b package} {\cf3\b com.example.natha_000.a2_comp_project.Graphing_Stats}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b android.app.Fragment}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.content.Context}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.os.Bundle}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.text.InputType}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.text.method.DigitsKeyListener}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.util.Log}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.view.Gravity}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.view.LayoutInflater}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.view.View}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.view.ViewGroup}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.widget.Button}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.widget.EditText}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.widget.TableLayout}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.widget.TableRow}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.widget.Toast}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b com.example.natha_000.a2_comp_project.R}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b java.io.File}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.io.FileWriter}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.util.ArrayList}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.util.List}{\cf14 ;}\par
+\par
+\par
+{\cf1\b public} {\cf1\b class} {\cf3\b StatsDataTable} {\cf1\b extends} Fragment {\cf14 \{}\par
+    {\cf1\b private} {\cf1\b static} List{\cf14 <}EditText{\cf14 [}{\cf14 ]}{\cf14 >} etList {\cf14 =} {\cf1\b new} ArrayList{\cf14 <}EditText{\cf14 [}{\cf14 ]}{\cf14 >}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+\par
+    {\cf1\b private} {\cf1\b static} TableLayout tl{\cf14 ;}\par
+\par
+    {\cf1\b public} {\cf3 StatsDataTable}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        {\cf6\i // Required empty public constructor\par
+}    {\cf14 \}}\par
+\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 onCreate}{\cf14 (}Bundle savedInstanceState{\cf14 )} {\cf14 \{}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onCreate}{\cf14 (}savedInstanceState{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} View {\cf3 onCreateView}{\cf14 (}LayoutInflater inflater{\cf14 ,} ViewGroup container{\cf14 ,}\par
+                             Bundle savedInstanceState{\cf14 )} {\cf14 \{}\par
+        {\cf6\i // Inflate the layout for this fragment\par
+}        View view {\cf14 =} inflater{\cf14 .}{\cf22 inflate}{\cf14 (}R{\cf14 .}{\cf22 layout}{\cf14 .}{\cf22 fragment_stats_data_table}{\cf14 ,} container{\cf14 ,} {\cf1\b false}{\cf14 )}{\cf14 ;}\par
+        tl {\cf14 =} {\cf14 (}TableLayout{\cf14 )} view{\cf14 .}{\cf22 findViewById}{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 tl2}{\cf14 )}{\cf14 ;}\par
+        Button b11 {\cf14 =} {\cf14 (}Button{\cf14 )} view{\cf14 .}{\cf22 findViewById}{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 button11}{\cf14 )}{\cf14 ;}\par
+        EditText{\cf14 [}{\cf14 ]} etArray {\cf14 =} {\cf14 \{}{\cf14 (}EditText{\cf14 )} view{\cf14 .}{\cf22 findViewById}{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 editText}{\cf14 )}{\cf14 ,}{\cf14 (}EditText{\cf14 )} view{\cf14 .}{\cf22 findViewById}{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 editText2}{\cf14 )}{\cf14 ,}{\cf14 (}EditText{\cf14 )} view{\cf14 .}{\cf22 findViewById}{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 editText3}{\cf14 )}{\cf14 \}}{\cf14 ;}\par
+        etList{\cf14 .}{\cf22 add}{\cf14 (}etArray{\cf14 )}{\cf14 ;}\par
+        b11{\cf14 .}{\cf22 setOnClickListener}{\cf14 (}{\cf1\b new} View{\cf14 .}{\cf22 OnClickListener}{\cf14 (}{\cf14 )}\par
+        {\cf14 \{}\par
+            {\cf11 @Override}\par
+            {\cf1\b public} {\cf7 void} {\cf3 onClick}{\cf14 (}View v{\cf14 )}\par
+            {\cf14 \{}\par
+                add_row{\cf14 (}v{\cf14 )}{\cf14 ;}\par
+            {\cf14 \}}\par
+        {\cf14 \}}{\cf14 )}{\cf14 ;}\par
+        Button b12 {\cf14 =} {\cf14 (}Button{\cf14 )} view{\cf14 .}{\cf22 findViewById}{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 button12}{\cf14 )}{\cf14 ;}\par
+        b12{\cf14 .}{\cf22 setOnClickListener}{\cf14 (}{\cf1\b new} View{\cf14 .}{\cf22 OnClickListener}{\cf14 (}{\cf14 )}\par
+        {\cf14 \{}\par
+            {\cf11 @Override}\par
+            {\cf1\b public} {\cf7 void} {\cf3 onClick}{\cf14 (}View v{\cf14 )}\par
+            {\cf14 \{}\par
+                clear_all{\cf14 (}v{\cf14 )}{\cf14 ;}\par
+            {\cf14 \}}\par
+        {\cf14 \}}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} view{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 onAttach}{\cf14 (}Context context{\cf14 )} {\cf14 \{}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onAttach}{\cf14 (}context{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 onDetach}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onDetach}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 void} {\cf3 delete_row}{\cf14 (}View view{\cf14 )} {\cf14 \{}\par
+        TableRow parent {\cf14 =} {\cf14 (}TableRow{\cf14 )} view{\cf14 .}{\cf22 getParent}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        EditText lb {\cf14 =} {\cf14 (}EditText{\cf14 )} parent{\cf14 .}{\cf22 getChildAt}{\cf14 (}{\cf14 0}{\cf14 )}{\cf14 ;}\par
+        EditText ub {\cf14 =} {\cf14 (}EditText{\cf14 )} parent{\cf14 .}{\cf22 getChildAt}{\cf14 (}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        EditText freq {\cf14 =} {\cf14 (}EditText{\cf14 )} parent{\cf14 .}{\cf22 getChildAt}{\cf14 (}{\cf14 2}{\cf14 )}{\cf14 ;}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: Delete row"}{\cf14 ,}lb{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: Delete row"}{\cf14 ,}ub{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: Delete row"}{\cf14 ,}freq{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b try} {\cf14 \{}\par
+            StatsClasses relClass {\cf14 =} StatsClasses{\cf14 .}{\cf22 getClassByLb}{\cf14 (}Integer{\cf14 .}{\cf22 parseInt}{\cf14 (}lb{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            relClass{\cf14 .}{\cf22 delete}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b catch} {\cf14 (}Exception e{\cf14 )} {\cf14 \{}{\cf14 \}}\par
+        {\cf1\b for} {\cf14 (}{\cf7 int} i {\cf14 =} etList{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )}{\cf14 -}{\cf14 1}{\cf14 ;} i{\cf14 >}{\cf14 =} {\cf14 0}{\cf14 ;} i{\cf14 -}{\cf14 -}{\cf14 )} {\cf14 \{}\par
+            {\cf1\b if} {\cf14 (}lb {\cf14 =}{\cf14 =} etList{\cf14 .}{\cf22 get}{\cf14 (}i{\cf14 )}{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 )} {\cf14 \{}\par
+                etList{\cf14 .}{\cf22 remove}{\cf14 (}i{\cf14 )}{\cf14 ;}\par
+            {\cf14 \}}\par
+        {\cf14 \}}\par
+        parent{\cf14 .}{\cf22 setVisibility}{\cf14 (}View{\cf14 .}{\cf22 GONE}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 void} {\cf3 clear_all}{\cf14 (}View view{\cf14 )} {\cf14 \{}\par
+        {\cf1\b for} {\cf14 (}{\cf7 int} i{\cf14 =}etList{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )}{\cf14 -}{\cf14 1}{\cf14 ;} i{\cf14 >}{\cf14 =}{\cf14 1}{\cf14 ;} i{\cf14 -}{\cf14 -}{\cf14 )} {\cf14 \{}\par
+            delete_row{\cf14 (}etList{\cf14 .}{\cf22 get}{\cf14 (}i{\cf14 )}{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 void} {\cf3 add_row}{\cf14 (}View view{\cf14 )}{\cf14 \{}\par
+        EditText{\cf14 [}{\cf14 ]} lastItem {\cf14 =} etList{\cf14 .}{\cf22 get}{\cf14 (}etList{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )}{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: add_Row"}{\cf14 ,}{\cf2 "This is the first item '"} {\cf14 +} lastItem{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 +}{\cf2 "'"}{\cf14 )} {\cf14 ;}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: add_Row"}{\cf14 ,}{\cf2 "This is the second item '"} {\cf14 +} lastItem{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 +}{\cf2 "'"}{\cf14 )}{\cf14 ;}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: add_Row"}{\cf14 ,}{\cf2 "This is the third item '"} {\cf14 +} lastItem{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 +}{\cf2 "'"}{\cf14 )}{\cf14 ;}\par
+        {\cf7 boolean} isEmpty {\cf14 =} lastItem{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 equals}{\cf14 (}{\cf2 ""}{\cf14 )} {\cf14 |}{\cf14 |} lastItem{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 equals}{\cf14 (}{\cf2 ""}{\cf14 )} {\cf14 |}{\cf14 |} lastItem{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 equals}{\cf14 (}{\cf2 ""}{\cf14 )}{\cf14 ;}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: add_Row"}{\cf14 ,}Boolean{\cf14 .}{\cf22 toString}{\cf14 (}isEmpty{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b if}{\cf14 (}isEmpty{\cf14 )} {\cf14 \{}\par
+            Toast{\cf14 .}{\cf22 makeText}{\cf14 (}{\cf14 (}Context{\cf14 )} getActivity{\cf14 (}{\cf14 )}{\cf14 ,}{\cf2 "Please enter valid data"}{\cf14 ,} Toast{\cf14 .}{\cf22 LENGTH_SHORT}{\cf14 )}{\cf14 .}{\cf22 show}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b else} {\cf14 \{}\par
+            {\cf7 boolean} validLb {\cf14 =} StatsClasses{\cf14 .}{\cf22 validBound}{\cf14 (}Float{\cf14 .}{\cf22 parseFloat}{\cf14 (}lastItem{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            {\cf7 boolean} validUb {\cf14 =} StatsClasses{\cf14 .}{\cf22 validBound}{\cf14 (}Float{\cf14 .}{\cf22 parseFloat}{\cf14 (}lastItem{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            {\cf7 boolean} validBounds {\cf14 =} StatsClasses{\cf14 .}{\cf22 validBounds}{\cf14 (}Float{\cf14 .}{\cf22 parseFloat}{\cf14 (}lastItem{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ,} Float{\cf14 .}{\cf22 parseFloat}{\cf14 (}lastItem{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            {\cf7 boolean} validFreq {\cf14 =} Integer{\cf14 .}{\cf22 parseInt}{\cf14 (}lastItem{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 )} {\cf14 !}{\cf14 =} {\cf14 0}{\cf14 ;}\par
+            {\cf7 boolean} invalid {\cf14 =} {\cf14 !}{\cf14 (}validLb {\cf14 &}{\cf14 &} validUb {\cf14 &}{\cf14 &} validBounds {\cf14 &}{\cf14 &} validFreq{\cf14 )}{\cf14 ;}\par
+            Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: add_Row"}{\cf14 ,}{\cf2 "ValidLb: "}{\cf14 +}Boolean{\cf14 .}{\cf22 toString}{\cf14 (}validLb{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: add_Row"}{\cf14 ,}{\cf2 "ValidUb: "}{\cf14 +}Boolean{\cf14 .}{\cf22 toString}{\cf14 (}validUb{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: add_Row"}{\cf14 ,}{\cf2 "ValidBounds: "}{\cf14 +}Boolean{\cf14 .}{\cf22 toString}{\cf14 (}validBounds{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: add_Row"}{\cf14 ,}{\cf2 "ValidFreq: "}{\cf14 +}Boolean{\cf14 .}{\cf22 toString}{\cf14 (}validFreq{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: add_Row"}{\cf14 ,}{\cf2 "invalid: "}{\cf14 +}Boolean{\cf14 .}{\cf22 toString}{\cf14 (}invalid{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            {\cf1\b if} {\cf14 (}invalid{\cf14 )} {\cf14 \{}\par
+                Toast{\cf14 .}{\cf22 makeText}{\cf14 (}{\cf14 (}Context{\cf14 )} getActivity{\cf14 (}{\cf14 )}{\cf14 ,}{\cf2 "Please enter valid data"}{\cf14 ,} Toast{\cf14 .}{\cf22 LENGTH_SHORT}{\cf14 )}{\cf14 .}{\cf22 show}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+                {\cf1\b return}{\cf14 ;}\par
+            {\cf14 \}}\par
+\par
+            {\cf7 float} lowerbound {\cf14 =} Float{\cf14 .}{\cf22 parseFloat}{\cf14 (}lastItem{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            {\cf7 float} upperbound {\cf14 =} Float{\cf14 .}{\cf22 parseFloat}{\cf14 (}lastItem{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            {\cf7 int} frequency {\cf14 =} Integer{\cf14 .}{\cf22 parseInt}{\cf14 (}lastItem{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            {\cf1\b if} {\cf14 (}StatsClasses{\cf14 .}{\cf22 getClassByLb}{\cf14 (}lowerbound{\cf14 )} {\cf14 =}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+                {\cf1\b new} StatsClasses{\cf14 (}lowerbound{\cf14 ,} upperbound{\cf14 ,} frequency{\cf14 )}{\cf14 ;}\par
+            {\cf14 \}}\par
+\par
+\par
+\par
+            TableRow tr {\cf14 =} {\cf1\b new} TableRow{\cf14 (}getActivity{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            tr{\cf14 .}{\cf22 setLayoutParams}{\cf14 (}{\cf1\b new} TableRow{\cf14 .}{\cf22 LayoutParams}{\cf14 (}TableRow{\cf14 .}{\cf22 LayoutParams}{\cf14 .}{\cf22 MATCH_PARENT}{\cf14 ,} TableRow{\cf14 .}{\cf22 LayoutParams}{\cf14 .}{\cf22 WRAP_CONTENT}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+            EditText lb {\cf14 =} {\cf1\b new} EditText{\cf14 (}getActivity{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            lb{\cf14 .}{\cf22 setKeyListener}{\cf14 (}DigitsKeyListener{\cf14 .}{\cf22 getInstance}{\cf14 (}{\cf1\b false}{\cf14 ,}{\cf1\b true}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            lb{\cf14 .}{\cf22 setId}{\cf14 (}View{\cf14 .}{\cf22 generateViewId}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+{\cf6\i //            lb.setInputType(InputType.TYPE_CLASS_NUMBER);\par
+}            TableRow{\cf14 .}{\cf22 LayoutParams} lbparams {\cf14 =} {\cf1\b new} TableRow{\cf14 .}{\cf22 LayoutParams}{\cf14 (}{\cf14 0}{\cf14 ,} TableRow{\cf14 .}{\cf22 LayoutParams}{\cf14 .}{\cf22 FILL_PARENT}{\cf14 ,} {\cf14 1f}{\cf14 )}{\cf14 ;}\par
+\par
+            tr{\cf14 .}{\cf22 addView}{\cf14 (}lb{\cf14 ,} lbparams{\cf14 )}{\cf14 ;}\par
+\par
+            EditText ub {\cf14 =} {\cf1\b new} EditText{\cf14 (}getActivity{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            ub{\cf14 .}{\cf22 setKeyListener}{\cf14 (}DigitsKeyListener{\cf14 .}{\cf22 getInstance}{\cf14 (}{\cf1\b false}{\cf14 ,}{\cf1\b true}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            ub{\cf14 .}{\cf22 setId}{\cf14 (}View{\cf14 .}{\cf22 generateViewId}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+{\cf6\i //            ub.setInputType(InputType.TYPE_CLASS_NUMBER);\par
+}            TableRow{\cf14 .}{\cf22 LayoutParams} ubparams {\cf14 =} {\cf1\b new} TableRow{\cf14 .}{\cf22 LayoutParams}{\cf14 (}{\cf14 0}{\cf14 ,} TableRow{\cf14 .}{\cf22 LayoutParams}{\cf14 .}{\cf22 FILL_PARENT}{\cf14 ,} {\cf14 1f}{\cf14 )}{\cf14 ;}\par
+\par
+            tr{\cf14 .}{\cf22 addView}{\cf14 (}ub{\cf14 ,} ubparams{\cf14 )}{\cf14 ;}\par
+\par
+            EditText freq {\cf14 =} {\cf1\b new} EditText{\cf14 (}getActivity{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            freq{\cf14 .}{\cf22 setId}{\cf14 (}View{\cf14 .}{\cf22 generateViewId}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            freq{\cf14 .}{\cf22 setInputType}{\cf14 (}InputType{\cf14 .}{\cf22 TYPE_CLASS_NUMBER}{\cf14 )}{\cf14 ;}\par
+            TableRow{\cf14 .}{\cf22 LayoutParams} freqparams {\cf14 =} {\cf1\b new} TableRow{\cf14 .}{\cf22 LayoutParams}{\cf14 (}{\cf14 0}{\cf14 ,} TableRow{\cf14 .}{\cf22 LayoutParams}{\cf14 .}{\cf22 FILL_PARENT}{\cf14 ,} {\cf14 1f}{\cf14 )}{\cf14 ;}\par
+\par
+            tr{\cf14 .}{\cf22 addView}{\cf14 (}freq{\cf14 ,} freqparams{\cf14 )}{\cf14 ;}\par
+\par
+            Button btn {\cf14 =} {\cf1\b new} Button{\cf14 (}getActivity{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            btn{\cf14 .}{\cf22 setText}{\cf14 (}{\cf2 "Delete?"}{\cf14 )}{\cf14 ;}\par
+            btn{\cf14 .}{\cf22 setGravity}{\cf14 (}Gravity{\cf14 .}{\cf22 CENTER}{\cf14 )}{\cf14 ;}\par
+            TableRow{\cf14 .}{\cf22 LayoutParams} btnparams {\cf14 =} {\cf1\b new} TableRow{\cf14 .}{\cf22 LayoutParams}{\cf14 (}{\cf14 0}{\cf14 ,} TableRow{\cf14 .}{\cf22 LayoutParams}{\cf14 .}{\cf22 FILL_PARENT}{\cf14 ,} {\cf14 1f}{\cf14 )}{\cf14 ;}\par
+\par
+            btn{\cf14 .}{\cf22 setOnClickListener}{\cf14 (}{\cf1\b new} View{\cf14 .}{\cf22 OnClickListener}{\cf14 (}{\cf14 )}\par
+            {\cf14 \{}\par
+                {\cf11 @Override}\par
+                {\cf1\b public} {\cf7 void} {\cf3 onClick}{\cf14 (}View v{\cf14 )}\par
+                {\cf14 \{}\par
+                    delete_row{\cf14 (}v{\cf14 )}{\cf14 ;}\par
+                {\cf14 \}}\par
+            {\cf14 \}}{\cf14 )}{\cf14 ;}\par
+\par
+            tr{\cf14 .}{\cf22 addView}{\cf14 (}btn{\cf14 ,} btnparams{\cf14 )}{\cf14 ;}\par
+\par
+            tl{\cf14 .}{\cf22 addView}{\cf14 (}tr{\cf14 ,} {\cf1\b new} TableLayout{\cf14 .}{\cf22 LayoutParams}{\cf14 (}TableLayout{\cf14 .}{\cf22 LayoutParams}{\cf14 .}{\cf22 FILL_PARENT}{\cf14 ,} TableLayout{\cf14 .}{\cf22 LayoutParams}{\cf14 .}{\cf22 WRAP_CONTENT}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: Add_Row"}{\cf14 ,} {\cf2 "Now adding a row"}{\cf14 )}{\cf14 ;}\par
+\par
+            EditText{\cf14 [}{\cf14 ]} etArray {\cf14 =} {\cf14 \{}lb{\cf14 ,}ub{\cf14 ,}freq{\cf14 \}}{\cf14 ;}\par
+            etList{\cf14 .}{\cf22 add}{\cf14 (}etArray{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 void} {\cf3 export}{\cf14 (}File folder{\cf14 )} {\cf14 \{}\par
+        StringBuilder csv {\cf14 =} {\cf1\b new} StringBuilder{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b for} {\cf14 (}StatsClasses ele{\cf14 :} StatsClasses{\cf14 .}{\cf22 classes}{\cf14 )} {\cf14 \{}\par
+            String lb {\cf14 =} Float{\cf14 .}{\cf22 toString}{\cf14 (}ele{\cf14 .}{\cf22 lowerbound}{\cf14 )}{\cf14 ;}\par
+            String ub {\cf14 =} Float{\cf14 .}{\cf22 toString}{\cf14 (}ele{\cf14 .}{\cf22 upperbound}{\cf14 )}{\cf14 ;}\par
+            String freq {\cf14 =} Integer{\cf14 .}{\cf22 toString}{\cf14 (}ele{\cf14 .}{\cf22 frequency}{\cf14 )}{\cf14 ;}\par
+            String freqdens {\cf14 =} Float{\cf14 .}{\cf22 toString}{\cf14 (}ele{\cf14 .}{\cf22 freqdensity}{\cf14 )}{\cf14 ;}\par
+            csv{\cf14 .}{\cf22 append}{\cf14 (}lb{\cf14 )}{\cf14 ;}\par
+            csv{\cf14 .}{\cf22 append}{\cf14 (}{\cf2 ","}{\cf14 )}{\cf14 ;}\par
+            csv{\cf14 .}{\cf22 append}{\cf14 (}ub{\cf14 )}{\cf14 ;}\par
+            csv{\cf14 .}{\cf22 append}{\cf14 (}{\cf2 ","}{\cf14 )}{\cf14 ;}\par
+            csv{\cf14 .}{\cf22 append}{\cf14 (}freq{\cf14 )}{\cf14 ;}\par
+            csv{\cf14 .}{\cf22 append}{\cf14 (}{\cf2 ","}{\cf14 )}{\cf14 ;}\par
+            csv{\cf14 .}{\cf22 append}{\cf14 (}freqdens{\cf14 )}{\cf14 ;}\par
+            csv{\cf14 .}{\cf22 append}{\cf14 (}{\cf2 "\\n"}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+        FileWriter file {\cf14 =} {\cf1\b null}{\cf14 ;}\par
+        {\cf1\b try} {\cf14 \{}\par
+            file {\cf14 =} {\cf1\b new} FileWriter{\cf14 (}{\cf1\b new} File{\cf14 (}folder{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )} {\cf14 +} File{\cf14 .}{\cf22 separator} {\cf14 +} {\cf2 "Table.csv"}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            file{\cf14 .}{\cf22 append}{\cf14 (}{\cf2 "Lowerbound, Upperbound, Frequency, Frequency Density\\n"}{\cf14 )}{\cf14 ;}\par
+            file{\cf14 .}{\cf22 append}{\cf14 (}csv{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b catch} {\cf14 (}Exception e{\cf14 )} {\cf14 \{}\par
+        {\cf14 \}} {\cf1\b finally} {\cf14 \{}\par
+            {\cf1\b try} {\cf14 \{}\par
+                file{\cf14 .}{\cf22 flush}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+                file{\cf14 .}{\cf22 close}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+            {\cf14 \}} {\cf1\b catch} {\cf14 (}Exception e{\cf14 )} {\cf14 \{}{\cf14 \}}\par
+        {\cf14 \}}\par
+    {\cf14 \}}\par
+{\cf14 \}}\par
+}

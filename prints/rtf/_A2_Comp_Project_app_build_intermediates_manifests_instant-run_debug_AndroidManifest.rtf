@@ -1,0 +1,78 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green128\blue0;\red186\green33\blue33;\red0\green0\blue255;\red188\green122\blue0;\red25\green23\blue124;\red64\green128\blue128;\red176\green0\blue64;\red187\green187\blue187;\red0\green0\blue128;\red160\green160\blue0;\red170\green34\blue255;\red136\green136\blue136;\red136\green0\blue0;\red102\green102\blue102;\red187\green102\blue136;\red0\green68\blue221;\red210\green65\blue58;\red255\green0\blue0;\red160\green0\blue0;\red187\green102\blue34;\red0\green160\blue0;\red125\green144\blue41;\red128\green0\blue128;\red153\green153\blue153;}\f0 .\\A2_Comp_Project\\app\\build\\intermediates\\manifests\\instant-run\\debug\\AndroidManifest.xml\par
+{\cf4 <?xml version="1.0" encoding="utf-8"?>}\par
+{\cf1\b <manifest} {\cf22 xmlns:android=}{\cf2 "http://schemas.android.com/apk/res/android"}\par
+    {\cf22 package=}{\cf2 "com.example.natha_000.a2_comp_project"}\par
+    {\cf22 android:versionCode=}{\cf2 "1"}\par
+    {\cf22 android:versionName=}{\cf2 "1.0"} {\cf1\b >}\par
+\par
+    {\cf1\b <uses-sdk}\par
+        {\cf22 android:minSdkVersion=}{\cf2 "19"}\par
+        {\cf22 android:targetSdkVersion=}{\cf2 "24"} {\cf1\b />}\par
+\par
+    {\cf1\b <uses-permission} {\cf22 android:name=}{\cf2 "android.permission.INTERNET"} {\cf1\b />}\par
+\par
+    {\cf1\b <uses-feature}\par
+        {\cf22 android:glEsVersion=}{\cf2 "0x00020000"}\par
+        {\cf22 android:required=}{\cf2 "true"} {\cf1\b />}\par
+\par
+    {\cf1\b <uses-permission} {\cf22 android:name=}{\cf2 "android.permission.NFC"} {\cf1\b />}\par
+    {\cf1\b <uses-permission} {\cf22 android:name=}{\cf2 "android.permission.WRITE_EXTERNAL_STORAGE"} {\cf1\b />}\par
+    {\cf1\b <uses-permission} {\cf22 android:name=}{\cf2 "android.permission.READ_PHONE_STATE"} {\cf1\b />}\par
+    {\cf1\b <uses-permission} {\cf22 android:name=}{\cf2 "android.permission.READ_EXTERNAL_STORAGE"} {\cf1\b />}\par
+\par
+    {\cf1\b <uses-feature}\par
+        {\cf22 android:glEsVersion=}{\cf2 "0x00020000"}\par
+        {\cf22 android:required=}{\cf2 "true"} {\cf1\b />}\par
+\par
+    {\cf1\b <supports-gl-texture} {\cf22 android:name=}{\cf2 "GL_OES_compressed_ETC1_RGB8_texture"} {\cf1\b />}\par
+    {\cf1\b <supports-gl-texture} {\cf22 android:name=}{\cf2 "GL_OES_compressed_paletted_texture"} {\cf1\b />}\par
+\par
+    {\cf6\i <!--}{\cf6\i  Indicates use of Android's VR}{\cf6\i -}{\cf6\i mode, available only on Android N+. }{\cf6\i -->}\par
+    {\cf1\b <uses-feature}\par
+        {\cf22 android:name=}{\cf2 "android.software.vr.mode"}\par
+        {\cf22 android:required=}{\cf2 "false"} {\cf1\b />} {\cf6\i <!--}{\cf6\i  Indicates use of VR features that are available only on Daydream}{\cf6\i -}{\cf6\i ready devices. }{\cf6\i -->}\par
+    {\cf1\b <uses-feature}\par
+        {\cf22 android:name=}{\cf2 "android.hardware.vr.high_performance"}\par
+        {\cf22 android:required=}{\cf2 "false"} {\cf1\b />}\par
+\par
+    {\cf1\b <application}\par
+        {\cf22 android:name=}{\cf2 "com.android.tools.fd.runtime.BootstrapApplication"}\par
+        {\cf22 android:allowBackup=}{\cf2 "true"}\par
+        {\cf22 android:icon=}{\cf2 "@mipmap/mathspepe"}\par
+        {\cf22 android:label=}{\cf2 "@string/app_name"}\par
+        {\cf22 android:supportsRtl=}{\cf2 "true"}\par
+        {\cf22 android:theme=}{\cf2 "@style/AppTheme"} {\cf1\b >}\par
+        {\cf1\b <activity}\par
+            {\cf22 android:name=}{\cf2 "com.example.natha_000.a2_comp_project.MainActivity"}\par
+            {\cf22 android:label=}{\cf2 "@string/app_name"}\par
+            {\cf22 android:theme=}{\cf2 "@style/AppTheme.NoActionBar"} {\cf1\b >}\par
+            {\cf1\b <intent-filter}{\cf1\b >}\par
+                {\cf1\b <action} {\cf22 android:name=}{\cf2 "android.intent.action.MAIN"} {\cf1\b />}\par
+\par
+                {\cf1\b <category} {\cf22 android:name=}{\cf2 "android.intent.category.LAUNCHER"} {\cf1\b />}\par
+            {\cf1\b </intent-filter>}\par
+        {\cf1\b </activity>}\par
+        {\cf1\b <activity}\par
+            {\cf22 android:name=}{\cf2 "com.example.natha_000.a2_comp_project.Main2DActivity"}\par
+            {\cf22 android:configChanges=}{\cf2 "orientation|screenSize|keyboardHidden"} {\cf1\b />}\par
+        {\cf1\b <activity}\par
+            {\cf22 android:name=}{\cf2 "com.example.natha_000.a2_comp_project.Main3DActivity"}\par
+            {\cf22 android:screenOrientation=}{\cf2 "landscape"} {\cf1\b />}\par
+        {\cf1\b <activity}\par
+            {\cf22 android:name=}{\cf2 "com.example.natha_000.a2_comp_project.MainStatsActivity"}\par
+            {\cf22 android:configChanges=}{\cf2 "orientation|screenSize|keyboardHidden"}\par
+            {\cf22 android:label=}{\cf2 "@string/title_activity_main_stats"}\par
+            {\cf22 android:theme=}{\cf2 "@style/AppTheme.NoActionBar"} {\cf1\b />}\par
+        {\cf1\b <activity}\par
+            {\cf22 android:name=}{\cf2 "com.example.natha_000.a2_comp_project.Main3DVRActivity"}\par
+            {\cf22 android:configChanges=}{\cf2 "orientation|keyboardHidden|screenSize"}\par
+            {\cf22 android:label=}{\cf2 "@string/title_activity_main3_dvr"}\par
+            {\cf22 android:theme=}{\cf2 "@style/FullscreenTheme"} {\cf1\b >}\par
+            {\cf1\b <intent-filter}{\cf1\b >}\par
+                {\cf1\b <category} {\cf22 android:name=}{\cf2 "com.google.intent.category.CARDBOARD"} {\cf1\b />}\par
+            {\cf1\b </intent-filter>}\par
+        {\cf1\b </activity>}\par
+    {\cf1\b </application>}\par
+\par
+{\cf1\b </manifest>}\par
+}

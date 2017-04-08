@@ -1,0 +1,76 @@
+<p style="font-size:14pt;font-family:sans-serif"><strong>.\FragmentBasics\app\src\main\java\com\example\android\fragments\ArticleFragment.java</strong></p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #408080; font-style: italic">/*</span>
+<span style="color: #408080; font-style: italic"> * Copyright (C) 2012 The Android Open Source Project</span>
+<span style="color: #408080; font-style: italic"> *</span>
+<span style="color: #408080; font-style: italic"> * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span style="color: #408080; font-style: italic"> * you may not use this file except in compliance with the License.</span>
+<span style="color: #408080; font-style: italic"> * You may obtain a copy of the License at</span>
+<span style="color: #408080; font-style: italic"> *</span>
+<span style="color: #408080; font-style: italic"> *      http://www.apache.org/licenses/LICENSE-2.0</span>
+<span style="color: #408080; font-style: italic"> *</span>
+<span style="color: #408080; font-style: italic"> * Unless required by applicable law or agreed to in writing, software</span>
+<span style="color: #408080; font-style: italic"> * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span style="color: #408080; font-style: italic"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span style="color: #408080; font-style: italic"> * See the License for the specific language governing permissions and</span>
+<span style="color: #408080; font-style: italic"> * limitations under the License.</span>
+<span style="color: #408080; font-style: italic"> */</span>
+<span style="color: #008000; font-weight: bold">package</span> <span style="color: #0000FF; font-weight: bold">com.example.android.fragments</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.support.v4.app.Fragment</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.os.Bundle</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.view.LayoutInflater</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.view.View</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.view.ViewGroup</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.widget.TextView</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">ArticleFragment</span> <span style="color: #008000; font-weight: bold">extends</span> Fragment <span style="color: #666666">{</span>
+    <span style="color: #008000; font-weight: bold">final</span> <span style="color: #008000; font-weight: bold">static</span> String ARG_POSITION <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;position&quot;</span><span style="color: #666666">;</span>
+    <span style="color: #B00040">int</span> mCurrentPosition <span style="color: #666666">=</span> <span style="color: #666666">-1;</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> View <span style="color: #0000FF">onCreateView</span><span style="color: #666666">(</span>LayoutInflater inflater<span style="color: #666666">,</span> ViewGroup container<span style="color: #666666">,</span> 
+        Bundle savedInstanceState<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+
+        <span style="color: #408080; font-style: italic">// If activity recreated (such as from screen rotate), restore</span>
+        <span style="color: #408080; font-style: italic">// the previous article selection set by onSaveInstanceState().</span>
+        <span style="color: #408080; font-style: italic">// This is primarily necessary when in the two-pane layout.</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>savedInstanceState <span style="color: #666666">!=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            mCurrentPosition <span style="color: #666666">=</span> savedInstanceState<span style="color: #666666">.</span><span style="color: #7D9029">getInt</span><span style="color: #666666">(</span>ARG_POSITION<span style="color: #666666">);</span>
+        <span style="color: #666666">}</span>
+
+        <span style="color: #408080; font-style: italic">// Inflate the layout for this fragment</span>
+        <span style="color: #008000; font-weight: bold">return</span> inflater<span style="color: #666666">.</span><span style="color: #7D9029">inflate</span><span style="color: #666666">(</span>R<span style="color: #666666">.</span><span style="color: #7D9029">layout</span><span style="color: #666666">.</span><span style="color: #7D9029">article_view</span><span style="color: #666666">,</span> container<span style="color: #666666">,</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onStart</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">super</span><span style="color: #666666">.</span><span style="color: #7D9029">onStart</span><span style="color: #666666">();</span>
+
+        <span style="color: #408080; font-style: italic">// During startup, check if there are arguments passed to the fragment.</span>
+        <span style="color: #408080; font-style: italic">// onStart is a good place to do this because the layout has already been</span>
+        <span style="color: #408080; font-style: italic">// applied to the fragment at this point so we can safely call the method</span>
+        <span style="color: #408080; font-style: italic">// below that sets the article text.</span>
+        Bundle args <span style="color: #666666">=</span> getArguments<span style="color: #666666">();</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>args <span style="color: #666666">!=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            <span style="color: #408080; font-style: italic">// Set article based on argument passed in</span>
+            updateArticleView<span style="color: #666666">(</span>args<span style="color: #666666">.</span><span style="color: #7D9029">getInt</span><span style="color: #666666">(</span>ARG_POSITION<span style="color: #666666">));</span>
+        <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>mCurrentPosition <span style="color: #666666">!=</span> <span style="color: #666666">-1)</span> <span style="color: #666666">{</span>
+            <span style="color: #408080; font-style: italic">// Set article based on saved instance state defined during onCreateView</span>
+            updateArticleView<span style="color: #666666">(</span>mCurrentPosition<span style="color: #666666">);</span>
+        <span style="color: #666666">}</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">updateArticleView</span><span style="color: #666666">(</span><span style="color: #B00040">int</span> position<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        TextView article <span style="color: #666666">=</span> <span style="color: #666666">(</span>TextView<span style="color: #666666">)</span> getActivity<span style="color: #666666">().</span><span style="color: #7D9029">findViewById</span><span style="color: #666666">(</span>R<span style="color: #666666">.</span><span style="color: #7D9029">id</span><span style="color: #666666">.</span><span style="color: #7D9029">article</span><span style="color: #666666">);</span>
+        article<span style="color: #666666">.</span><span style="color: #7D9029">setText</span><span style="color: #666666">(</span>Ipsum<span style="color: #666666">.</span><span style="color: #7D9029">Articles</span><span style="color: #666666">[</span>position<span style="color: #666666">]);</span>
+        mCurrentPosition <span style="color: #666666">=</span> position<span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onSaveInstanceState</span><span style="color: #666666">(</span>Bundle outState<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">super</span><span style="color: #666666">.</span><span style="color: #7D9029">onSaveInstanceState</span><span style="color: #666666">(</span>outState<span style="color: #666666">);</span>
+
+        <span style="color: #408080; font-style: italic">// Save the current article selection in case we need to recreate the fragment</span>
+        outState<span style="color: #666666">.</span><span style="color: #7D9029">putInt</span><span style="color: #666666">(</span>ARG_POSITION<span style="color: #666666">,</span> mCurrentPosition<span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre></div>

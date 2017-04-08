@@ -1,0 +1,87 @@
+<p style="font-size:14pt;font-family:sans-serif"><strong>.\A2_Comp_Project\app\build\intermediates\res\merged\debug\layout\transition_view.xml</strong></p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #BC7A00">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;RelativeLayout</span> <span style="color: #7D9029">xmlns:android=</span><span style="color: #BA2121">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/transition_frame&quot;</span>
+    <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;match_parent&quot;</span>
+    <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;match_parent&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;ImageButton</span> <span style="color: #7D9029">xmlns:android=</span><span style="color: #BA2121">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+        <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/back_button&quot;</span>
+        <span style="color: #7D9029">style=</span><span style="color: #BA2121">&quot;@style/UiButton&quot;</span>
+        <span style="color: #7D9029">android:src=</span><span style="color: #BA2121">&quot;@drawable/quantum_ic_close_white_24&quot;</span>
+        <span style="color: #7D9029">android:layout_alignParentStart=</span><span style="color: #BA2121">&quot;true&quot;</span>
+        <span style="color: #7D9029">android:layout_alignParentTop=</span><span style="color: #BA2121">&quot;true&quot;</span><span style="color: #008000; font-weight: bold">/&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;RelativeLayout</span>
+        <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/transition_top_frame&quot;</span>
+        <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+        <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+        <span style="color: #7D9029">android:layout_centerInParent=</span><span style="color: #BA2121">&quot;true&quot;</span>
+        <span style="color: #7D9029">android:paddingBottom=</span><span style="color: #BA2121">&quot;48dp&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+
+        <span style="color: #008000; font-weight: bold">&lt;ImageView</span>
+            <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/transition_icon&quot;</span>
+            <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+            <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+            <span style="color: #7D9029">android:padding=</span><span style="color: #BA2121">&quot;4dp&quot;</span>
+            <span style="color: #7D9029">android:layout_centerHorizontal=</span><span style="color: #BA2121">&quot;true&quot;</span>
+            <span style="color: #7D9029">android:scaleType=</span><span style="color: #BA2121">&quot;center&quot;</span>
+            <span style="color: #7D9029">android:src=</span><span style="color: #BA2121">&quot;@drawable/transition&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+        <span style="color: #008000; font-weight: bold">&lt;TextView</span>
+            <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/transition_text&quot;</span>
+            <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;match_parent&quot;</span>
+            <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+            <span style="color: #7D9029">android:layout_marginTop=</span><span style="color: #BA2121">&quot;32dp&quot;</span>
+            <span style="color: #7D9029">android:gravity=</span><span style="color: #BA2121">&quot;center&quot;</span>
+            <span style="color: #7D9029">android:textColor=</span><span style="color: #BA2121">&quot;#ffffff&quot;</span>
+            <span style="color: #7D9029">android:textSize=</span><span style="color: #BA2121">&quot;16sp&quot;</span>
+            <span style="color: #7D9029">android:layout_below=</span><span style="color: #BA2121">&quot;@id/transition_icon&quot;</span>
+            <span style="color: #7D9029">android:text=</span><span style="color: #BA2121">&quot;@string/place_your_phone_into_cardboard&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;/RelativeLayout&gt;</span>
+
+    <span style="color: #408080; font-style: italic">&lt;!-- Note that the transition_bottom_frame element may be programmatically</span>
+<span style="color: #408080; font-style: italic">         hidden when the device or view layout is landscape. --&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;LinearLayout</span>
+        <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/transition_bottom_frame&quot;</span>
+        <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;match_parent&quot;</span>
+        <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;@dimen/transition_bottom_bar_height&quot;</span>
+        <span style="color: #7D9029">android:orientation=</span><span style="color: #BA2121">&quot;horizontal&quot;</span>
+        <span style="color: #7D9029">android:layout_alignParentBottom=</span><span style="color: #BA2121">&quot;true&quot;</span>
+        <span style="color: #7D9029">android:background=</span><span style="color: #BA2121">&quot;#FF546E7A&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+        <span style="color: #008000; font-weight: bold">&lt;TextView</span>
+            <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/transition_question_text&quot;</span>
+            <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+            <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;match_parent&quot;</span>
+            <span style="color: #7D9029">android:layout_below=</span><span style="color: #BA2121">&quot;@id/transition_icon&quot;</span>
+            <span style="color: #7D9029">android:layout_marginStart=</span><span style="color: #BA2121">&quot;24dp&quot;</span>
+            <span style="color: #7D9029">android:paddingEnd=</span><span style="color: #BA2121">&quot;20dp&quot;</span>
+            <span style="color: #7D9029">android:gravity=</span><span style="color: #BA2121">&quot;start|center_vertical&quot;</span>
+            <span style="color: #7D9029">android:textColor=</span><span style="color: #BA2121">&quot;#ffffff&quot;</span>
+            <span style="color: #7D9029">android:textSize=</span><span style="color: #BA2121">&quot;16sp&quot;</span>
+            <span style="color: #7D9029">android:text=</span><span style="color: #BA2121">&quot;@string/switch_viewer_prompt&quot;</span><span style="color: #008000; font-weight: bold">/&gt;</span>
+        <span style="color: #008000; font-weight: bold">&lt;View</span>
+            <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;0dp&quot;</span>
+            <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;0dp&quot;</span>
+            <span style="color: #7D9029">android:layout_weight=</span><span style="color: #BA2121">&quot;1&quot;</span><span style="color: #008000; font-weight: bold">/&gt;</span>
+        <span style="color: #008000; font-weight: bold">&lt;View</span>
+            <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;1dp&quot;</span>
+            <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;match_parent&quot;</span>
+            <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/divider&quot;</span>
+            <span style="color: #7D9029">android:background=</span><span style="color: #BA2121">&quot;#1F000000&quot;</span>
+            <span style="color: #7D9029">android:layout_marginTop=</span><span style="color: #BA2121">&quot;10dp&quot;</span>
+            <span style="color: #7D9029">android:layout_marginBottom=</span><span style="color: #BA2121">&quot;10dp&quot;</span><span style="color: #008000; font-weight: bold">/&gt;</span>
+        <span style="color: #008000; font-weight: bold">&lt;TextView</span>
+            <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/transition_switch_action&quot;</span>
+            <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+            <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;match_parent&quot;</span>
+            <span style="color: #7D9029">android:paddingStart=</span><span style="color: #BA2121">&quot;20dp&quot;</span>
+            <span style="color: #7D9029">android:paddingEnd=</span><span style="color: #BA2121">&quot;24dp&quot;</span>
+            <span style="color: #7D9029">android:gravity=</span><span style="color: #BA2121">&quot;end|center_vertical&quot;</span>
+            <span style="color: #7D9029">android:textColor=</span><span style="color: #BA2121">&quot;#ffffff&quot;</span>
+            <span style="color: #7D9029">android:textSize=</span><span style="color: #BA2121">&quot;16sp&quot;</span>
+            <span style="color: #7D9029">android:text=</span><span style="color: #BA2121">&quot;@string/switch_viewer_action&quot;</span>
+            <span style="color: #7D9029">android:textAllCaps=</span><span style="color: #BA2121">&quot;true&quot;</span>
+            <span style="color: #7D9029">android:background=</span><span style="color: #BA2121">&quot;?android:attr/selectableItemBackground&quot;</span><span style="color: #008000; font-weight: bold">/&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;/LinearLayout&gt;</span>
+
+<span style="color: #008000; font-weight: bold">&lt;/RelativeLayout&gt;</span>
+</pre></div>

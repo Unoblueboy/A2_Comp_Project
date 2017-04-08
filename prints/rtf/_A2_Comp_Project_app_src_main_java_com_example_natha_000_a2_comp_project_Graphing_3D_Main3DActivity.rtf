@@ -1,0 +1,54 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green128\blue0;\red186\green33\blue33;\red0\green0\blue255;\red188\green122\blue0;\red25\green23\blue124;\red64\green128\blue128;\red176\green0\blue64;\red187\green187\blue187;\red0\green0\blue128;\red160\green160\blue0;\red170\green34\blue255;\red136\green136\blue136;\red136\green0\blue0;\red102\green102\blue102;\red187\green102\blue136;\red0\green68\blue221;\red210\green65\blue58;\red255\green0\blue0;\red160\green0\blue0;\red187\green102\blue34;\red0\green160\blue0;\red125\green144\blue41;\red128\green0\blue128;\red153\green153\blue153;}\f0 {\cf14 .}{\chbrdr\chcfpat18 \\}A2_Comp_Project{\chbrdr\chcfpat18 \\}app{\chbrdr\chcfpat18 \\}src{\chbrdr\chcfpat18 \\}main{\chbrdr\chcfpat18 \\}java{\chbrdr\chcfpat18 \\}com{\chbrdr\chcfpat18 \\}example{\chbrdr\chcfpat18 \\}natha_000{\chbrdr\chcfpat18 \\}a2_comp_project{\chbrdr\chcfpat18 \\}Graphing_3D{\chbrdr\chcfpat18 \\}Main3DActivity{\cf14 .}{\cf22 java}\par
+{\cf1\b package} {\cf3\b com.example.natha_000.a2_comp_project.Graphing_3D}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b android.app.Fragment}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.app.FragmentManager}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.content.Intent}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.os.Bundle}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.support.v7.app.AppCompatActivity}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b com.example.natha_000.a2_comp_project.R}{\cf14 ;}\par
+\par
+{\cf6\i /**\par
+ * This class is used as a the container for the fragment used to draw a 2D\par
+ * Projection of the 3D graph\par
+*/}\par
+{\cf1\b public} {\cf1\b class} {\cf3\b Main3DActivity} {\cf1\b extends} AppCompatActivity{\cf14 \{}\par
+\par
+    {\cf6\i /**\par
+     * This is a string into which we put the function text so that it can be used by the attached fragment\par
+    */}\par
+    {\cf1\b static} String functext{\cf14 ;}\par
+\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b protected} {\cf7 void} {\cf3 onCreate}{\cf14 (}Bundle savedInstanceState{\cf14 )} {\cf14 \{}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onCreate}{\cf14 (}savedInstanceState{\cf14 )}{\cf14 ;}\par
+        setContentView{\cf14 (}R{\cf14 .}{\cf22 layout}{\cf14 .}{\cf22 activity_main_3d}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // Put the sent in value from the main activity into the variable\par
+}        Intent intent {\cf14 =} getIntent{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        functext {\cf14 =} intent{\cf14 .}{\cf22 getStringExtra}{\cf14 (}Intemediary3D{\cf14 .}{\cf22 EXTRA_MESSAGE}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // Set up the fragment that draws the 3D graph\par
+}        {\cf6\i // and start it within the activity\par
+}        FragmentManager fragmentManager {\cf14 =} getFragmentManager{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        Fragment fragment {\cf14 =} {\cf1\b new} Sketch3DGraph{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        fragmentManager{\cf14 .}{\cf22 beginTransaction}{\cf14 (}{\cf14 )}\par
+                {\cf14 .}{\cf22 replace}{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 container}{\cf14 ,} fragment{\cf14 )}\par
+                {\cf14 .}{\cf22 commit}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b protected} {\cf7 void} {\cf3 onResume}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onResume}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b protected} {\cf7 void} {\cf3 onPause}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onPause}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+{\cf14 \}}\par
+}

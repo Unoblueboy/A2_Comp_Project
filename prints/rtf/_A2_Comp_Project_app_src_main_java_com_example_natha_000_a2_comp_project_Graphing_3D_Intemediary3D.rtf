@@ -1,0 +1,71 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green128\blue0;\red186\green33\blue33;\red0\green0\blue255;\red188\green122\blue0;\red25\green23\blue124;\red64\green128\blue128;\red176\green0\blue64;\red187\green187\blue187;\red0\green0\blue128;\red160\green160\blue0;\red170\green34\blue255;\red136\green136\blue136;\red136\green0\blue0;\red102\green102\blue102;\red187\green102\blue136;\red0\green68\blue221;\red210\green65\blue58;\red255\green0\blue0;\red160\green0\blue0;\red187\green102\blue34;\red0\green160\blue0;\red125\green144\blue41;\red128\green0\blue128;\red153\green153\blue153;}\f0 {\cf14 .}{\chbrdr\chcfpat18 \\}A2_Comp_Project{\chbrdr\chcfpat18 \\}app{\chbrdr\chcfpat18 \\}src{\chbrdr\chcfpat18 \\}main{\chbrdr\chcfpat18 \\}java{\chbrdr\chcfpat18 \\}com{\chbrdr\chcfpat18 \\}example{\chbrdr\chcfpat18 \\}natha_000{\chbrdr\chcfpat18 \\}a2_comp_project{\chbrdr\chcfpat18 \\}Graphing_3D{\chbrdr\chcfpat18 \\}Intemediary3D{\cf14 .}{\cf22 java}\par
+{\cf1\b package} {\cf3\b com.example.natha_000.a2_comp_project.Graphing_3D}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b android.content.Intent}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.os.Bundle}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.support.v7.app.AppCompatActivity}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.support.v7.widget.Toolbar}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.view.View}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.widget.EditText}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b com.example.natha_000.a2_comp_project.R}{\cf14 ;}\par
+\par
+{\cf6\i /**\par
+ * This class holds the activity that allows the user to input their 3D function\par
+ * And allows them to choose the way in which they wih to view it.\par
+*/}\par
+{\cf1\b public} {\cf1\b class} {\cf3\b Intemediary3D} {\cf1\b extends} AppCompatActivity {\cf14 \{}\par
+\par
+    {\cf6\i /**\par
+     * Textstring used so that the other activities can get the information provided by this activity\par
+    */}\par
+    {\cf1\b public} {\cf1\b final} {\cf1\b static} String EXTRA_MESSAGE {\cf14 =} {\cf2 "com.example.natha_000.a2_comp_project.MESSAGE"}{\cf14 ;}\par
+\par
+    {\cf6\i /**\par
+     * Sets up the general start up of the activity\par
+     * @param savedInstanceState The information sent from the previous activity\par
+    */}\par
+    {\cf11 @Override}\par
+    {\cf1\b protected} {\cf7 void} {\cf3 onCreate}{\cf14 (}Bundle savedInstanceState{\cf14 )} {\cf14 \{}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onCreate}{\cf14 (}savedInstanceState{\cf14 )}{\cf14 ;}\par
+        setContentView{\cf14 (}R{\cf14 .}{\cf22 layout}{\cf14 .}{\cf22 intemediary3d}{\cf14 )}{\cf14 ;}\par
+        Toolbar toolbar {\cf14 =} {\cf14 (}Toolbar{\cf14 )} findViewById{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 toolbar}{\cf14 )}{\cf14 ;}\par
+        setSupportActionBar{\cf14 (}toolbar{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * Sends the user to the activity that contains the projection of the 3D graph\par
+     * @param view The view which called this function\par
+    */}\par
+    {\cf1\b public} {\cf7 void} {\cf3 goTo3D}{\cf14 (}View view{\cf14 )} {\cf14 \{}\par
+        {\cf6\i //Sets up the new activity\par
+}        Intent intent {\cf14 =} {\cf1\b new} Intent{\cf14 (}{\cf1\b this}{\cf14 ,} Main3DActivity{\cf14 .}{\cf22 class}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i //Get the desired function and add it to be sent with the activity\par
+}        EditText editText {\cf14 =} {\cf14 (}EditText{\cf14 )} findViewById{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 funcText}{\cf14 )}{\cf14 ;}\par
+        String message {\cf14 =} editText{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        intent{\cf14 .}{\cf22 putExtra}{\cf14 (}EXTRA_MESSAGE{\cf14 ,} message{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i //Send the user to the activity\par
+}        startActivity{\cf14 (}intent{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * Sends the user to the activity that contains the VR 3D graph\par
+     * @param view The view which called this function\par
+    */}\par
+    {\cf1\b public} {\cf7 void} {\cf3 goTo3DVR}{\cf14 (}View view{\cf14 )} {\cf14 \{}\par
+        {\cf6\i //Sets up the new activity\par
+}        Intent intent {\cf14 =} {\cf1\b new} Intent{\cf14 (}{\cf1\b this}{\cf14 ,} Main3DVRActivity{\cf14 .}{\cf22 class}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i //Get the desired function and add it to be sent with the activity\par
+}        EditText editText {\cf14 =} {\cf14 (}EditText{\cf14 )} findViewById{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 funcText}{\cf14 )}{\cf14 ;}\par
+        String message {\cf14 =} editText{\cf14 .}{\cf22 getText}{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        intent{\cf14 .}{\cf22 putExtra}{\cf14 (}EXTRA_MESSAGE{\cf14 ,} message{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i //Send the user to the activity\par
+}        startActivity{\cf14 (}intent{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+{\cf14 \}}\par
+}

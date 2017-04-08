@@ -66,7 +66,7 @@ public class SketchHistogram extends PApplet {
         yAxisLB = 0;
         yAxisUB = yresults[1];
         yScale = yresults[2];
-        ytick = (int) xresults[3];
+        ytick = (int) yresults[3];
 
         xtickdist = w*(1 - rmargin - lmargin)/(xtick-1);
         ytickdist = h*(1 - tmargin - bmargin)/(ytick-1);
@@ -207,9 +207,10 @@ public class SketchHistogram extends PApplet {
 //            Log.d("MyFragment", "Fragment is not visible.");
 //    }
 
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
+    public void setUserVisibleHint(boolean hidden) {
+        super.setUserVisibleHint(hidden);
         if (hidden==false) {
+            startUp(sketchWidth(),sketchHeight());
             redraw();
         }
     }

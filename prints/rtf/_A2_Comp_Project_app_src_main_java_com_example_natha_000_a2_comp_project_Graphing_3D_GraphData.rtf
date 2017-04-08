@@ -1,0 +1,498 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green128\blue0;\red186\green33\blue33;\red0\green0\blue255;\red188\green122\blue0;\red25\green23\blue124;\red64\green128\blue128;\red176\green0\blue64;\red187\green187\blue187;\red0\green0\blue128;\red160\green160\blue0;\red170\green34\blue255;\red136\green136\blue136;\red136\green0\blue0;\red102\green102\blue102;\red187\green102\blue136;\red0\green68\blue221;\red210\green65\blue58;\red255\green0\blue0;\red160\green0\blue0;\red187\green102\blue34;\red0\green160\blue0;\red125\green144\blue41;\red128\green0\blue128;\red153\green153\blue153;}\f0 {\cf14 .}{\chbrdr\chcfpat18 \\}A2_Comp_Project{\chbrdr\chcfpat18 \\}app{\chbrdr\chcfpat18 \\}src{\chbrdr\chcfpat18 \\}main{\chbrdr\chcfpat18 \\}java{\chbrdr\chcfpat18 \\}com{\chbrdr\chcfpat18 \\}example{\chbrdr\chcfpat18 \\}natha_000{\chbrdr\chcfpat18 \\}a2_comp_project{\chbrdr\chcfpat18 \\}Graphing_3D{\chbrdr\chcfpat18 \\}GraphData{\cf14 .}{\cf22 java}\par
+{\cf1\b package} {\cf3\b com.example.natha_000.a2_comp_project.Graphing_3D}{\cf14 ;}\par
+\par
+{\cf6\i /**\par
+ * Created by Natha_000 on 02/01/2017.\par
+ */}\par
+\par
+{\cf1\b import} {\cf3\b java.io.IOException}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.io.StreamTokenizer}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.io.StringReader}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.util.ArrayList}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.util.Deque}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.util.HashMap}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.util.LinkedList}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.util.List}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.util.Map}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.util.Objects}{\cf14 ;}\par
+\par
+{\cf6\i /**\par
+ * This class is used to generate an evaluatable function from a string function\par
+ * It uses the Function interface to allow for easy composition of functions.\par
+*/}\par
+{\cf1\b public} {\cf1\b class} {\cf3\b GraphData} {\cf14 \{}\par
+\par
+    {\cf6\i //The following code defines a large array of simple arithmetic functions\par
+}\par
+    {\cf6\i //This defines the arithmetic operation of addition\par
+}    {\cf1\b private} {\cf1\b static} Function add {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} x{\cf14 +}y{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This defines the arithmetic operation of subtraction\par
+}    {\cf1\b private} {\cf1\b static} Function sub {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} x{\cf14 -}y{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This defines the arithmetic operation of multiplication\par
+}    {\cf1\b private} {\cf1\b static} Function mul {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} x{\cf14 *}y{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This defines the arithmetic operation of Division\par
+}    {\cf1\b private} {\cf1\b static} Function div {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} x{\cf14 /}y{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This defines the arithmetic operation of exponentiation\par
+}    {\cf1\b private} {\cf1\b static} Function power {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 pow}{\cf14 (}x{\cf14 ,}y{\cf14 )}{\cf14 ;}\par
+        {\cf1\b if} {\cf14 (}z{\cf14 !}{\cf14 =}z{\cf14 )} {\cf14 \{}\par
+            {\cf1\b return} {\cf14 0}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This calculates the sine of the first input\par
+}    {\cf1\b private} {\cf1\b static} Function sin {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 sin}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This calculates the cosine of the first input\par
+}    {\cf1\b private} {\cf1\b static} Function cos {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 cos}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This calculates the tangent of the first input\par
+}    {\cf1\b private} {\cf1\b static} Function tan {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 tan}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This calculates the cosecant (=1/sine) of the first input\par
+}    {\cf1\b private} {\cf1\b static} Function cosec {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 sin}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} {\cf14 1}{\cf14 /}z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This calculates the secant (=1/cosine) of the first input\par
+}    {\cf1\b private} {\cf1\b static} Function sec {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 cos}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} {\cf14 1}{\cf14 /}z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This calculates the cotangent (=1/tangent) of the first input\par
+}    {\cf1\b private} {\cf1\b static} Function cot {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 tan}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} {\cf14 1}{\cf14 /}z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This calculates the hyperbolic sine of the first input\par
+}    {\cf1\b private} {\cf1\b static} Function sinh {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 sinh}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This calculates the hyperbolic cosine of the first input\par
+}    {\cf1\b private} {\cf1\b static} Function cosh {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 cosh}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This calculates the hyperbolic tangent of the first input\par
+}    {\cf1\b private} {\cf1\b static} Function tanh {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 tanh}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This calculates the inverse sine of the first input\par
+}    {\cf1\b private} {\cf1\b static} Function asin {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 asin}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This calculates the inverse cosine of the first input\par
+}    {\cf1\b private} {\cf1\b static} Function acos {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 acos}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This calculates the inverse tangent of the first input\par
+}    {\cf1\b private} {\cf1\b static} Function atan {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 atan}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This calculates the greatest integer less than or equal to the first input\par
+}    {\cf1\b private} {\cf1\b static} Function floor {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 floor}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This calculates the least integer greater than or equal to the first input\par
+}    {\cf1\b private} {\cf1\b static} Function ceil {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 ceil}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This calculates the natural logarithm of the first input\par
+}    {\cf1\b private} {\cf1\b static} Function ln {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 log}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;} {\cf6\i //log\par
+}\par
+    {\cf6\i //This calculates the logarithm base 10 of the first input\par
+}    {\cf1\b private} {\cf1\b static} Function log {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 log10}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;} {\cf6\i //log10\par
+}\par
+    {\cf6\i //This rounds the first input to the nearest integer\par
+}    {\cf1\b private} {\cf1\b static} Function round {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 round}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This calculates the sign of the first input(positive = 1, negative = -1, zero = 0)\par
+}    {\cf1\b private} {\cf1\b static} Function signum {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 signum}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This calculates the absolute value of the first input\par
+}    {\cf1\b private} {\cf1\b static} Function abs {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 abs}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This calculates the square root of the first input\par
+}    {\cf1\b private} {\cf1\b static} Function sqrt {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+        {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 sqrt}{\cf14 (}x{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} z{\cf14 ;}\par
+    {\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i //This maps all of the functions to corresponding strings\par
+}    {\cf1\b private} {\cf1\b static} Map{\cf14 <}String{\cf14 ,} Function{\cf14 >} ops_func {\cf14 =} {\cf1\b new} HashMap{\cf14 <}String{\cf14 ,} Function{\cf14 >}{\cf14 (}{\cf14 )}{\cf14 \{}{\cf14 \{}\par
+        put{\cf14 (}{\cf2 "+"}{\cf14 ,}add{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "-"}{\cf14 ,}sub{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "*"}{\cf14 ,}mul{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "/"}{\cf14 ,}div{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "^"}{\cf14 ,}power{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "sin"}{\cf14 ,}sin{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "cos"}{\cf14 ,}cos{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "tan"}{\cf14 ,}tan{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "cosec"}{\cf14 ,}cosec{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "csc"}{\cf14 ,}cosec{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "sec"}{\cf14 ,}sec{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "cot"}{\cf14 ,}cot{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "sinh"}{\cf14 ,}sinh{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "cosh"}{\cf14 ,}cosh{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "tanh"}{\cf14 ,}tanh{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "asin"}{\cf14 ,}asin{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "arcsin"}{\cf14 ,}asin{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "acos"}{\cf14 ,}acos{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "arccos"}{\cf14 ,}acos{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "atan"}{\cf14 ,}atan{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "arctan"}{\cf14 ,}atan{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "floor"}{\cf14 ,}floor{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "ceil"}{\cf14 ,}ceil{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "ln"}{\cf14 ,}ln{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "log"}{\cf14 ,}log{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "round"}{\cf14 ,}round{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "signum"}{\cf14 ,}signum{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "abs"}{\cf14 ,}abs{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "sqrt"}{\cf14 ,}sqrt{\cf14 )}{\cf14 ;}\par
+        put{\cf14 (}{\cf2 "{\u226}{\u710}{\u353}"}{\cf14 ,}sqrt{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}{\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf1\b public} {\cf1\b static} String {\cf3 format}{\cf14 (}String func{\cf14 )}{\cf14 \{}\par
+        {\cf1\b return} func{\cf14 .}{\cf22 replaceAll}{\cf14 (}{\cf2 "(\\\\d+(\\\\.\\\\d+)?)\\\\s*(e|pi)"}{\cf14 ,}{\cf2 "$1 * $3"}{\cf14 )}\par
+                {\cf14 .}{\cf22 replaceAll}{\cf14 (}{\cf2 "(e|pi)\\\\s*(e|pi)"}{\cf14 ,}{\cf2 "$1 * $2"}{\cf14 )}\par
+                {\cf14 .}{\cf22 replaceAll}{\cf14 (}{\cf2 "(e|pi|\\\\d+(\\\\.\\\\d+)?)\\\\s*(\\\\w)"}{\cf14 ,}{\cf2 "$1 * $3"}{\cf14 )}\par
+                {\cf14 .}{\cf22 replaceAll}{\cf14 (}{\cf2 "e"}{\cf14 ,}Double{\cf14 .}{\cf22 toString}{\cf14 (}Math{\cf14 .}{\cf22 E}{\cf14 )}{\cf14 )}\par
+                {\cf14 .}{\cf22 replaceAll}{\cf14 (}{\cf2 "pi"}{\cf14 ,}Double{\cf14 .}{\cf22 toString}{\cf14 (}Math{\cf14 .}{\cf22 PI}{\cf14 )}{\cf14 )}\par
+                {\cf14 .}{\cf22 replaceAll}{\cf14 (}{\cf2 "(^|\\\\D) \\\\s* - \\\\s* (\\\\w) "}{\cf14 ,}{\cf2 "$1 0 - $0"}{\cf14 )}{\cf14 ;}\par
+\par
+    {\cf14 \}}\par
+\par
+\par
+    {\cf6\i /**\par
+     * This creates a mathematical function into which a value of x and y\par
+     * can be entered.\par
+     * @param func A string which represents the function to be evaluated\par
+     * @return a Function object which can be used to evaluate the function for\par
+     * different x and y\par
+    */}\par
+    {\cf1\b public} {\cf1\b static} Function {\cf3 function_creator}{\cf14 (}String func{\cf14 )} {\cf1\b throws} IOException{\cf14 \{}\par
+        {\cf6\i //This uses the function input and converts it into a string of tokens\par
+}        ShuntingYard parser {\cf14 =} {\cf1\b new} ShuntingYard{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        List{\cf14 <}String{\cf14 >} tokens {\cf14 =} tokenise{\cf14 (}func{\cf14 )}{\cf14 ;}\par
+        List{\cf14 <}String{\cf14 >} ops {\cf14 =} tokenise{\cf14 (}parser{\cf14 .}{\cf22 shuntingYard}{\cf14 (}tokens{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i //This sets up the variables to be used within the process of parsing the reverse polish notation\par
+}        StringBuilder output {\cf14 =} {\cf1\b new} StringBuilder{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        Deque{\cf14 <}Object{\cf14 >} stack  {\cf14 =} {\cf1\b new} LinkedList{\cf14 <}{\cf14 >}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i //For each of the inputs in the token list\par
+}        {\cf1\b for} {\cf14 (}String token {\cf14 :} ops{\cf14 )} {\cf14 \{}\par
+            {\cf6\i //If the token is a number or a variable add it to the stack\par
+}            {\cf1\b if} {\cf14 (}parser{\cf14 .}{\cf22 isAlgebraic}{\cf14 (}token{\cf14 )}{\cf14 )} {\cf14 \{}\par
+                {\cf1\b try} {\cf14 \{}\par
+                    stack{\cf14 .}{\cf22 push}{\cf14 (} Float{\cf14 .}{\cf22 parseFloat}{\cf14 (}token{\cf14 )}{\cf14 )}{\cf14 ;}\par
+                {\cf14 \}} {\cf1\b catch} {\cf14 (}Exception e{\cf14 )} {\cf14 \{}\par
+                    stack{\cf14 .}{\cf22 push}{\cf14 (}token{\cf14 )}{\cf14 ;}\par
+                {\cf14 \}}\par
+\par
+            {\cf6\i //The token is an operator\par
+}            {\cf14 \}} {\cf1\b else} {\cf14 \{}\par
+                {\cf6\i /* If the operator takes two arguments\par
+                   pop two functions from the stack,\par
+                   evaluate the operator with the arguments as the two functions,\par
+                   and push the result to the stack. */}\par
+                {\cf1\b if} {\cf14 (}ShuntingYard{\cf14 .}{\cf22 ops_2_arg}{\cf14 .}{\cf22 containsKey}{\cf14 (}token{\cf14 )}{\cf14 )} {\cf14 \{}\par
+                    Object arg2 {\cf14 =} {\cf14 (}Object{\cf14 )} stack{\cf14 .}{\cf22 pop}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+                    Object arg1 {\cf14 =} {\cf14 (}Object{\cf14 )} stack{\cf14 .}{\cf22 pop}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+\par
+                    {\cf6\i /* Case 1:\par
+                        The first argument is a float\par
+                        The second argument is a float\par
+                    */}\par
+                    {\cf1\b if} {\cf14 (}arg2 {\cf1\b instanceof} Float {\cf14 &}{\cf14 &} arg1 {\cf1\b instanceof} Float{\cf14 )} {\cf14 \{}\par
+                        {\cf7 float} v1 {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} arg1{\cf14 ;}\par
+                        {\cf7 float} v2 {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} arg2{\cf14 ;}\par
+                        Function a {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+                            {\cf7 float} z {\cf14 =} ops_func{\cf14 .}{\cf22 get}{\cf14 (}token{\cf14 )}{\cf14 .}{\cf22 evalfunc}{\cf14 (}v1{\cf14 ,}v2{\cf14 )}{\cf14 ;}\par
+                            {\cf1\b return} z{\cf14 ;}\par
+                        {\cf14 \}}{\cf14 ;}\par
+                        stack{\cf14 .}{\cf22 push}{\cf14 (}a{\cf14 )}{\cf14 ;}\par
+                    {\cf14 \}}\par
+\par
+                    {\cf6\i /* Case 2:\par
+                    The first argument is a float\par
+                    The second argument is a function\par
+                    */}\par
+                    {\cf1\b else} {\cf1\b if} {\cf14 (}arg2 {\cf1\b instanceof} Function {\cf14 &}{\cf14 &} arg1 {\cf1\b instanceof} Float{\cf14 )} {\cf14 \{}\par
+                        {\cf7 float} v1 {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} arg1{\cf14 ;}\par
+                        Function f1 {\cf14 =} {\cf14 (}Function{\cf14 )} arg2{\cf14 ;}\par
+                        Function a {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+                            {\cf7 float} z {\cf14 =} ops_func{\cf14 .}{\cf22 get}{\cf14 (}token{\cf14 )}{\cf14 .}{\cf22 evalfunc}{\cf14 (}v1{\cf14 ,}f1{\cf14 .}{\cf22 evalfunc}{\cf14 (}x{\cf14 ,}y{\cf14 )}{\cf14 )}{\cf14 ;}\par
+                            {\cf1\b return} z{\cf14 ;}\par
+                        {\cf14 \}}{\cf14 ;}\par
+                        stack{\cf14 .}{\cf22 push}{\cf14 (}a{\cf14 )}{\cf14 ;}\par
+                    {\cf14 \}}\par
+\par
+                    {\cf6\i /* Case 3:\par
+                    The first argument is a function\par
+                    The second argument is a float\par
+                    */}\par
+                    {\cf1\b else} {\cf1\b if} {\cf14 (}arg1 {\cf1\b instanceof} Function {\cf14 &}{\cf14 &} arg2 {\cf1\b instanceof} Float{\cf14 )} {\cf14 \{}\par
+                        {\cf7 float} v1 {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} arg2{\cf14 ;}\par
+                        Function f1 {\cf14 =} {\cf14 (}Function{\cf14 )} arg1{\cf14 ;}\par
+                        Function a {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+                            {\cf7 float} z {\cf14 =} ops_func{\cf14 .}{\cf22 get}{\cf14 (}token{\cf14 )}{\cf14 .}{\cf22 evalfunc}{\cf14 (}f1{\cf14 .}{\cf22 evalfunc}{\cf14 (}x{\cf14 ,}y{\cf14 )}{\cf14 ,}v1{\cf14 )}{\cf14 ;}\par
+                            {\cf1\b return} z{\cf14 ;}\par
+                        {\cf14 \}}{\cf14 ;}\par
+                        stack{\cf14 .}{\cf22 push}{\cf14 (}a{\cf14 )}{\cf14 ;}\par
+                    {\cf14 \}}\par
+\par
+                    {\cf6\i /* Case 4:\par
+                    The first argument is a function\par
+                    The second argument is a function\par
+                    */}\par
+                    {\cf1\b else} {\cf1\b if} {\cf14 (}arg1 {\cf1\b instanceof} Function {\cf14 &}{\cf14 &} arg2 {\cf1\b instanceof} Function{\cf14 )} {\cf14 \{}\par
+                        Function f2 {\cf14 =} {\cf14 (}Function{\cf14 )} arg2{\cf14 ;}\par
+                        Function f1 {\cf14 =} {\cf14 (}Function{\cf14 )} arg1{\cf14 ;}\par
+                        Function a {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+                            {\cf7 float} z {\cf14 =} ops_func{\cf14 .}{\cf22 get}{\cf14 (}token{\cf14 )}{\cf14 .}{\cf22 evalfunc}{\cf14 (}f1{\cf14 .}{\cf22 evalfunc}{\cf14 (}x{\cf14 ,}y{\cf14 )}{\cf14 ,}\par
+                                                                   f2{\cf14 .}{\cf22 evalfunc}{\cf14 (}x{\cf14 ,}y{\cf14 )}{\cf14 )}{\cf14 ;}\par
+                            {\cf1\b return} z{\cf14 ;}\par
+                        {\cf14 \}}{\cf14 ;}\par
+                        stack{\cf14 .}{\cf22 push}{\cf14 (}a{\cf14 )}{\cf14 ;}\par
+                    {\cf14 \}}\par
+\par
+                    {\cf6\i /* Case 5:\par
+                    The first argument is a variable\par
+                    The second argument is a variable\par
+                    */}\par
+                    {\cf1\b else} {\cf1\b if} {\cf14 (}arg1 {\cf1\b instanceof} String {\cf14 &}{\cf14 &} arg2 {\cf1\b instanceof} String{\cf14 )} {\cf14 \{}\par
+                        String v2 {\cf14 =} {\cf14 (}String{\cf14 )} arg2{\cf14 ;}\par
+                        String v1 {\cf14 =} {\cf14 (}String{\cf14 )} arg1{\cf14 ;}\par
+                        Function a {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+                            {\cf7 float} z {\cf14 =} ops_func{\cf14 .}{\cf22 get}{\cf14 (}token{\cf14 )}{\cf14 .}{\cf22 evalfunc}{\cf14 (}{\cf14 (}Objects{\cf14 .}{\cf22 equals}{\cf14 (}v1{\cf14 ,}{\cf2 "x"}{\cf14 )}{\cf14 )} {\cf14 ?} x {\cf14 :} y{\cf14 ,}\par
+                                                                   {\cf14 (}Objects{\cf14 .}{\cf22 equals}{\cf14 (}v2{\cf14 ,}{\cf2 "x"}{\cf14 )}{\cf14 )} {\cf14 ?} x {\cf14 :} y{\cf14 )}{\cf14 ;}\par
+                            {\cf1\b return} z{\cf14 ;}\par
+                        {\cf14 \}}{\cf14 ;}\par
+                        stack{\cf14 .}{\cf22 push}{\cf14 (}a{\cf14 )}{\cf14 ;}\par
+                    {\cf14 \}}\par
+\par
+                    {\cf6\i /* Case 6:\par
+                    The first argument is a variable\par
+                    The second argument is a float\par
+                    */}\par
+                    {\cf1\b else} {\cf1\b if} {\cf14 (}arg1 {\cf1\b instanceof} String {\cf14 &}{\cf14 &} arg2 {\cf1\b instanceof} Float{\cf14 )} {\cf14 \{}\par
+                        {\cf7 float} v2 {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} arg2{\cf14 ;}\par
+                        String v1 {\cf14 =} {\cf14 (}String{\cf14 )} arg1{\cf14 ;}\par
+                        Function a {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+                            {\cf7 float} z {\cf14 =} ops_func{\cf14 .}{\cf22 get}{\cf14 (}token{\cf14 )}{\cf14 .}{\cf22 evalfunc}{\cf14 (}{\cf14 (}Objects{\cf14 .}{\cf22 equals}{\cf14 (}v1{\cf14 ,}{\cf2 "x"}{\cf14 )}{\cf14 )} {\cf14 ?} x {\cf14 :} y{\cf14 ,}v2{\cf14 )}{\cf14 ;}\par
+                            {\cf1\b return} z{\cf14 ;}\par
+                        {\cf14 \}}{\cf14 ;}\par
+                        stack{\cf14 .}{\cf22 push}{\cf14 (}a{\cf14 )}{\cf14 ;}\par
+                    {\cf14 \}}\par
+\par
+                    {\cf6\i /* Case 7:\par
+                    The first argument is a float\par
+                    The second argument is a variable\par
+                    */}\par
+                    {\cf1\b else} {\cf1\b if} {\cf14 (}arg2 {\cf1\b instanceof} String {\cf14 &}{\cf14 &} arg1 {\cf1\b instanceof} Float{\cf14 )} {\cf14 \{}\par
+                        {\cf7 float} v2 {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} arg1{\cf14 ;}\par
+                        String v1 {\cf14 =} {\cf14 (}String{\cf14 )} arg2{\cf14 ;}\par
+                        Function a {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+                            {\cf7 float} z {\cf14 =} ops_func{\cf14 .}{\cf22 get}{\cf14 (}token{\cf14 )}{\cf14 .}{\cf22 evalfunc}{\cf14 (}v2{\cf14 ,} {\cf14 (}Objects{\cf14 .}{\cf22 equals}{\cf14 (}v1{\cf14 ,}{\cf2 "x"}{\cf14 )}{\cf14 )} {\cf14 ?} x {\cf14 :} y{\cf14 )}{\cf14 ;}\par
+                            {\cf1\b return} z{\cf14 ;}\par
+                        {\cf14 \}}{\cf14 ;}\par
+                        stack{\cf14 .}{\cf22 push}{\cf14 (}a{\cf14 )}{\cf14 ;}\par
+                    {\cf14 \}}\par
+\par
+                    {\cf6\i /* Case 8:\par
+                    The first argument is a variable\par
+                    The second argument is a function\par
+                    */}\par
+                    {\cf1\b else} {\cf1\b if} {\cf14 (}arg1 {\cf1\b instanceof} String {\cf14 &}{\cf14 &} arg2 {\cf1\b instanceof} Function{\cf14 )} {\cf14 \{}\par
+                        Function v2 {\cf14 =} {\cf14 (}Function{\cf14 )} arg2{\cf14 ;}\par
+                        String v1 {\cf14 =} {\cf14 (}String{\cf14 )} arg1{\cf14 ;}\par
+                        Function a {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+                            {\cf7 float} z {\cf14 =} ops_func{\cf14 .}{\cf22 get}{\cf14 (}token{\cf14 )}{\cf14 .}{\cf22 evalfunc}{\cf14 (}{\cf14 (}Objects{\cf14 .}{\cf22 equals}{\cf14 (}v1{\cf14 ,}{\cf2 "x"}{\cf14 )}{\cf14 )} {\cf14 ?} x {\cf14 :} y{\cf14 ,} v2{\cf14 .}{\cf22 evalfunc}{\cf14 (}x{\cf14 ,}y{\cf14 )}{\cf14 )}{\cf14 ;}\par
+                            {\cf1\b return} z{\cf14 ;}\par
+                        {\cf14 \}}{\cf14 ;}\par
+                        stack{\cf14 .}{\cf22 push}{\cf14 (}a{\cf14 )}{\cf14 ;}\par
+                    {\cf14 \}}\par
+\par
+                    {\cf6\i /* Case 9:\par
+                    The first argument is a function\par
+                    The second argument is a variable\par
+                    */}\par
+                    {\cf1\b else} {\cf1\b if} {\cf14 (}arg2 {\cf1\b instanceof} String {\cf14 &}{\cf14 &} arg1 {\cf1\b instanceof} Function{\cf14 )} {\cf14 \{}\par
+                        Function v2 {\cf14 =} {\cf14 (}Function{\cf14 )} arg1{\cf14 ;}\par
+                        String v1 {\cf14 =} {\cf14 (}String{\cf14 )} arg2{\cf14 ;}\par
+                        Function a {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+                            {\cf7 float} z {\cf14 =} ops_func{\cf14 .}{\cf22 get}{\cf14 (}token{\cf14 )}{\cf14 .}{\cf22 evalfunc}{\cf14 (}v2{\cf14 .}{\cf22 evalfunc}{\cf14 (}x{\cf14 ,}y{\cf14 )}{\cf14 ,} {\cf14 (}Objects{\cf14 .}{\cf22 equals}{\cf14 (}v1{\cf14 ,}{\cf2 "x"}{\cf14 )}{\cf14 )} {\cf14 ?} x {\cf14 :} y{\cf14 )}{\cf14 ;}\par
+                            {\cf1\b return} z{\cf14 ;}\par
+                        {\cf14 \}}{\cf14 ;}\par
+                        stack{\cf14 .}{\cf22 push}{\cf14 (}a{\cf14 )}{\cf14 ;}\par
+                    {\cf14 \}}\par
+\par
+                {\cf6\i /* If the operator takes one argument\par
+                   pop one function from the stack,\par
+                   evaluate the operator with the argument as the function,\par
+                   and push the result to the stack. */}\par
+                {\cf14 \}} {\cf1\b else} {\cf14 \{}\par
+                    Object arg1 {\cf14 =} {\cf14 (}Object{\cf14 )} stack{\cf14 .}{\cf22 pop}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+\par
+                    {\cf6\i /* Case 1:\par
+                    The argument is a float\par
+                    */}\par
+                    {\cf1\b if} {\cf14 (}arg1 {\cf1\b instanceof} Float{\cf14 )} {\cf14 \{}\par
+                        {\cf7 float} v1 {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} arg1{\cf14 ;}\par
+                        Function a {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+                            {\cf7 float} z {\cf14 =} ops_func{\cf14 .}{\cf22 get}{\cf14 (}token{\cf14 )}{\cf14 .}{\cf22 evalfunc}{\cf14 (}v1{\cf14 ,}{\cf14 0.0f}{\cf14 )}{\cf14 ;}\par
+                            {\cf1\b return} z{\cf14 ;}\par
+                        {\cf14 \}}{\cf14 ;}\par
+                        stack{\cf14 .}{\cf22 push}{\cf14 (}a{\cf14 )}{\cf14 ;}\par
+                    {\cf14 \}}\par
+\par
+                    {\cf6\i /* Case 2:\par
+                    The argument is a variable\par
+                    */}\par
+                    {\cf1\b else} {\cf1\b if} {\cf14 (}arg1 {\cf1\b instanceof} String{\cf14 )} {\cf14 \{}\par
+                        String v1 {\cf14 =} {\cf14 (}String{\cf14 )} arg1{\cf14 ;}\par
+                        Function a {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+                            {\cf7 float} z {\cf14 =} ops_func{\cf14 .}{\cf22 get}{\cf14 (}token{\cf14 )}{\cf14 .}{\cf22 evalfunc}{\cf14 (}{\cf14 (}Objects{\cf14 .}{\cf22 equals}{\cf14 (}v1{\cf14 ,}{\cf2 "x"}{\cf14 )}{\cf14 )} {\cf14 ?} x {\cf14 :} y{\cf14 ,} {\cf14 0.0f}{\cf14 )}{\cf14 ;}\par
+                            {\cf1\b return} z{\cf14 ;}\par
+                        {\cf14 \}}{\cf14 ;}\par
+                        stack{\cf14 .}{\cf22 push}{\cf14 (}a{\cf14 )}{\cf14 ;}\par
+                    {\cf14 \}}\par
+\par
+                    {\cf6\i /* Case 3:\par
+                    The argument is a function\par
+                    */}\par
+                    {\cf1\b else} {\cf1\b if} {\cf14 (}arg1 {\cf1\b instanceof} Function{\cf14 )} {\cf14 \{}\par
+                        Function f1 {\cf14 =} {\cf14 (}Function{\cf14 )} arg1{\cf14 ;}\par
+                        Function a {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+                            {\cf7 float} z {\cf14 =} ops_func{\cf14 .}{\cf22 get}{\cf14 (}token{\cf14 )}{\cf14 .}{\cf22 evalfunc}{\cf14 (}f1{\cf14 .}{\cf22 evalfunc}{\cf14 (}x{\cf14 ,}y{\cf14 )}{\cf14 ,}{\cf14 0.0f}{\cf14 )}{\cf14 ;}\par
+                            {\cf1\b return} z{\cf14 ;}\par
+                        {\cf14 \}}{\cf14 ;}\par
+                        stack{\cf14 .}{\cf22 push}{\cf14 (}a{\cf14 )}{\cf14 ;}\par
+                    {\cf14 \}}\par
+                {\cf14 \}}\par
+            {\cf14 \}}\par
+        {\cf14 \}}\par
+\par
+        {\cf6\i //The only object left in the stack should now be the final function\par
+}        Object end {\cf14 =} stack{\cf14 .}{\cf22 pop}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i /* Case 1:\par
+        The final function is a function\par
+        */}\par
+        {\cf1\b if} {\cf14 (}end {\cf1\b instanceof} Function{\cf14 )} {\cf14 \{}\par
+            {\cf1\b return} {\cf14 (}Function{\cf14 )} end{\cf14 ;}\par
+        {\cf14 \}}\par
+\par
+        {\cf6\i /* Case 2:\par
+        The final function is a float\par
+        */}\par
+        {\cf1\b else} {\cf1\b if} {\cf14 (}end {\cf1\b instanceof} Float{\cf14 )} {\cf14 \{}\par
+            Function a {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+                {\cf7 float} z {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} end{\cf14 ;}\par
+                {\cf1\b return} z{\cf14 ;}\par
+            {\cf14 \}}{\cf14 ;}\par
+            {\cf1\b return} a{\cf14 ;}\par
+        {\cf14 \}}\par
+\par
+        {\cf6\i /* Case 3:\par
+        The final function is a variable\par
+        */}\par
+        {\cf1\b else} {\cf1\b if} {\cf14 (}end {\cf1\b instanceof} String{\cf14 )} {\cf14 \{}\par
+            Function a {\cf14 =} {\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf14 -}{\cf14 >} {\cf14 \{}\par
+                {\cf7 float} z {\cf14 =} {\cf14 (}Objects{\cf14 .}{\cf22 equals}{\cf14 (}end{\cf14 ,}{\cf2 "x"}{\cf14 )}{\cf14 )} {\cf14 ?} x {\cf14 :} y{\cf14 ;}\par
+                {\cf1\b return} z{\cf14 ;}\par
+            {\cf14 \}}{\cf14 ;}\par
+            {\cf1\b return} a{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b return} {\cf14 (}Function{\cf14 )} stack{\cf14 .}{\cf22 pop}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * This takes in a string and breaks it up into it's constituent tokens\par
+     * @param s A string that is going to be tokenised\par
+     * @return a list of string tokens in the order in which they appeared in s\par
+    */}\par
+    {\cf1\b public} {\cf1\b static} List{\cf14 <}String{\cf14 >} {\cf3 tokenise}{\cf14 (}String s{\cf14 )} {\cf1\b throws} IOException {\cf14 \{}\par
+        StreamTokenizer tokenizer {\cf14 =} {\cf1\b new} StreamTokenizer{\cf14 (}{\cf1\b new} StringReader{\cf14 (}s{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        tokenizer{\cf14 .}{\cf22 ordinaryChar}{\cf14 (}{\cf2 '-'}{\cf14 )}{\cf14 ;} {\cf6\i // Don't parse minus as part of numbers.\par
+}        tokenizer{\cf14 .}{\cf22 ordinaryChar}{\cf14 (}{\cf2 '/'}{\cf14 )}{\cf14 ;} {\cf6\i // Don't parse / as a special character\par
+}        List{\cf14 <}String{\cf14 >} tokBuf {\cf14 =} {\cf1\b new} ArrayList{\cf14 <}String{\cf14 >}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf6\i // While the final token has not been reached\par
+}        {\cf1\b while} {\cf14 (}tokenizer{\cf14 .}{\cf22 nextToken}{\cf14 (}{\cf14 )} {\cf14 !}{\cf14 =} StreamTokenizer{\cf14 .}{\cf22 TT_EOF}{\cf14 )} {\cf14 \{}\par
+            {\cf6\i /* Make sure all of the items that are added to the list are of type\par
+            string */}\par
+            {\cf1\b switch}{\cf14 (}tokenizer{\cf14 .}{\cf22 ttype}{\cf14 )} {\cf14 \{}\par
+                {\cf1\b case} StreamTokenizer{\cf14 .}{\cf22 TT_NUMBER}{\cf14 :}\par
+                    tokBuf{\cf14 .}{\cf22 add}{\cf14 (}String{\cf14 .}{\cf22 valueOf}{\cf14 (}tokenizer{\cf14 .}{\cf22 nval}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+                    {\cf1\b break}{\cf14 ;}\par
+                {\cf1\b case} StreamTokenizer{\cf14 .}{\cf22 TT_WORD}{\cf14 :}\par
+                    tokBuf{\cf14 .}{\cf22 add}{\cf14 (}tokenizer{\cf14 .}{\cf22 sval}{\cf14 )}{\cf14 ;}\par
+                    {\cf1\b break}{\cf14 ;}\par
+                {\cf1\b default}{\cf14 :}  {\cf6\i // operator\par
+}                    tokBuf{\cf14 .}{\cf22 add}{\cf14 (}String{\cf14 .}{\cf22 valueOf}{\cf14 (}{\cf14 (}{\cf7 char}{\cf14 )} tokenizer{\cf14 .}{\cf22 ttype}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            {\cf14 \}}\par
+        {\cf14 \}}\par
+        {\cf1\b return} tokBuf{\cf14 ;}\par
+    {\cf14 \}}\par
+{\cf14 \}}\par
+}

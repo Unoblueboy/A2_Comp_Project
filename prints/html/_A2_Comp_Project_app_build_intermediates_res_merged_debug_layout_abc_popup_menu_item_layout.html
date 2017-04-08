@@ -1,0 +1,72 @@
+<p style="font-size:14pt;font-family:sans-serif"><strong>.\A2_Comp_Project\app\build\intermediates\res\merged\debug\layout\abc_popup_menu_item_layout.xml</strong></p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #BC7A00">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span style="color: #408080; font-style: italic">&lt;!-- Copyright (C) 2010 The Android Open Source Project</span>
+
+<span style="color: #408080; font-style: italic">     Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span style="color: #408080; font-style: italic">     you may not use this file except in compliance with the License.</span>
+<span style="color: #408080; font-style: italic">     You may obtain a copy of the License at</span>
+
+<span style="color: #408080; font-style: italic">          http://www.apache.org/licenses/LICENSE-2.0</span>
+
+<span style="color: #408080; font-style: italic">     Unless required by applicable law or agreed to in writing, software</span>
+<span style="color: #408080; font-style: italic">     distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span style="color: #408080; font-style: italic">     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span style="color: #408080; font-style: italic">     See the License for the specific language governing permissions and</span>
+<span style="color: #408080; font-style: italic">     limitations under the License.</span>
+<span style="color: #408080; font-style: italic">--&gt;</span>
+
+<span style="color: #008000; font-weight: bold">&lt;android.support.v7.view.menu.ListMenuItemView</span>
+        <span style="color: #7D9029">xmlns:android=</span><span style="color: #BA2121">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+        <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;match_parent&quot;</span>
+        <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;?attr/dropdownListPreferredItemHeight&quot;</span>
+        <span style="color: #7D9029">android:minWidth=</span><span style="color: #BA2121">&quot;196dip&quot;</span>
+        <span style="color: #7D9029">style=</span><span style="color: #BA2121">&quot;@style/RtlOverlay.Widget.AppCompat.PopupMenuItem&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+
+    <span style="color: #408080; font-style: italic">&lt;!-- Icon will be inserted here. --&gt;</span>
+
+    <span style="color: #408080; font-style: italic">&lt;!-- The title and summary have some gap between them, and this &#39;group&#39; should be centered vertically. --&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;RelativeLayout</span>
+            <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;0dip&quot;</span>
+            <span style="color: #7D9029">android:layout_weight=</span><span style="color: #BA2121">&quot;1&quot;</span>
+            <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+            <span style="color: #7D9029">android:layout_gravity=</span><span style="color: #BA2121">&quot;center_vertical&quot;</span>
+            <span style="color: #7D9029">android:duplicateParentState=</span><span style="color: #BA2121">&quot;true&quot;</span>
+            <span style="color: #7D9029">style=</span><span style="color: #BA2121">&quot;@style/RtlOverlay.Widget.AppCompat.PopupMenuItem.InternalGroup&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+
+        <span style="color: #008000; font-weight: bold">&lt;TextView</span>
+                <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/title&quot;</span>
+                <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;match_parent&quot;</span>
+                <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+                <span style="color: #7D9029">android:layout_alignParentTop=</span><span style="color: #BA2121">&quot;true&quot;</span>
+                <span style="color: #7D9029">android:textAppearance=</span><span style="color: #BA2121">&quot;?attr/textAppearanceLargePopupMenu&quot;</span>
+                <span style="color: #7D9029">android:singleLine=</span><span style="color: #BA2121">&quot;true&quot;</span>
+                <span style="color: #7D9029">android:duplicateParentState=</span><span style="color: #BA2121">&quot;true&quot;</span>
+                <span style="color: #7D9029">android:ellipsize=</span><span style="color: #BA2121">&quot;marquee&quot;</span>
+                <span style="color: #7D9029">android:fadingEdge=</span><span style="color: #BA2121">&quot;horizontal&quot;</span>
+                <span style="color: #7D9029">style=</span><span style="color: #BA2121">&quot;@style/RtlOverlay.Widget.AppCompat.PopupMenuItem.Text&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+        <span style="color: #008000; font-weight: bold">&lt;TextView</span>
+                <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/shortcut&quot;</span>
+                <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+                <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+                <span style="color: #7D9029">android:layout_below=</span><span style="color: #BA2121">&quot;@id/title&quot;</span>
+                <span style="color: #7D9029">android:textAppearance=</span><span style="color: #BA2121">&quot;?attr/textAppearanceSmallPopupMenu&quot;</span>
+                <span style="color: #7D9029">android:singleLine=</span><span style="color: #BA2121">&quot;true&quot;</span>
+                <span style="color: #7D9029">android:duplicateParentState=</span><span style="color: #BA2121">&quot;true&quot;</span>
+                <span style="color: #7D9029">style=</span><span style="color: #BA2121">&quot;@style/RtlOverlay.Widget.AppCompat.PopupMenuItem.Text&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;/RelativeLayout&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;ImageView</span>
+            <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/submenuarrow&quot;</span>
+            <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+            <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+            <span style="color: #7D9029">android:layout_gravity=</span><span style="color: #BA2121">&quot;center&quot;</span>
+            <span style="color: #7D9029">android:layout_marginStart=</span><span style="color: #BA2121">&quot;8dp&quot;</span>
+            <span style="color: #7D9029">android:layout_marginLeft=</span><span style="color: #BA2121">&quot;8dp&quot;</span>
+            <span style="color: #7D9029">android:scaleType=</span><span style="color: #BA2121">&quot;center&quot;</span>
+            <span style="color: #7D9029">android:visibility=</span><span style="color: #BA2121">&quot;gone&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+    <span style="color: #408080; font-style: italic">&lt;!-- Checkbox, and/or radio button will be inserted here. --&gt;</span>
+
+<span style="color: #008000; font-weight: bold">&lt;/android.support.v7.view.menu.ListMenuItemView&gt;</span>
+</pre></div>

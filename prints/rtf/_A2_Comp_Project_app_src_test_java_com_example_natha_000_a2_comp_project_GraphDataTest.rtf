@@ -1,0 +1,178 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green128\blue0;\red186\green33\blue33;\red0\green0\blue255;\red188\green122\blue0;\red25\green23\blue124;\red64\green128\blue128;\red176\green0\blue64;\red187\green187\blue187;\red0\green0\blue128;\red160\green160\blue0;\red170\green34\blue255;\red136\green136\blue136;\red136\green0\blue0;\red102\green102\blue102;\red187\green102\blue136;\red0\green68\blue221;\red210\green65\blue58;\red255\green0\blue0;\red160\green0\blue0;\red187\green102\blue34;\red0\green160\blue0;\red125\green144\blue41;\red128\green0\blue128;\red153\green153\blue153;}\f0 {\cf14 .}{\chbrdr\chcfpat18 \\}A2_Comp_Project{\chbrdr\chcfpat18 \\}app{\chbrdr\chcfpat18 \\}src{\chbrdr\chcfpat18 \\}test{\chbrdr\chcfpat18 \\}java{\chbrdr\chcfpat18 \\}com{\chbrdr\chcfpat18 \\}example{\chbrdr\chcfpat18 \\}natha_000{\chbrdr\chcfpat18 \\}a2_comp_project{\chbrdr\chcfpat18 \\}GraphDataTest{\cf14 .}{\cf22 java}\par
+{\cf1\b package} {\cf3\b com.example.natha_000.a2_comp_project}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b com.example.natha_000.a2_comp_project.Graphing_3D.GraphData}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b com.example.natha_000.a2_comp_project.Graphing_3D.Function}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b org.junit.Test}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b java.util.Arrays}{\cf14 ;}\par
+\par
+{\cf1\b import static} {\cf3\b com.example.natha_000.a2_comp_project.Graphing_3D.GraphData.function_creator}{\cf14 ;}\par
+{\cf1\b import static} {\cf3\b org.junit.Assert.assertEquals}{\cf14 ;}\par
+\par
+{\cf6\i /**\par
+ * To work on unit tests, switch the Test Artifact in the Build Variants view.\par
+ */}\par
+{\cf1\b public} {\cf1\b class} {\cf3\b GraphDataTest} {\cf14 \{}\par
+    {\cf11 @Test}\par
+    {\cf1\b public} {\cf7 void} {\cf3 function_creator_isCorrect}{\cf14 (}{\cf14 )} {\cf1\b throws} Exception {\cf14 \{}\par
+        Function function1 {\cf14 =} function_creator{\cf14 (}{\cf2 "x"}{\cf14 )}{\cf14 ;}\par
+        Function function2 {\cf14 =} function_creator{\cf14 (}{\cf2 "x + y"}{\cf14 )}{\cf14 ;}\par
+        Function function3 {\cf14 =} function_creator{\cf14 (}{\cf2 "x + y * x"}{\cf14 )}{\cf14 ;}\par
+        Function function4 {\cf14 =} function_creator{\cf14 (}{\cf2 "1 + 2"}{\cf14 )}{\cf14 ;}\par
+        Function function5 {\cf14 =} function_creator{\cf14 (}{\cf2 "3 + 4 * 5 / 6"}{\cf14 )}{\cf14 ;}\par
+        Function function6 {\cf14 =} function_creator{\cf14 (}{\cf2 "3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3"}{\cf14 )}{\cf14 ;}\par
+        Function function7 {\cf14 =} function_creator{\cf14 (}{\cf2 "sin ( 3 / 3 * 3.1415 )"}{\cf14 )}{\cf14 ;}\par
+        Function function8 {\cf14 =} function_creator{\cf14 (}{\cf2 "tanh ( x + ( y + 1 ) ^ 5 )"}{\cf14 )}{\cf14 ;}\par
+        Function function9 {\cf14 =} function_creator{\cf14 (}{\cf2 "sin ( 4 * x + y ) / cos ( 4 ^ y - x )"}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0}      {\cf14 ,}   function1{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0}      {\cf14 ,}   function1{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 1}      {\cf14 ,}   function1{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 1}      {\cf14 ,}   function1{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0}      {\cf14 ,}   function1{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 1}     {\cf14 ,}   function1{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 1}     {\cf14 ,}   function1{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 1}     {\cf14 ,}   function1{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 1}      {\cf14 ,}   function1{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 100}    {\cf14 ,}   function1{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 100} {\cf14 ,}   {\cf14 100} {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 100}   {\cf14 ,}   function1{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 100}{\cf14 ,}   {\cf14 -}{\cf14 100}{\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0}      {\cf14 ,}   function2{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 1}      {\cf14 ,}   function2{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 1}      {\cf14 ,}   function2{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 2}      {\cf14 ,}   function2{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 1}     {\cf14 ,}   function2{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 1}     {\cf14 ,}   function2{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 2}     {\cf14 ,}   function2{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0}      {\cf14 ,}   function2{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0}      {\cf14 ,}   function2{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 200}    {\cf14 ,}   function2{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 100} {\cf14 ,}   {\cf14 100} {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 200}   {\cf14 ,}   function2{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 100}{\cf14 ,}   {\cf14 -}{\cf14 100}{\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0}      {\cf14 ,}   function3{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0}      {\cf14 ,}   function3{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 1}      {\cf14 ,}   function3{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 2}      {\cf14 ,}   function3{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0}      {\cf14 ,}   function3{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 1}     {\cf14 ,}   function3{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0}      {\cf14 ,}   function3{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 2}     {\cf14 ,}   function3{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0}      {\cf14 ,}   function3{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 10100}  {\cf14 ,}   function3{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 100} {\cf14 ,}   {\cf14 100} {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 9900}   {\cf14 ,}   function3{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 100}{\cf14 ,}   {\cf14 -}{\cf14 100}{\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3}      {\cf14 ,}   function4{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3}      {\cf14 ,}   function4{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3}      {\cf14 ,}   function4{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3}      {\cf14 ,}   function4{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3}      {\cf14 ,}   function4{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3}      {\cf14 ,}   function4{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3}      {\cf14 ,}   function4{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3}      {\cf14 ,}   function4{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3}      {\cf14 ,}   function4{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3}      {\cf14 ,}   function4{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 100} {\cf14 ,}   {\cf14 100} {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3}      {\cf14 ,}   function4{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 100}{\cf14 ,}   {\cf14 -}{\cf14 100}{\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 6.33333}{\cf14 ,}   function5{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 6.33333}{\cf14 ,}   function5{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 6.33333}{\cf14 ,}   function5{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 6.33333}{\cf14 ,}   function5{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 6.33333}{\cf14 ,}   function5{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 6.33333}{\cf14 ,}   function5{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 6.33333}{\cf14 ,}   function5{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 6.33333}{\cf14 ,}   function5{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 6.33333}{\cf14 ,}   function5{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 6.33333}{\cf14 ,}   function5{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 100} {\cf14 ,}   {\cf14 100} {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 6.33333}{\cf14 ,}   function5{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 100}{\cf14 ,}   {\cf14 -}{\cf14 100}{\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3.00012}{\cf14 ,}   function6{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3.00012}{\cf14 ,}   function6{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3.00012}{\cf14 ,}   function6{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3.00012}{\cf14 ,}   function6{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3.00012}{\cf14 ,}   function6{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3.00012}{\cf14 ,}   function6{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3.00012}{\cf14 ,}   function6{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3.00012}{\cf14 ,}   function6{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3.00012}{\cf14 ,}   function6{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3.00012}{\cf14 ,}   function6{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 100} {\cf14 ,}   {\cf14 100} {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3.00012}{\cf14 ,}   function6{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 100}{\cf14 ,}   {\cf14 -}{\cf14 100}{\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0.00009}{\cf14 ,}   function7{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0.00009}{\cf14 ,}   function7{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0.00009}{\cf14 ,}   function7{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0.00009}{\cf14 ,}   function7{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0.00009}{\cf14 ,}   function7{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0.00009}{\cf14 ,}   function7{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0.00009}{\cf14 ,}   function7{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0.00009}{\cf14 ,}   function7{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0.00009}{\cf14 ,}   function7{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0.00009}{\cf14 ,}   function7{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 100} {\cf14 ,}   {\cf14 100} {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0.00009}{\cf14 ,}   function7{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 100}{\cf14 ,}   {\cf14 -}{\cf14 100}{\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0.76159}{\cf14 ,}   function8{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 1}      {\cf14 ,}   function8{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0.96402}{\cf14 ,}   function8{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 1}      {\cf14 ,}   function8{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0}      {\cf14 ,}   function8{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0}      {\cf14 ,}   function8{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 0.76159}{\cf14 ,}   function8{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 1}      {\cf14 ,}   function8{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0.76159}{\cf14 ,}   function8{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 1}      {\cf14 ,}   function8{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 100} {\cf14 ,}   {\cf14 100} {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 1}     {\cf14 ,}   function8{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 100}{\cf14 ,}   {\cf14 -}{\cf14 100}{\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0}      {\cf14 ,}   function9{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 1.28735}{\cf14 ,}   function9{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 0.75680}{\cf14 ,}   function9{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0.96861}{\cf14 ,}   function9{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 0.86847}{\cf14 ,}   function9{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 0}   {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 1.81859}{\cf14 ,}   function9{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 0}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 3.04109}{\cf14 ,}   function9{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 -}{\cf14 0.49749}{\cf14 ,}   function9{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 1}  {\cf14 ,}   {\cf14 1}   {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0.19286}{\cf14 ,}   function9{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 1}   {\cf14 ,}   {\cf14 -}{\cf14 1}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 1.54638}{\cf14 ,}   function9{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 100} {\cf14 ,}   {\cf14 10}  {\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf14 0.54246}{\cf14 ,}   function9{\cf14 .}{\cf22 evalfunc}{\cf14 (} {\cf14 -}{\cf14 100}{\cf14 ,}   {\cf14 -}{\cf14 100}{\cf14 )}   {\cf14 ,}{\cf14 0.00001}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Test}\par
+    {\cf1\b public} {\cf7 void} {\cf3 tokenise_isCorrect}{\cf14 (}{\cf14 )} {\cf1\b throws} Exception {\cf14 \{}\par
+        String test1 {\cf14 =} {\cf2 "x"}{\cf14 ;}\par
+        String test2 {\cf14 =} {\cf2 "x + y"}{\cf14 ;}\par
+        String test3 {\cf14 =} {\cf2 "x    +    y"}{\cf14 ;}\par
+        String test4 {\cf14 =} {\cf2 "3 + 4 * 2 / ( 1 {\u226}{\u8364}{\u8220} 5 ) ^ 2 ^ 3"}{\cf14 ;}\par
+        String test5 {\cf14 =} {\cf2 "sin ( 3 / 3 * 3.1415 )"}{\cf14 ;}\par
+        String test6 {\cf14 =} {\cf2 "sin ( x + ( y + 1 ) ^ 5 )"}{\cf14 ;}\par
+        assertEquals{\cf14 (}Arrays{\cf14 .}{\cf22 asList}{\cf14 (}{\cf1\b new} String{\cf14 [}{\cf14 ]}{\cf14 \{}{\cf2 "x"}{\cf14 \}}{\cf14 )}{\cf14 ,} GraphData{\cf14 .}{\cf22 tokenise}{\cf14 (}test1{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}Arrays{\cf14 .}{\cf22 asList}{\cf14 (}{\cf1\b new} String{\cf14 [}{\cf14 ]}{\cf14 \{}{\cf2 "x"}{\cf14 ,}{\cf2 "+"}{\cf14 ,}{\cf2 "y"}{\cf14 \}}{\cf14 )}{\cf14 ,} GraphData{\cf14 .}{\cf22 tokenise}{\cf14 (}test2{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}Arrays{\cf14 .}{\cf22 asList}{\cf14 (}{\cf1\b new} String{\cf14 [}{\cf14 ]}{\cf14 \{}{\cf2 "x"}{\cf14 ,}{\cf2 "+"}{\cf14 ,}{\cf2 "y"}{\cf14 \}}{\cf14 )}{\cf14 ,} GraphData{\cf14 .}{\cf22 tokenise}{\cf14 (}test3{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}Arrays{\cf14 .}{\cf22 asList}{\cf14 (}{\cf1\b new} String{\cf14 [}{\cf14 ]}{\cf14 \{}{\cf2 "3.0"}{\cf14 ,} {\cf2 "+"}{\cf14 ,} {\cf2 "4.0"}{\cf14 ,} {\cf2 "*"}{\cf14 ,} {\cf2 "2.0"}{\cf14 ,} {\cf2 "/"}{\cf14 ,} {\cf2 "("}{\cf14 ,} {\cf2 "1.0"}{\cf14 ,} {\cf2 "{\u226}{\u8364}{\u8220}"}{\cf14 ,} {\cf2 "5.0"}{\cf14 ,} {\cf2 ")"}{\cf14 ,} {\cf2 "^"}{\cf14 ,} {\cf2 "2.0"}{\cf14 ,} {\cf2 "^"}{\cf14 ,} {\cf2 "3.0"}{\cf14 \}}{\cf14 )}{\cf14 ,} GraphData{\cf14 .}{\cf22 tokenise}{\cf14 (}test4{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}Arrays{\cf14 .}{\cf22 asList}{\cf14 (}{\cf1\b new} String{\cf14 [}{\cf14 ]}{\cf14 \{}{\cf2 "sin"}{\cf14 ,} {\cf2 "("}{\cf14 ,} {\cf2 "3.0"}{\cf14 ,} {\cf2 "/"}{\cf14 ,} {\cf2 "3.0"}{\cf14 ,} {\cf2 "*"}{\cf14 ,} {\cf2 "3.1415"}{\cf14 ,} {\cf2 ")"}{\cf14 \}}{\cf14 )}{\cf14 ,} GraphData{\cf14 .}{\cf22 tokenise}{\cf14 (}test5{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}Arrays{\cf14 .}{\cf22 asList}{\cf14 (}{\cf1\b new} String{\cf14 [}{\cf14 ]}{\cf14 \{}{\cf2 "sin"}{\cf14 ,} {\cf2 "("}{\cf14 ,}  {\cf2 "x"}{\cf14 ,} {\cf2 "+"}{\cf14 ,} {\cf2 "("}{\cf14 ,} {\cf2 "y"}{\cf14 ,} {\cf2 "+"}{\cf14 ,} {\cf2 "1.0"}{\cf14 ,} {\cf2 ")"}{\cf14 ,} {\cf2 "^"}{\cf14 ,} {\cf2 "5.0"}{\cf14 ,} {\cf2 ")"}{\cf14 \}}{\cf14 )}{\cf14 ,} GraphData{\cf14 .}{\cf22 tokenise}{\cf14 (}test6{\cf14 )}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Test}\par
+    {\cf1\b public} {\cf7 void} {\cf3 format_isCorrect}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        String test1 {\cf14 =} {\cf2 "e"}{\cf14 ;}\par
+        String test2 {\cf14 =} {\cf2 "pi"}{\cf14 ;}\par
+        String test3 {\cf14 =} {\cf2 "ex"}{\cf14 ;}\par
+        String test4 {\cf14 =} {\cf2 "pix"}{\cf14 ;}\par
+        String test5 {\cf14 =} {\cf2 "2pix"}{\cf14 ;}\par
+        String test6 {\cf14 =} {\cf2 "2x"}{\cf14 ;}\par
+        String test7 {\cf14 =} {\cf2 "e^x"}{\cf14 ;}\par
+        String test8 {\cf14 =} {\cf2 "pi^(2x)^2"}{\cf14 ;}\par
+        String test9 {\cf14 =} {\cf2 "2sin(pix)"}{\cf14 ;}\par
+        String test10{\cf14 =} {\cf2 "x + y"}{\cf14 ;}\par
+        String test11{\cf14 =} {\cf2 "3 + 4 * 2 / ( 1 {\u226}{\u8364}{\u8220} e ) ^ 2 ^ 3"}{\cf14 ;}\par
+        String test12{\cf14 =} {\cf2 "esin ( 3 / 3 * pi )"}{\cf14 ;}\par
+        String test13{\cf14 =} {\cf2 "sin ( 2pi + ( y + 1 ) ^ e )"}{\cf14 ;}\par
+        String test14{\cf14 =} {\cf2 "e     x"}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf2 "2.718281828459045"}{\cf14 ,}GraphData{\cf14 .}{\cf22 format}{\cf14 (}test1{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf2 "3.141592653589793"}{\cf14 ,}GraphData{\cf14 .}{\cf22 format}{\cf14 (}test2{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf2 "2.718281828459045 * x"}{\cf14 ,}GraphData{\cf14 .}{\cf22 format}{\cf14 (}test3{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf2 "3.141592653589793 * x"}{\cf14 ,}GraphData{\cf14 .}{\cf22 format}{\cf14 (}test4{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf2 "2 * 3.141592653589793 * x"}{\cf14 ,}GraphData{\cf14 .}{\cf22 format}{\cf14 (}test5{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf2 "2 * x"}{\cf14 ,}GraphData{\cf14 .}{\cf22 format}{\cf14 (}test6{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf2 "2.718281828459045^x"}{\cf14 ,}GraphData{\cf14 .}{\cf22 format}{\cf14 (}test7{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf2 "3.141592653589793^(2 * x)^2"}{\cf14 ,}GraphData{\cf14 .}{\cf22 format}{\cf14 (}test8{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf2 "2 * sin(3.141592653589793 * x)"}{\cf14 ,}GraphData{\cf14 .}{\cf22 format}{\cf14 (}test9{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf2 "x + y"}{\cf14 ,}GraphData{\cf14 .}{\cf22 format}{\cf14 (}test10{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf2 "3 + 4 * 2 / ( 1 {\u226}{\u8364}{\u8220} 2.718281828459045 ) ^ 2 ^ 3"}{\cf14 ,}GraphData{\cf14 .}{\cf22 format}{\cf14 (}test11{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf2 "2.718281828459045 * sin ( 3 / 3 * 3.141592653589793 )"}{\cf14 ,}GraphData{\cf14 .}{\cf22 format}{\cf14 (}test12{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf2 "sin ( 2 * 3.141592653589793 + ( y + 1 ) ^ 2.718281828459045 )"}{\cf14 ,}GraphData{\cf14 .}{\cf22 format}{\cf14 (}test13{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        assertEquals{\cf14 (}{\cf2 "2.718281828459045 * x"}{\cf14 ,}GraphData{\cf14 .}{\cf22 format}{\cf14 (}test14{\cf14 )}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+{\cf14 \}}\par
+}

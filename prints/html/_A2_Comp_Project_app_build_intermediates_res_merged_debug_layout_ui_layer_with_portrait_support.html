@@ -1,0 +1,28 @@
+<p style="font-size:14pt;font-family:sans-serif"><strong>.\A2_Comp_Project\app\build\intermediates\res\merged\debug\layout\ui_layer_with_portrait_support.xml</strong></p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #BC7A00">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;RelativeLayout</span> <span style="color: #7D9029">xmlns:android=</span><span style="color: #BA2121">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+  <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;match_parent&quot;</span>
+  <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;match_parent&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+
+    <span style="color: #408080; font-style: italic">&lt;!-- UiLayer layout when portrait support is enabled.</span>
+<span style="color: #408080; font-style: italic">         See corresponding file in layout-land/ui_layer_with_portrait_support.xml</span>
+
+<span style="color: #408080; font-style: italic">         Portrait orientation while in VR mode should be reserved for special cases,</span>
+<span style="color: #408080; font-style: italic">         such as widgets for fast transitions between embed and full-screen VR.</span>
+<span style="color: #408080; font-style: italic">         See b/26580727 for details.</span>
+<span style="color: #408080; font-style: italic">    --&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;include</span> <span style="color: #7D9029">layout=</span><span style="color: #BA2121">&quot;@layout/back_button&quot;</span> <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/ui_back_button&quot;</span><span style="color: #008000; font-weight: bold">/&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;RelativeLayout</span>
+      <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/ui_alignment_marker&quot;</span>
+      <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;@dimen/alignment_marker_thickness&quot;</span>
+      <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;@dimen/alignment_marker_height&quot;</span>
+      <span style="color: #7D9029">android:layout_centerVertical=</span><span style="color: #BA2121">&quot;true&quot;</span>
+      <span style="color: #7D9029">android:layout_alignParentLeft=</span><span style="color: #BA2121">&quot;true&quot;</span>
+      <span style="color: #7D9029">android:background=</span><span style="color: #BA2121">&quot;@color/alignment_marker_color&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;/RelativeLayout&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;include</span> <span style="color: #7D9029">layout=</span><span style="color: #BA2121">&quot;@layout/settings_button&quot;</span> <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/ui_settings_button&quot;</span><span style="color: #008000; font-weight: bold">/&gt;</span>
+
+<span style="color: #008000; font-weight: bold">&lt;/RelativeLayout&gt;</span>
+</pre></div>

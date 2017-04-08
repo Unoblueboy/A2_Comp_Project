@@ -1,0 +1,82 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green128\blue0;\red186\green33\blue33;\red0\green0\blue255;\red188\green122\blue0;\red25\green23\blue124;\red64\green128\blue128;\red176\green0\blue64;\red187\green187\blue187;\red0\green0\blue128;\red160\green160\blue0;\red170\green34\blue255;\red136\green136\blue136;\red136\green0\blue0;\red102\green102\blue102;\red187\green102\blue136;\red0\green68\blue221;\red210\green65\blue58;\red255\green0\blue0;\red160\green0\blue0;\red187\green102\blue34;\red0\green160\blue0;\red125\green144\blue41;\red128\green0\blue128;\red153\green153\blue153;}\f0 {\cf14 .}{\chbrdr\chcfpat18 \\}FragmentBasics{\chbrdr\chcfpat18 \\}app{\chbrdr\chcfpat18 \\}src{\chbrdr\chcfpat18 \\}main{\chbrdr\chcfpat18 \\}java{\chbrdr\chcfpat18 \\}com{\chbrdr\chcfpat18 \\}example{\chbrdr\chcfpat18 \\}android{\chbrdr\chcfpat18 \\}fragments{\chbrdr\chcfpat18 \\}HeadlinesFragment{\cf14 .}{\cf22 java}\par
+{\cf6\i /*\par
+ * Copyright (C) 2012 The Android Open Source Project\par
+ *\par
+ * Licensed under the Apache License, Version 2.0 (the "License");\par
+ * you may not use this file except in compliance with the License.\par
+ * You may obtain a copy of the License at\par
+ *\par
+ *      http://www.apache.org/licenses/LICENSE-2.0\par
+ *\par
+ * Unless required by applicable law or agreed to in writing, software\par
+ * distributed under the License is distributed on an "AS IS" BASIS,\par
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\par
+ * See the License for the specific language governing permissions and\par
+ * limitations under the License.\par
+ */}\par
+{\cf1\b package} {\cf3\b com.example.android.fragments}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b android.app.Activity}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.os.Build}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.os.Bundle}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.support.v4.app.ListFragment}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.view.View}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.widget.ArrayAdapter}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.widget.ListView}{\cf14 ;}\par
+\par
+{\cf1\b public} {\cf1\b class} {\cf3\b HeadlinesFragment} {\cf1\b extends} ListFragment {\cf14 \{}\par
+    OnHeadlineSelectedListener mCallback{\cf14 ;}\par
+\par
+    {\cf6\i // The container Activity must implement this interface so the frag can deliver messages\par
+}    {\cf1\b public} {\cf1\b interface} {\cf3\b OnHeadlineSelectedListener} {\cf14 \{}\par
+        {\cf6\i /** Called by HeadlinesFragment when a list item is selected */}\par
+        {\cf1\b public} {\cf7 void} {\cf3 onArticleSelected}{\cf14 (}{\cf7 int} position{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 onCreate}{\cf14 (}Bundle savedInstanceState{\cf14 )} {\cf14 \{}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onCreate}{\cf14 (}savedInstanceState{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // We need to use a different list item layout for devices older than Honeycomb\par
+}        {\cf7 int} layout {\cf14 =} Build{\cf14 .}{\cf22 VERSION}{\cf14 .}{\cf22 SDK_INT} {\cf14 >}{\cf14 =} Build{\cf14 .}{\cf22 VERSION_CODES}{\cf14 .}{\cf22 HONEYCOMB} {\cf14 ?}\par
+                android{\cf14 .}{\cf22 R}{\cf14 .}{\cf22 layout}{\cf14 .}{\cf22 simple_list_item_activated_1} {\cf14 :} android{\cf14 .}{\cf22 R}{\cf14 .}{\cf22 layout}{\cf14 .}{\cf22 simple_list_item_1}{\cf14 ;}\par
+\par
+        {\cf6\i // Create an array adapter for the list view, using the Ipsum headlines array\par
+}        setListAdapter{\cf14 (}{\cf1\b new} ArrayAdapter{\cf14 <}String{\cf14 >}{\cf14 (}getActivity{\cf14 (}{\cf14 )}{\cf14 ,} layout{\cf14 ,} Ipsum{\cf14 .}{\cf22 Headlines}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 onStart}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onStart}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // When in two-pane layout, set the listview to highlight the selected list item\par
+}        {\cf6\i // (We do this during onStart because at the point the listview is available.)\par
+}        {\cf1\b if} {\cf14 (}getFragmentManager{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 findFragmentById}{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 article_fragment}{\cf14 )} {\cf14 !}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+            getListView{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 setChoiceMode}{\cf14 (}ListView{\cf14 .}{\cf22 CHOICE_MODE_SINGLE}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 onAttach}{\cf14 (}Activity activity{\cf14 )} {\cf14 \{}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onAttach}{\cf14 (}activity{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // This makes sure that the container activity has implemented\par
+}        {\cf6\i // the callback interface. If not, it throws an exception.\par
+}        {\cf1\b try} {\cf14 \{}\par
+            mCallback {\cf14 =} {\cf14 (}OnHeadlineSelectedListener{\cf14 )} activity{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b catch} {\cf14 (}ClassCastException e{\cf14 )} {\cf14 \{}\par
+            {\cf1\b throw} {\cf1\b new} ClassCastException{\cf14 (}activity{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}\par
+                    {\cf14 +} {\cf2 " must implement OnHeadlineSelectedListener"}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 onListItemClick}{\cf14 (}ListView l{\cf14 ,} View v{\cf14 ,} {\cf7 int} position{\cf14 ,} {\cf7 long} id{\cf14 )} {\cf14 \{}\par
+        {\cf6\i // Notify the parent activity of selected item\par
+}        mCallback{\cf14 .}{\cf22 onArticleSelected}{\cf14 (}position{\cf14 )}{\cf14 ;}\par
+        \par
+        {\cf6\i // Set the item as checked to be highlighted when in two-pane layout\par
+}        getListView{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 setItemChecked}{\cf14 (}position{\cf14 ,} {\cf1\b true}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+{\cf14 \}}\par
+}

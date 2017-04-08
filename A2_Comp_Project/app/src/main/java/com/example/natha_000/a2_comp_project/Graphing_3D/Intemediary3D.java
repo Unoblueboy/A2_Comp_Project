@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.natha_000.a2_comp_project.R;
 
@@ -18,7 +19,8 @@ public class Intemediary3D extends AppCompatActivity {
     /**
      * Textstring used so that the other activities can get the information provided by this activity
     */
-    public final static String EXTRA_MESSAGE = "com.example.natha_000.a2_comp_project.MESSAGE";
+    public final static String EXTRA_MESSAGE = "com.example.natha_000.a2_comp_project.Graphing_3D.MESSAGE";
+    public final static String ERROR_MESSAGE = "com.example.natha_000.a2_comp_project.Graphing_3D.ERROR";
 
     /**
      * Sets up the general start up of the activity
@@ -30,6 +32,12 @@ public class Intemediary3D extends AppCompatActivity {
         setContentView(R.layout.intemediary3d);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(ERROR_MESSAGE);
+        if (message == "error") {
+            Toast.makeText(this,"Please enter a valid function",Toast.LENGTH_LONG);
+        }
     }
 
     /**

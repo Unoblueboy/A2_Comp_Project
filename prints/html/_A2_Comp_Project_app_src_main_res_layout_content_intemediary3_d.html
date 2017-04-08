@@ -1,0 +1,45 @@
+<p style="font-size:14pt;font-family:sans-serif"><strong>.\A2_Comp_Project\app\src\main\res\layout\content_intemediary3_d.xml</strong></p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #BC7A00">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;RelativeLayout</span> <span style="color: #7D9029">xmlns:android=</span><span style="color: #BA2121">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span style="color: #7D9029">xmlns:app=</span><span style="color: #BA2121">&quot;http://schemas.android.com/apk/res-auto&quot;</span>
+    <span style="color: #7D9029">xmlns:tools=</span><span style="color: #BA2121">&quot;http://schemas.android.com/tools&quot;</span>
+    <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/content_intemediary3_d&quot;</span>
+    <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;match_parent&quot;</span>
+    <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;match_parent&quot;</span>
+    <span style="color: #7D9029">android:paddingBottom=</span><span style="color: #BA2121">&quot;@dimen/activity_vertical_margin&quot;</span>
+    <span style="color: #7D9029">android:paddingLeft=</span><span style="color: #BA2121">&quot;@dimen/activity_horizontal_margin&quot;</span>
+    <span style="color: #7D9029">android:paddingRight=</span><span style="color: #BA2121">&quot;@dimen/activity_horizontal_margin&quot;</span>
+    <span style="color: #7D9029">android:paddingTop=</span><span style="color: #BA2121">&quot;@dimen/activity_vertical_margin&quot;</span>
+    <span style="color: #7D9029">app:layout_behavior=</span><span style="color: #BA2121">&quot;@string/appbar_scrolling_view_behavior&quot;</span>
+    <span style="color: #7D9029">tools:context=</span><span style="color: #BA2121">&quot;com.example.natha_000.a2_comp_project.Graphing_3D.Intemediary3D&quot;</span>
+    <span style="color: #7D9029">tools:showIn=</span><span style="color: #BA2121">&quot;@layout/intemediary3d&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;EditText</span>
+        <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+        <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+        <span style="color: #7D9029">android:inputType=</span><span style="color: #BA2121">&quot;textPersonName&quot;</span>
+        <span style="color: #7D9029">android:text=</span><span style="color: #BA2121">&quot;sin(x)+sin(y)&quot;</span>
+        <span style="color: #7D9029">android:ems=</span><span style="color: #BA2121">&quot;10&quot;</span>
+        <span style="color: #7D9029">android:layout_alignParentTop=</span><span style="color: #BA2121">&quot;true&quot;</span>
+        <span style="color: #7D9029">android:layout_alignParentStart=</span><span style="color: #BA2121">&quot;true&quot;</span>
+        <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/funcText&quot;</span>
+        <span style="color: #7D9029">android:layout_alignParentEnd=</span><span style="color: #BA2121">&quot;true&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;Button</span>
+        <span style="color: #7D9029">android:text=</span><span style="color: #BA2121">&quot;3D&quot;</span>
+        <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+        <span style="color: #7D9029">android:layout_below=</span><span style="color: #BA2121">&quot;@+id/funcText&quot;</span>
+        <span style="color: #7D9029">android:layout_alignParentStart=</span><span style="color: #BA2121">&quot;true&quot;</span>
+        <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/button6&quot;</span>
+        <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+        <span style="color: #7D9029">android:onClick=</span><span style="color: #BA2121">&quot;goTo3D&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;Button</span>
+        <span style="color: #7D9029">android:text=</span><span style="color: #BA2121">&quot;3D VR&quot;</span>
+        <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+        <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+        <span style="color: #7D9029">android:layout_below=</span><span style="color: #BA2121">&quot;@+id/funcText&quot;</span>
+        <span style="color: #7D9029">android:layout_alignParentEnd=</span><span style="color: #BA2121">&quot;true&quot;</span>
+        <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/button7&quot;</span>
+        <span style="color: #7D9029">android:onClick=</span><span style="color: #BA2121">&quot;goTo3DVR&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;/RelativeLayout&gt;</span>
+</pre></div>

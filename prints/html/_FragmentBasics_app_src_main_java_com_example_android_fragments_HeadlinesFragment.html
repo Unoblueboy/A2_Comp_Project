@@ -1,0 +1,81 @@
+<p style="font-size:14pt;font-family:sans-serif"><strong>.\FragmentBasics\app\src\main\java\com\example\android\fragments\HeadlinesFragment.java</strong></p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #408080; font-style: italic">/*</span>
+<span style="color: #408080; font-style: italic"> * Copyright (C) 2012 The Android Open Source Project</span>
+<span style="color: #408080; font-style: italic"> *</span>
+<span style="color: #408080; font-style: italic"> * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span style="color: #408080; font-style: italic"> * you may not use this file except in compliance with the License.</span>
+<span style="color: #408080; font-style: italic"> * You may obtain a copy of the License at</span>
+<span style="color: #408080; font-style: italic"> *</span>
+<span style="color: #408080; font-style: italic"> *      http://www.apache.org/licenses/LICENSE-2.0</span>
+<span style="color: #408080; font-style: italic"> *</span>
+<span style="color: #408080; font-style: italic"> * Unless required by applicable law or agreed to in writing, software</span>
+<span style="color: #408080; font-style: italic"> * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span style="color: #408080; font-style: italic"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span style="color: #408080; font-style: italic"> * See the License for the specific language governing permissions and</span>
+<span style="color: #408080; font-style: italic"> * limitations under the License.</span>
+<span style="color: #408080; font-style: italic"> */</span>
+<span style="color: #008000; font-weight: bold">package</span> <span style="color: #0000FF; font-weight: bold">com.example.android.fragments</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.app.Activity</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.os.Build</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.os.Bundle</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.support.v4.app.ListFragment</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.view.View</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.widget.ArrayAdapter</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.widget.ListView</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">HeadlinesFragment</span> <span style="color: #008000; font-weight: bold">extends</span> ListFragment <span style="color: #666666">{</span>
+    OnHeadlineSelectedListener mCallback<span style="color: #666666">;</span>
+
+    <span style="color: #408080; font-style: italic">// The container Activity must implement this interface so the frag can deliver messages</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">interface</span> <span style="color: #0000FF; font-weight: bold">OnHeadlineSelectedListener</span> <span style="color: #666666">{</span>
+        <span style="color: #408080; font-style: italic">/** Called by HeadlinesFragment when a list item is selected */</span>
+        <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onArticleSelected</span><span style="color: #666666">(</span><span style="color: #B00040">int</span> position<span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onCreate</span><span style="color: #666666">(</span>Bundle savedInstanceState<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">super</span><span style="color: #666666">.</span><span style="color: #7D9029">onCreate</span><span style="color: #666666">(</span>savedInstanceState<span style="color: #666666">);</span>
+
+        <span style="color: #408080; font-style: italic">// We need to use a different list item layout for devices older than Honeycomb</span>
+        <span style="color: #B00040">int</span> layout <span style="color: #666666">=</span> Build<span style="color: #666666">.</span><span style="color: #7D9029">VERSION</span><span style="color: #666666">.</span><span style="color: #7D9029">SDK_INT</span> <span style="color: #666666">&gt;=</span> Build<span style="color: #666666">.</span><span style="color: #7D9029">VERSION_CODES</span><span style="color: #666666">.</span><span style="color: #7D9029">HONEYCOMB</span> <span style="color: #666666">?</span>
+                android<span style="color: #666666">.</span><span style="color: #7D9029">R</span><span style="color: #666666">.</span><span style="color: #7D9029">layout</span><span style="color: #666666">.</span><span style="color: #7D9029">simple_list_item_activated_1</span> <span style="color: #666666">:</span> android<span style="color: #666666">.</span><span style="color: #7D9029">R</span><span style="color: #666666">.</span><span style="color: #7D9029">layout</span><span style="color: #666666">.</span><span style="color: #7D9029">simple_list_item_1</span><span style="color: #666666">;</span>
+
+        <span style="color: #408080; font-style: italic">// Create an array adapter for the list view, using the Ipsum headlines array</span>
+        setListAdapter<span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">new</span> ArrayAdapter<span style="color: #666666">&lt;</span>String<span style="color: #666666">&gt;(</span>getActivity<span style="color: #666666">(),</span> layout<span style="color: #666666">,</span> Ipsum<span style="color: #666666">.</span><span style="color: #7D9029">Headlines</span><span style="color: #666666">));</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onStart</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">super</span><span style="color: #666666">.</span><span style="color: #7D9029">onStart</span><span style="color: #666666">();</span>
+
+        <span style="color: #408080; font-style: italic">// When in two-pane layout, set the listview to highlight the selected list item</span>
+        <span style="color: #408080; font-style: italic">// (We do this during onStart because at the point the listview is available.)</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>getFragmentManager<span style="color: #666666">().</span><span style="color: #7D9029">findFragmentById</span><span style="color: #666666">(</span>R<span style="color: #666666">.</span><span style="color: #7D9029">id</span><span style="color: #666666">.</span><span style="color: #7D9029">article_fragment</span><span style="color: #666666">)</span> <span style="color: #666666">!=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            getListView<span style="color: #666666">().</span><span style="color: #7D9029">setChoiceMode</span><span style="color: #666666">(</span>ListView<span style="color: #666666">.</span><span style="color: #7D9029">CHOICE_MODE_SINGLE</span><span style="color: #666666">);</span>
+        <span style="color: #666666">}</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onAttach</span><span style="color: #666666">(</span>Activity activity<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">super</span><span style="color: #666666">.</span><span style="color: #7D9029">onAttach</span><span style="color: #666666">(</span>activity<span style="color: #666666">);</span>
+
+        <span style="color: #408080; font-style: italic">// This makes sure that the container activity has implemented</span>
+        <span style="color: #408080; font-style: italic">// the callback interface. If not, it throws an exception.</span>
+        <span style="color: #008000; font-weight: bold">try</span> <span style="color: #666666">{</span>
+            mCallback <span style="color: #666666">=</span> <span style="color: #666666">(</span>OnHeadlineSelectedListener<span style="color: #666666">)</span> activity<span style="color: #666666">;</span>
+        <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">catch</span> <span style="color: #666666">(</span>ClassCastException e<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            <span style="color: #008000; font-weight: bold">throw</span> <span style="color: #008000; font-weight: bold">new</span> ClassCastException<span style="color: #666666">(</span>activity<span style="color: #666666">.</span><span style="color: #7D9029">toString</span><span style="color: #666666">()</span>
+                    <span style="color: #666666">+</span> <span style="color: #BA2121">&quot; must implement OnHeadlineSelectedListener&quot;</span><span style="color: #666666">);</span>
+        <span style="color: #666666">}</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onListItemClick</span><span style="color: #666666">(</span>ListView l<span style="color: #666666">,</span> View v<span style="color: #666666">,</span> <span style="color: #B00040">int</span> position<span style="color: #666666">,</span> <span style="color: #B00040">long</span> id<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #408080; font-style: italic">// Notify the parent activity of selected item</span>
+        mCallback<span style="color: #666666">.</span><span style="color: #7D9029">onArticleSelected</span><span style="color: #666666">(</span>position<span style="color: #666666">);</span>
+        
+        <span style="color: #408080; font-style: italic">// Set the item as checked to be highlighted when in two-pane layout</span>
+        getListView<span style="color: #666666">().</span><span style="color: #7D9029">setItemChecked</span><span style="color: #666666">(</span>position<span style="color: #666666">,</span> <span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre></div>

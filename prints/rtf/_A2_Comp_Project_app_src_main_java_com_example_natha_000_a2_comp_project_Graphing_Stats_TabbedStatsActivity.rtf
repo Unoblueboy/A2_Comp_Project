@@ -1,0 +1,290 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green128\blue0;\red186\green33\blue33;\red0\green0\blue255;\red188\green122\blue0;\red25\green23\blue124;\red64\green128\blue128;\red176\green0\blue64;\red187\green187\blue187;\red0\green0\blue128;\red160\green160\blue0;\red170\green34\blue255;\red136\green136\blue136;\red136\green0\blue0;\red102\green102\blue102;\red187\green102\blue136;\red0\green68\blue221;\red210\green65\blue58;\red255\green0\blue0;\red160\green0\blue0;\red187\green102\blue34;\red0\green160\blue0;\red125\green144\blue41;\red128\green0\blue128;\red153\green153\blue153;}\f0 {\cf14 .}{\chbrdr\chcfpat18 \\}A2_Comp_Project{\chbrdr\chcfpat18 \\}app{\chbrdr\chcfpat18 \\}src{\chbrdr\chcfpat18 \\}main{\chbrdr\chcfpat18 \\}java{\chbrdr\chcfpat18 \\}com{\chbrdr\chcfpat18 \\}example{\chbrdr\chcfpat18 \\}natha_000{\chbrdr\chcfpat18 \\}a2_comp_project{\chbrdr\chcfpat18 \\}Graphing_Stats{\chbrdr\chcfpat18 \\}TabbedStatsActivity{\cf14 .}{\cf22 java}\par
+{\cf1\b package} {\cf3\b com.example.natha_000.a2_comp_project.Graphing_Stats}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b android.app.Fragment}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.app.FragmentManager}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.os.Bundle}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.os.Environment}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.support.design.widget.FloatingActionButton}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.support.design.widget.TabLayout}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.support.v4.app.FragmentPagerAdapter}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.support.v4.view.ViewPager}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.support.v7.app.AppCompatActivity}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.support.v7.widget.Toolbar}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.util.Log}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.view.Menu}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.view.MenuItem}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.view.View}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b com.example.natha_000.a2_comp_project.R}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b java.io.File}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.text.SimpleDateFormat}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.util.Date}{\cf14 ;}\par
+\par
+{\cf1\b public} {\cf1\b class} {\cf3\b TabbedStatsActivity} {\cf1\b extends} AppCompatActivity {\cf14 \{}\par
+\par
+    {\cf1\b static} File folder {\cf14 =} {\cf1\b new} File{\cf14 (}Environment{\cf14 .}{\cf22 getExternalStorageDirectory}{\cf14 (}{\cf14 )} {\cf14 +} File{\cf14 .}{\cf22 separator} {\cf14 +} {\cf2 "Statistics"}{\cf14 )}{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf1\b final} {\cf7 int} READ_REQUEST_CODE {\cf14 =} {\cf14 42}{\cf14 ;}\par
+\par
+    {\cf6\i /**\par
+     * The \{@link android.support.v4.view.PagerAdapter\} that will provide\par
+     * fragments for each of the sections. We use a\par
+     * \{@link FragmentPagerAdapter\} derivative, which will keep every\par
+     * loaded fragment in memory. If this becomes too memory intensive, it\par
+     * may be best to switch to a\par
+     * \{@link android.support.v4.app.FragmentStatePagerAdapter\}.\par
+     */}\par
+    {\cf1\b private} SectionsPagerAdapter mSectionsPagerAdapter{\cf14 ;}\par
+\par
+    {\cf6\i /**\par
+     * The \{@link ViewPager\} that will host the section contents.\par
+     */}\par
+    {\cf1\b private} ViewPager mViewPager{\cf14 ;}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b protected} {\cf7 void} {\cf3 onCreate}{\cf14 (}Bundle savedInstanceState{\cf14 )} {\cf14 \{}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onCreate}{\cf14 (}savedInstanceState{\cf14 )}{\cf14 ;}\par
+        setContentView{\cf14 (}R{\cf14 .}{\cf22 layout}{\cf14 .}{\cf22 activity_tabbed_stats}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 0}{\cf14 ,}{\cf14 10}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 10}{\cf14 ,}{\cf14 20}{\cf14 ,}{\cf14 2}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 20}{\cf14 ,}{\cf14 30}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 30}{\cf14 ,}{\cf14 40}{\cf14 ,}{\cf14 2}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 40}{\cf14 ,}{\cf14 50}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 50}{\cf14 ,}{\cf14 60}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 60}{\cf14 ,}{\cf14 70}{\cf14 ,}{\cf14 5}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 70}{\cf14 ,}{\cf14 80}{\cf14 ,}{\cf14 4}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 80}{\cf14 ,}{\cf14 90}{\cf14 ,}{\cf14 11}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 90}{\cf14 ,}{\cf14 100}{\cf14 ,}{\cf14 5}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 100}{\cf14 ,}{\cf14 110}{\cf14 ,}{\cf14 4}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 110}{\cf14 ,}{\cf14 120}{\cf14 ,}{\cf14 8}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 120}{\cf14 ,}{\cf14 130}{\cf14 ,}{\cf14 11}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 130}{\cf14 ,}{\cf14 140}{\cf14 ,}{\cf14 13}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 140}{\cf14 ,}{\cf14 150}{\cf14 ,}{\cf14 7}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 150}{\cf14 ,}{\cf14 160}{\cf14 ,}{\cf14 12}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 160}{\cf14 ,}{\cf14 170}{\cf14 ,}{\cf14 10}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 170}{\cf14 ,}{\cf14 180}{\cf14 ,}{\cf14 7}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 180}{\cf14 ,}{\cf14 190}{\cf14 ,}{\cf14 13}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 190}{\cf14 ,}{\cf14 200}{\cf14 ,}{\cf14 25}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 200}{\cf14 ,}{\cf14 210}{\cf14 ,}{\cf14 11}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 210}{\cf14 ,}{\cf14 220}{\cf14 ,}{\cf14 21}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 220}{\cf14 ,}{\cf14 230}{\cf14 ,}{\cf14 22}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 230}{\cf14 ,}{\cf14 240}{\cf14 ,}{\cf14 31}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 240}{\cf14 ,}{\cf14 250}{\cf14 ,}{\cf14 24}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 250}{\cf14 ,}{\cf14 260}{\cf14 ,}{\cf14 35}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 260}{\cf14 ,}{\cf14 270}{\cf14 ,}{\cf14 31}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 270}{\cf14 ,}{\cf14 280}{\cf14 ,}{\cf14 36}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 280}{\cf14 ,}{\cf14 290}{\cf14 ,}{\cf14 37}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 290}{\cf14 ,}{\cf14 300}{\cf14 ,}{\cf14 39}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 300}{\cf14 ,}{\cf14 310}{\cf14 ,}{\cf14 40}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 310}{\cf14 ,}{\cf14 320}{\cf14 ,}{\cf14 57}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 320}{\cf14 ,}{\cf14 330}{\cf14 ,}{\cf14 41}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 330}{\cf14 ,}{\cf14 340}{\cf14 ,}{\cf14 50}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 340}{\cf14 ,}{\cf14 350}{\cf14 ,}{\cf14 52}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 350}{\cf14 ,}{\cf14 360}{\cf14 ,}{\cf14 70}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 360}{\cf14 ,}{\cf14 370}{\cf14 ,}{\cf14 72}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 370}{\cf14 ,}{\cf14 380}{\cf14 ,}{\cf14 67}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 380}{\cf14 ,}{\cf14 390}{\cf14 ,}{\cf14 82}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 390}{\cf14 ,}{\cf14 400}{\cf14 ,}{\cf14 74}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 400}{\cf14 ,}{\cf14 410}{\cf14 ,}{\cf14 85}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 410}{\cf14 ,}{\cf14 420}{\cf14 ,}{\cf14 73}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 420}{\cf14 ,}{\cf14 430}{\cf14 ,}{\cf14 81}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 430}{\cf14 ,}{\cf14 440}{\cf14 ,}{\cf14 72}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 440}{\cf14 ,}{\cf14 450}{\cf14 ,}{\cf14 92}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 450}{\cf14 ,}{\cf14 460}{\cf14 ,}{\cf14 85}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 460}{\cf14 ,}{\cf14 470}{\cf14 ,}{\cf14 108}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 470}{\cf14 ,}{\cf14 480}{\cf14 ,}{\cf14 90}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 480}{\cf14 ,}{\cf14 490}{\cf14 ,}{\cf14 84}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 490}{\cf14 ,}{\cf14 500}{\cf14 ,}{\cf14 85}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 500}{\cf14 ,}{\cf14 510}{\cf14 ,}{\cf14 83}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 510}{\cf14 ,}{\cf14 520}{\cf14 ,}{\cf14 94}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 520}{\cf14 ,}{\cf14 530}{\cf14 ,}{\cf14 100}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 530}{\cf14 ,}{\cf14 540}{\cf14 ,}{\cf14 74}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 540}{\cf14 ,}{\cf14 550}{\cf14 ,}{\cf14 85}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 550}{\cf14 ,}{\cf14 560}{\cf14 ,}{\cf14 105}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 560}{\cf14 ,}{\cf14 570}{\cf14 ,}{\cf14 73}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 570}{\cf14 ,}{\cf14 580}{\cf14 ,}{\cf14 82}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 580}{\cf14 ,}{\cf14 590}{\cf14 ,}{\cf14 86}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 590}{\cf14 ,}{\cf14 600}{\cf14 ,}{\cf14 80}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 600}{\cf14 ,}{\cf14 610}{\cf14 ,}{\cf14 87}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 610}{\cf14 ,}{\cf14 620}{\cf14 ,}{\cf14 72}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 620}{\cf14 ,}{\cf14 630}{\cf14 ,}{\cf14 67}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 630}{\cf14 ,}{\cf14 640}{\cf14 ,}{\cf14 72}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 640}{\cf14 ,}{\cf14 650}{\cf14 ,}{\cf14 67}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 650}{\cf14 ,}{\cf14 660}{\cf14 ,}{\cf14 69}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 660}{\cf14 ,}{\cf14 670}{\cf14 ,}{\cf14 38}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 670}{\cf14 ,}{\cf14 680}{\cf14 ,}{\cf14 58}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 680}{\cf14 ,}{\cf14 690}{\cf14 ,}{\cf14 63}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 690}{\cf14 ,}{\cf14 700}{\cf14 ,}{\cf14 63}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 700}{\cf14 ,}{\cf14 710}{\cf14 ,}{\cf14 58}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 710}{\cf14 ,}{\cf14 720}{\cf14 ,}{\cf14 42}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 720}{\cf14 ,}{\cf14 730}{\cf14 ,}{\cf14 44}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 730}{\cf14 ,}{\cf14 740}{\cf14 ,}{\cf14 41}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 740}{\cf14 ,}{\cf14 750}{\cf14 ,}{\cf14 28}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 750}{\cf14 ,}{\cf14 760}{\cf14 ,}{\cf14 45}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 760}{\cf14 ,}{\cf14 770}{\cf14 ,}{\cf14 35}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 770}{\cf14 ,}{\cf14 780}{\cf14 ,}{\cf14 24}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 780}{\cf14 ,}{\cf14 790}{\cf14 ,}{\cf14 24}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 790}{\cf14 ,}{\cf14 800}{\cf14 ,}{\cf14 13}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 800}{\cf14 ,}{\cf14 810}{\cf14 ,}{\cf14 22}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 810}{\cf14 ,}{\cf14 820}{\cf14 ,}{\cf14 16}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 820}{\cf14 ,}{\cf14 830}{\cf14 ,}{\cf14 16}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 830}{\cf14 ,}{\cf14 840}{\cf14 ,}{\cf14 6}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 840}{\cf14 ,}{\cf14 850}{\cf14 ,}{\cf14 12}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 850}{\cf14 ,}{\cf14 860}{\cf14 ,}{\cf14 9}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 860}{\cf14 ,}{\cf14 870}{\cf14 ,}{\cf14 13}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 870}{\cf14 ,}{\cf14 880}{\cf14 ,}{\cf14 11}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 880}{\cf14 ,}{\cf14 890}{\cf14 ,}{\cf14 11}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 890}{\cf14 ,}{\cf14 900}{\cf14 ,}{\cf14 9}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 900}{\cf14 ,}{\cf14 910}{\cf14 ,}{\cf14 5}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 910}{\cf14 ,}{\cf14 920}{\cf14 ,}{\cf14 5}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 920}{\cf14 ,}{\cf14 930}{\cf14 ,}{\cf14 6}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 930}{\cf14 ,}{\cf14 940}{\cf14 ,}{\cf14 2}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 940}{\cf14 ,}{\cf14 950}{\cf14 ,}{\cf14 4}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 950}{\cf14 ,}{\cf14 960}{\cf14 ,}{\cf14 4}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 960}{\cf14 ,}{\cf14 970}{\cf14 ,}{\cf14 2}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 970}{\cf14 ,}{\cf14 980}{\cf14 ,}{\cf14 4}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 980}{\cf14 ,}{\cf14 990}{\cf14 ,}{\cf14 2}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 990}{\cf14 ,}{\cf14 1000}{\cf14 ,}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 1000}{\cf14 ,}{\cf14 1010}{\cf14 ,}{\cf14 0}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b new} StatsClasses{\cf14 (}{\cf14 1010}{\cf14 ,}{\cf14 1020}{\cf14 ,}{\cf14 5}{\cf14 )}{\cf14 ;}\par
+\par
+        Toolbar toolbar {\cf14 =} {\cf14 (}Toolbar{\cf14 )} findViewById{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 toolbar}{\cf14 )}{\cf14 ;}\par
+        setSupportActionBar{\cf14 (}toolbar{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf1\b if} {\cf14 (}{\cf14 !}folder{\cf14 .}{\cf22 exists}{\cf14 (}{\cf14 )}{\cf14 )} {\cf14 \{}\par
+            folder{\cf14 .}{\cf22 mkdirs}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+\par
+        {\cf6\i // Create the adapter that will return a fragment for each of the three\par
+}        {\cf6\i // primary sections of the activity.\par
+}        mSectionsPagerAdapter {\cf14 =} {\cf1\b new} SectionsPagerAdapter{\cf14 (}getFragmentManager{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // Set up the ViewPager with the sections adapter.\par
+}        mViewPager {\cf14 =} {\cf14 (}ViewPager{\cf14 )} findViewById{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 container}{\cf14 )}{\cf14 ;}\par
+        mViewPager{\cf14 .}{\cf22 setAdapter}{\cf14 (}mSectionsPagerAdapter{\cf14 )}{\cf14 ;}\par
+        mViewPager{\cf14 .}{\cf22 setCurrentItem}{\cf14 (}{\cf14 0}{\cf14 )}{\cf14 ;}\par
+        mViewPager{\cf14 .}{\cf22 setOnPageChangeListener}{\cf14 (}{\cf1\b new} ViewPager{\cf14 .}{\cf22 OnPageChangeListener}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+\par
+            {\cf11 @Override}\par
+            {\cf1\b public} {\cf7 void} {\cf3 onPageSelected}{\cf14 (}{\cf7 int} position{\cf14 )} {\cf14 \{}\par
+{\cf6\i //                Log.i("Tabbed","On Page Selected"+Integer.toString(position));\par
+}                {\cf1\b if} {\cf14 (}position {\cf14 =}{\cf14 =} {\cf14 0}{\cf14 )} {\cf14 \{}\par
+                    StatsClasses{\cf14 .}{\cf22 reset}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+                {\cf14 \}}\par
+            {\cf14 \}}\par
+\par
+            {\cf11 @Override}\par
+            {\cf1\b public} {\cf7 void} {\cf3 onPageScrolled}{\cf14 (}{\cf7 int} arg0{\cf14 ,} {\cf7 float} arg1{\cf14 ,} {\cf7 int} arg2{\cf14 )} {\cf14 \{}\par
+{\cf6\i //                Log.i("Tabbed","On Page Scrolled: " + Arrays.toString(new float[]\{arg0,arg1,arg2\}));\par
+}            {\cf14 \}}\par
+\par
+            {\cf11 @Override}\par
+            {\cf1\b public} {\cf7 void} {\cf3 onPageScrollStateChanged}{\cf14 (}{\cf7 int} pos{\cf14 )} {\cf14 \{}\par
+{\cf6\i //                Log.i("Tabbed","On Page Scroll State Changed: " + Integer.toString(pos));\par
+}            {\cf14 \}}\par
+        {\cf14 \}}{\cf14 )}{\cf14 ;}\par
+\par
+        TabLayout tabLayout {\cf14 =} {\cf14 (}TabLayout{\cf14 )} findViewById{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 tabs}{\cf14 )}{\cf14 ;}\par
+        tabLayout{\cf14 .}{\cf22 setupWithViewPager}{\cf14 (}mViewPager{\cf14 )}{\cf14 ;}\par
+\par
+        FloatingActionButton fab {\cf14 =} {\cf14 (}FloatingActionButton{\cf14 )} findViewById{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 fab}{\cf14 )}{\cf14 ;}\par
+        fab{\cf14 .}{\cf22 setOnClickListener}{\cf14 (}{\cf1\b new} View{\cf14 .}{\cf22 OnClickListener}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+            {\cf11 @Override}\par
+            {\cf1\b public} {\cf7 void} {\cf3 onClick}{\cf14 (}View view{\cf14 )} {\cf14 \{}\par
+                export{\cf14 (}{\cf14 )}{\cf14 ;}\par
+            {\cf14 \}}\par
+        {\cf14 \}}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 void} {\cf3 export}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        String newfolname {\cf14 =} {\cf14 (}{\cf1\b new} SimpleDateFormat{\cf14 (}{\cf2 "dd-MM-yy-HH:mm:ss"}{\cf14 )}{\cf14 )}{\cf14 .}{\cf22 format}{\cf14 (}{\cf1\b new} Date{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+        File newfolder {\cf14 =} {\cf1\b new} File{\cf14 (}folder{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )} {\cf14 +} File{\cf14 .}{\cf22 separator} {\cf14 +} newfolname{\cf14 )}{\cf14 ;}\par
+        {\cf1\b if} {\cf14 (}{\cf14 !}newfolder{\cf14 .}{\cf22 exists}{\cf14 (}{\cf14 )}{\cf14 )} {\cf14 \{}\par
+            newfolder{\cf14 .}{\cf22 mkdirs}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf14 (}{\cf1\b new} SketchHistogram{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 .}{\cf22 export}{\cf14 (}{\cf14 600}{\cf14 ,} {\cf14 1000}{\cf14 ,} newfolder{\cf14 )}{\cf14 ;}\par
+        {\cf14 (}{\cf1\b new} SketchCumFreq{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 .}{\cf22 export}{\cf14 (}{\cf14 600}{\cf14 ,} {\cf14 1000}{\cf14 ,} newfolder{\cf14 )}{\cf14 ;}\par
+        {\cf14 (}{\cf1\b new} StatsDataTable{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 .}{\cf22 export}{\cf14 (}newfolder{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 boolean} {\cf3 onCreateOptionsMenu}{\cf14 (}Menu menu{\cf14 )} {\cf14 \{}\par
+        {\cf6\i // Inflate the menu; this adds items to the action bar if it is present.\par
+}        getMenuInflater{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 inflate}{\cf14 (}R{\cf14 .}{\cf22 menu}{\cf14 .}{\cf22 menu_tabbed_stats}{\cf14 ,} menu{\cf14 )}{\cf14 ;}\par
+        {\cf1\b return} {\cf1\b true}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 boolean} {\cf3 onOptionsItemSelected}{\cf14 (}MenuItem item{\cf14 )} {\cf14 \{}\par
+        {\cf6\i // Handle action bar item clicks here. The action bar will\par
+}        {\cf6\i // automatically handle clicks on the Home/Up button, so long\par
+}        {\cf6\i // as you specify a parent activity in AndroidManifest.xml.\par
+}        {\cf7 int} id {\cf14 =} item{\cf14 .}{\cf22 getItemId}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i //noinspection SimplifiableIfStatement\par
+}        {\cf1\b if} {\cf14 (}id {\cf14 =}{\cf14 =} R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 action_settings}{\cf14 )} {\cf14 \{}\par
+            {\cf1\b return} {\cf1\b true}{\cf14 ;}\par
+        {\cf14 \}}\par
+\par
+        {\cf1\b return} {\cf1\b super}{\cf14 .}{\cf22 onOptionsItemSelected}{\cf14 (}item{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * A \{@link NewFragmentPagerAdapter\} that returns a fragment corresponding to\par
+     * one of the sections/tabs/pages.\par
+     */}\par
+    {\cf1\b public} {\cf1\b class} {\cf3\b SectionsPagerAdapter} {\cf1\b extends} NewFragmentPagerAdapter {\cf14 \{}\par
+\par
+        {\cf7 int} prevFragment {\cf14 =} {\cf14 0}{\cf14 ;}\par
+\par
+        {\cf1\b public} {\cf3 SectionsPagerAdapter}{\cf14 (}FragmentManager fm{\cf14 )} {\cf14 \{}\par
+            {\cf1\b super}{\cf14 (}fm{\cf14 )}{\cf14 ;}\par
+            Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: Switch"}{\cf14 ,}{\cf2 ""}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+\par
+        {\cf11 @Override}\par
+        {\cf1\b public} Fragment {\cf3 getItem}{\cf14 (}{\cf7 int} position{\cf14 )} {\cf14 \{}\par
+            {\cf6\i // getItem is called to instantiate the fragment for the given page.\par
+}            {\cf6\i // Return a PlaceholderFragment (defined as a static inner class below).\par
+}            {\cf1\b switch} {\cf14 (}position{\cf14 )} {\cf14 \{}\par
+                {\cf1\b case} {\cf14 0}{\cf14 :}\par
+                    {\cf1\b return} {\cf1\b new} StatsDataTable{\cf14 (}{\cf14 )}{\cf14 ;}\par
+                {\cf1\b case} {\cf14 1}{\cf14 :}\par
+                    {\cf1\b return} {\cf1\b new} SketchHistogram{\cf14 (}{\cf14 )}{\cf14 ;}\par
+                {\cf1\b case} {\cf14 2}{\cf14 :}\par
+                    {\cf1\b return} {\cf1\b new} SketchCumFreq{\cf14 (}{\cf14 )}{\cf14 ;}\par
+            {\cf14 \}}\par
+            {\cf1\b return} {\cf1\b null}{\cf14 ;}\par
+\par
+{\cf6\i //            return PlaceholderFragment.newInstance(position + 1);\par
+}        {\cf14 \}}\par
+\par
+        {\cf11 @Override}\par
+        {\cf1\b public} {\cf7 int} {\cf3 getCount}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+            {\cf6\i // Show 3 total pages.\par
+}            {\cf1\b return} {\cf14 3}{\cf14 ;}\par
+        {\cf14 \}}\par
+\par
+        {\cf11 @Override}\par
+        {\cf1\b public} CharSequence {\cf3 getPageTitle}{\cf14 (}{\cf7 int} position{\cf14 )} {\cf14 \{}\par
+            Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: Switch Title"}{\cf14 ,}Integer{\cf14 .}{\cf22 toString}{\cf14 (}position{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            {\cf1\b switch} {\cf14 (}position{\cf14 )} {\cf14 \{}\par
+                {\cf1\b case} {\cf14 0}{\cf14 :}\par
+                    {\cf1\b return} {\cf2 "table"}{\cf14 ;}\par
+                {\cf1\b case} {\cf14 1}{\cf14 :}\par
+                    {\cf1\b return} {\cf2 "Histogram"}{\cf14 ;}\par
+                {\cf1\b case} {\cf14 2}{\cf14 :}\par
+                    {\cf1\b return} {\cf2 "Cumulative Frequency"}{\cf14 ;}\par
+            {\cf14 \}}\par
+            {\cf1\b return} {\cf1\b null}{\cf14 ;}\par
+        {\cf14 \}}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 void} {\cf3 onDestroy}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onDestroy}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        StatsClasses{\cf14 .}{\cf22 reset}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+{\cf14 \}}\par
+}

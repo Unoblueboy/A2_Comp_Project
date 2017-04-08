@@ -1,0 +1,297 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green128\blue0;\red186\green33\blue33;\red0\green0\blue255;\red188\green122\blue0;\red25\green23\blue124;\red64\green128\blue128;\red176\green0\blue64;\red187\green187\blue187;\red0\green0\blue128;\red160\green160\blue0;\red170\green34\blue255;\red136\green136\blue136;\red136\green0\blue0;\red102\green102\blue102;\red187\green102\blue136;\red0\green68\blue221;\red210\green65\blue58;\red255\green0\blue0;\red160\green0\blue0;\red187\green102\blue34;\red0\green160\blue0;\red125\green144\blue41;\red128\green0\blue128;\red153\green153\blue153;}\f0 {\cf14 .}{\chbrdr\chcfpat18 \\}A2_Comp_Project{\chbrdr\chcfpat18 \\}app{\chbrdr\chcfpat18 \\}src{\chbrdr\chcfpat18 \\}main{\chbrdr\chcfpat18 \\}java{\chbrdr\chcfpat18 \\}com{\chbrdr\chcfpat18 \\}example{\chbrdr\chcfpat18 \\}natha_000{\chbrdr\chcfpat18 \\}a2_comp_project{\chbrdr\chcfpat18 \\}Graphing_3D{\chbrdr\chcfpat18 \\}WorldLayoutData{\cf14 .}{\cf22 java}\par
+{\cf1\b package} {\cf3\b com.example.natha_000.a2_comp_project.Graphing_3D}{\cf14 ;}\par
+\par
+{\cf6\i /**\par
+ * Created by Natha_000 on 02/01/2017.\par
+ */}\par
+\par
+{\cf1\b import} {\cf3\b com.google.vr.sdk.base.HeadTransform}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b java.io.IOException}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.util.ArrayList}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.util.List}{\cf14 ;}\par
+{\cf6\i /**\par
+ * This class is used to generate the class data that will be used for the\par
+ * Plotting of the 3D graphs\par
+*/}\par
+{\cf1\b public} {\cf1\b class} {\cf3\b WorldLayoutData} {\cf14 \{}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} minX{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} maxX{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} minY{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} maxY{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 int} cols{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 int} rows{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} scl{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} w{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} h{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float}{\cf14 [}{\cf14 ]} offset {\cf14 =} {\cf14 \{}{\cf14 0}{\cf14 ,}{\cf14 0}{\cf14 ,}{\cf14 0}{\cf14 \}}{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} List{\cf14 <}{\cf7 float}{\cf14 [}{\cf14 ]}{\cf14 >} values{\cf14 ;}\par
+    {\cf1\b public} {\cf1\b static} {\cf7 float}{\cf14 [}{\cf14 ]} SURFACE_COORDS{\cf14 ;}\par
+    {\cf1\b public} {\cf1\b static} {\cf7 float}{\cf14 [}{\cf14 ]} SURFACE_NORMALS{\cf14 ;}\par
+    {\cf1\b public} {\cf1\b static} {\cf7 float}{\cf14 [}{\cf14 ]} SURFACE_COLORS{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float}{\cf14 [}{\cf14 ]} eulerAngles {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}{\cf14 3}{\cf14 ]}{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} flySpeed {\cf14 =} {\cf14 0.1f}{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 boolean} flying {\cf14 =} {\cf1\b false}{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} Function a{\cf14 ;}\par
+\par
+    {\cf6\i /**\par
+     * This is used to change the parameters used in generating the coordinate of the landscape\par
+     * @param xMin\par
+    */}\par
+    {\cf1\b public} {\cf1\b static} {\cf7 void} {\cf3 setParameters}{\cf14 (}{\cf7 float} xMin{\cf14 ,} {\cf7 float} xMax{\cf14 ,}\par
+                              {\cf7 float} yMin{\cf14 ,} {\cf7 float} yMax{\cf14 ,}\par
+                              {\cf7 int} col{\cf14 ,} {\cf7 int} row{\cf14 ,} {\cf7 float} sl{\cf14 )} {\cf14 \{}\par
+        minX {\cf14 =} xMin{\cf14 ;}\par
+        maxX {\cf14 =} xMax{\cf14 ;}\par
+        minY {\cf14 =} yMin{\cf14 ;}\par
+        maxY {\cf14 =} yMax{\cf14 ;}\par
+        cols {\cf14 =} col{\cf14 ;}\par
+        rows {\cf14 =} row{\cf14 ;}\par
+        scl {\cf14 =} sl{\cf14 ;}\par
+\par
+        {\cf6\i // Find the distance between consecutive x values\par
+}        w {\cf14 =} {\cf14 (}maxX {\cf14 -} minX{\cf14 )}{\cf14 /}{\cf14 (}cols{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+        {\cf6\i // Find the distance between consecutive y values\par
+}        h {\cf14 =} {\cf14 (}maxY {\cf14 -} minY{\cf14 )}{\cf14 /}{\cf14 (}rows{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // Calculate the size of the necessary arrays and instantiate arrays of the appropriate size\par
+}        SURFACE_COORDS {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}{\cf14 (}cols{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 *}{\cf14 (}rows{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 *}{\cf14 6}{\cf14 *}{\cf14 3}{\cf14 ]}{\cf14 ;}\par
+        SURFACE_NORMALS {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}SURFACE_COORDS{\cf14 .}{\cf22 length}{\cf14 ]}{\cf14 ;}\par
+        SURFACE_COLORS {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}{\cf14 4} {\cf14 *} SURFACE_COORDS{\cf14 .}{\cf22 length} {\cf14 /} {\cf14 3}{\cf14 ]}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+\par
+    {\cf6\i /**\par
+     * Toggles to indicate whether the user is moving through the space or not.\par
+     */}\par
+    {\cf1\b static} {\cf7 void} {\cf3 toggleFlying}{\cf14 (}{\cf14 )} {\cf14 \{}flying {\cf14 =} {\cf14 !}flying{\cf14 ;}{\cf14 \}}\par
+\par
+\par
+    {\cf6\i /**\par
+     * Used to obtain whether the user is flying from outside of the class.\par
+     */}\par
+    {\cf1\b static} {\cf7 boolean} {\cf3 isFlying}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        {\cf1\b return} flying{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * Used to reset the class once the activity has finished using it.\par
+     */}\par
+    {\cf1\b static} {\cf7 void} {\cf3 reset}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        offset{\cf14 [}{\cf14 0}{\cf14 ]} {\cf14 =} {\cf14 0}{\cf14 ;}\par
+        offset{\cf14 [}{\cf14 1}{\cf14 ]} {\cf14 =} {\cf14 0}{\cf14 ;}\par
+        offset{\cf14 [}{\cf14 2}{\cf14 ]} {\cf14 =} {\cf14 0}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b static} {\cf7 void} {\cf3 changeResolution}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        {\cf1\b if} {\cf14 (}cols {\cf14 =}{\cf14 =} {\cf14 61}{\cf14 )} {\cf14 \{}\par
+            WorldLayoutData{\cf14 .}{\cf22 setParameters}{\cf14 (}{\cf14 -}{\cf14 10}f{\cf14 ,}{\cf14 10}f{\cf14 ,}{\cf14 -}{\cf14 10}f{\cf14 ,}{\cf14 10}f{\cf14 ,}{\cf14 41}{\cf14 ,}{\cf14 41}{\cf14 ,}{\cf14 10}f{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b else} {\cf14 \{}\par
+            WorldLayoutData{\cf14 .}{\cf22 setParameters}{\cf14 (}{\cf14 -}{\cf14 10}f{\cf14 ,}{\cf14 10}f{\cf14 ,}{\cf14 -}{\cf14 10}f{\cf14 ,}{\cf14 10}f{\cf14 ,}{\cf14 61}{\cf14 ,}{\cf14 61}{\cf14 ,}{\cf14 10}f{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * Used to obtain whether the x,y, and z offset from outside of the class.\par
+     */}\par
+    {\cf1\b static} {\cf7 float}{\cf14 [}{\cf14 ]} {\cf3 getOffset}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        {\cf1\b return} offset{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+\par
+    {\cf6\i /**\par
+     * The purpose of this function is to use the rotation of the user to emulate\par
+     * the feeling of flight via the changing of the relative x,y, and z offset.\par
+     * @param hT the relative position of the head, from the Google VR class\par
+     */}\par
+    {\cf1\b static} {\cf7 void} {\cf3 fly}{\cf14 (}HeadTransform hT{\cf14 )} {\cf14 \{}\par
+        hT{\cf14 .}{\cf22 getEulerAngles}{\cf14 (}eulerAngles{\cf14 ,} {\cf14 0}{\cf14 )}{\cf14 ;}\par
+        offset{\cf14 [}{\cf14 0}{\cf14 ]} {\cf14 =} offset{\cf14 [}{\cf14 0}{\cf14 ]} {\cf14 -} flySpeed{\cf14 *}{\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 sin}{\cf14 (} {\cf14 (}{\cf7 double}{\cf14 )} eulerAngles{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 )}{\cf14 *}\par
+                {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 cos}{\cf14 (} {\cf14 (}{\cf7 double}{\cf14 )} eulerAngles{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 )}{\cf14 ;}\par
+        offset{\cf14 [}{\cf14 1}{\cf14 ]} {\cf14 =} offset{\cf14 [}{\cf14 1}{\cf14 ]} {\cf14 -} flySpeed{\cf14 *}{\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 cos}{\cf14 (} {\cf14 (}{\cf7 double}{\cf14 )} eulerAngles{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 )}{\cf14 *}\par
+                {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 cos}{\cf14 (} {\cf14 (}{\cf7 double}{\cf14 )} eulerAngles{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 )}{\cf14 ;}\par
+        offset{\cf14 [}{\cf14 2}{\cf14 ]} {\cf14 =} offset{\cf14 [}{\cf14 2}{\cf14 ]} {\cf14 -} flySpeed{\cf14 *}{\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 sin}{\cf14 (} {\cf14 (}{\cf7 double}{\cf14 )} eulerAngles{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * The purpose of this function is to use the rotation of the user to emulate\par
+     * the feeling of flight via the changing of the relative x,y, and z offset.\par
+     * @param eulerAngle the relative rotation of the user, given by an array of length 2 or 3\par
+     */}\par
+    {\cf1\b static} {\cf7 void} {\cf3 fly}{\cf14 (}{\cf7 float}{\cf14 [}{\cf14 ]} eulerAngle{\cf14 )} {\cf14 \{}\par
+        offset{\cf14 [}{\cf14 0}{\cf14 ]} {\cf14 =} offset{\cf14 [}{\cf14 0}{\cf14 ]} {\cf14 +} flySpeed{\cf14 *}{\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 sin}{\cf14 (} {\cf14 (}{\cf7 double}{\cf14 )} eulerAngle{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 )}{\cf14 *}\par
+                {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 cos}{\cf14 (} {\cf14 (}{\cf7 double}{\cf14 )} eulerAngle{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 )}{\cf14 ;}\par
+        offset{\cf14 [}{\cf14 1}{\cf14 ]} {\cf14 =} offset{\cf14 [}{\cf14 1}{\cf14 ]} {\cf14 -} flySpeed{\cf14 *}{\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 cos}{\cf14 (} {\cf14 (}{\cf7 double}{\cf14 )} eulerAngle{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 )}{\cf14 *}\par
+                {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 cos}{\cf14 (} {\cf14 (}{\cf7 double}{\cf14 )} eulerAngle{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 )}{\cf14 ;}\par
+        offset{\cf14 [}{\cf14 2}{\cf14 ]} {\cf14 =} offset{\cf14 [}{\cf14 2}{\cf14 ]} {\cf14 -} flySpeed{\cf14 *}{\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 sin}{\cf14 (} {\cf14 (}{\cf7 double}{\cf14 )} eulerAngle{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+\par
+    {\cf6\i /**\par
+     * The purpose of this function is to parse the functext to generate a mathematical formula\par
+     * That can be used in the rest of this activity.\par
+     * @param functext is the text that represents the main function\par
+     * @throws IOException If the function is invalid\par
+     */}\par
+    {\cf1\b public} {\cf1\b static} {\cf7 void} {\cf3 setfunction}{\cf14 (}String functext{\cf14 )} {\cf1\b throws} IOException{\cf14 \{}\par
+        a {\cf14 =} GraphData{\cf14 .}{\cf22 function_creator}{\cf14 (}functext{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * Converts Hue, saturation, lightness into red, green, blue\par
+     * @param h Hue between 0 and 360 degrees\par
+     * @param s Saturation between 0 and 1l\par
+     * @param l lightness between 0 and 1\par
+    */}\par
+    {\cf1\b public} {\cf1\b static} {\cf7 float}{\cf14 [}{\cf14 ]} {\cf3 hslTorgb}{\cf14 (}{\cf7 float} h{\cf14 ,} {\cf7 float} s{\cf14 ,} {\cf7 float} l{\cf14 )} {\cf14 \{}\par
+        {\cf7 float} C {\cf14 =} {\cf14 (}{\cf14 1} {\cf14 -} Math{\cf14 .}{\cf22 abs}{\cf14 (}{\cf14 2}{\cf14 *}l {\cf14 -} {\cf14 1}{\cf14 )}{\cf14 )} {\cf14 *} s{\cf14 ;}\par
+        {\cf7 float} X {\cf14 =} C{\cf14 *}{\cf14 (}{\cf14 1}{\cf14 -} Math{\cf14 .}{\cf22 abs}{\cf14 (}{\cf14 (}{\cf14 (}h{\cf14 /}{\cf14 60}{\cf14 )}{\cf14 %}{\cf14 2}{\cf14 )} {\cf14 -} {\cf14 1}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        {\cf7 float} m {\cf14 =} l{\cf14 -}C{\cf14 /}{\cf14 2}{\cf14 ;}\par
+        {\cf7 float} H {\cf14 =} Math{\cf14 .}{\cf22 max}{\cf14 (}{\cf14 0}{\cf14 ,}Math{\cf14 .}{\cf22 min}{\cf14 (}h{\cf14 /}{\cf14 60}{\cf14 ,}{\cf14 6}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b if} {\cf14 (}H{\cf14 <}{\cf14 =}{\cf14 1}{\cf14 )} {\cf14 \{}\par
+            {\cf7 float}{\cf14 [}{\cf14 ]} result {\cf14 =} {\cf14 \{}Math{\cf14 .}{\cf22 round}{\cf14 (}{\cf14 (}C{\cf14 +}m{\cf14 )}{\cf14 *}{\cf14 255}{\cf14 )}{\cf14 ,}Math{\cf14 .}{\cf22 round}{\cf14 (}{\cf14 (}X{\cf14 +}m{\cf14 )}{\cf14 *}{\cf14 255}{\cf14 )}{\cf14 ,}Math{\cf14 .}{\cf22 round}{\cf14 (}{\cf14 (}{\cf14 0}{\cf14 +}m{\cf14 )}{\cf14 *}{\cf14 255}{\cf14 )}{\cf14 \}}{\cf14 ;}\par
+            {\cf1\b return} result{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b else} {\cf1\b if} {\cf14 (}H{\cf14 <}{\cf14 =}{\cf14 2}{\cf14 )} {\cf14 \{}\par
+            {\cf7 float}{\cf14 [}{\cf14 ]} result {\cf14 =} {\cf14 \{}Math{\cf14 .}{\cf22 round}{\cf14 (}{\cf14 (}X{\cf14 +}m{\cf14 )}{\cf14 *}{\cf14 255}{\cf14 )}{\cf14 ,}Math{\cf14 .}{\cf22 round}{\cf14 (}{\cf14 (}C{\cf14 +}m{\cf14 )}{\cf14 *}{\cf14 255}{\cf14 )}{\cf14 ,}Math{\cf14 .}{\cf22 round}{\cf14 (}{\cf14 (}{\cf14 0}{\cf14 +}m{\cf14 )}{\cf14 *}{\cf14 255}{\cf14 )}{\cf14 \}}{\cf14 ;}\par
+            {\cf1\b return} result{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b else} {\cf1\b if} {\cf14 (}H{\cf14 <}{\cf14 =}{\cf14 3}{\cf14 )} {\cf14 \{}\par
+            {\cf7 float}{\cf14 [}{\cf14 ]} result {\cf14 =} {\cf14 \{}Math{\cf14 .}{\cf22 round}{\cf14 (}{\cf14 (}{\cf14 0}{\cf14 +}m{\cf14 )}{\cf14 *}{\cf14 255}{\cf14 )}{\cf14 ,}Math{\cf14 .}{\cf22 round}{\cf14 (}{\cf14 (}C{\cf14 +}m{\cf14 )}{\cf14 *}{\cf14 255}{\cf14 )}{\cf14 ,}Math{\cf14 .}{\cf22 round}{\cf14 (}{\cf14 (}X{\cf14 +}m{\cf14 )}{\cf14 *}{\cf14 255}{\cf14 )}{\cf14 \}}{\cf14 ;}\par
+            {\cf1\b return} result{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b else} {\cf1\b if} {\cf14 (}H{\cf14 <}{\cf14 =}{\cf14 4}{\cf14 )} {\cf14 \{}\par
+            {\cf7 float}{\cf14 [}{\cf14 ]} result {\cf14 =} {\cf14 \{}Math{\cf14 .}{\cf22 round}{\cf14 (}{\cf14 (}{\cf14 0}{\cf14 +}m{\cf14 )}{\cf14 *}{\cf14 255}{\cf14 )}{\cf14 ,}Math{\cf14 .}{\cf22 round}{\cf14 (}{\cf14 (}X{\cf14 +}m{\cf14 )}{\cf14 *}{\cf14 255}{\cf14 )}{\cf14 ,}Math{\cf14 .}{\cf22 round}{\cf14 (}{\cf14 (}C{\cf14 +}m{\cf14 )}{\cf14 *}{\cf14 255}{\cf14 )}{\cf14 \}}{\cf14 ;}\par
+            {\cf1\b return} result{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b else} {\cf1\b if} {\cf14 (}H{\cf14 <}{\cf14 =}{\cf14 5}{\cf14 )} {\cf14 \{}\par
+            {\cf7 float}{\cf14 [}{\cf14 ]} result {\cf14 =} {\cf14 \{}Math{\cf14 .}{\cf22 round}{\cf14 (}{\cf14 (}X{\cf14 +}m{\cf14 )}{\cf14 *}{\cf14 255}{\cf14 )}{\cf14 ,}Math{\cf14 .}{\cf22 round}{\cf14 (}{\cf14 (}{\cf14 0}{\cf14 +}m{\cf14 )}{\cf14 *}{\cf14 255}{\cf14 )}{\cf14 ,}Math{\cf14 .}{\cf22 round}{\cf14 (}{\cf14 (}C{\cf14 +}m{\cf14 )}{\cf14 *}{\cf14 255}{\cf14 )}{\cf14 \}}{\cf14 ;}\par
+            {\cf1\b return} result{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b else} {\cf14 \{}\par
+            {\cf7 float}{\cf14 [}{\cf14 ]} result {\cf14 =} {\cf14 \{}Math{\cf14 .}{\cf22 round}{\cf14 (}{\cf14 (}C{\cf14 +}m{\cf14 )}{\cf14 *}{\cf14 255}{\cf14 )}{\cf14 ,}Math{\cf14 .}{\cf22 round}{\cf14 (}{\cf14 (}{\cf14 0}{\cf14 +}m{\cf14 )}{\cf14 *}{\cf14 255}{\cf14 )}{\cf14 ,}Math{\cf14 .}{\cf22 round}{\cf14 (}{\cf14 (}X{\cf14 +}m{\cf14 )}{\cf14 *}{\cf14 255}{\cf14 )}{\cf14 \}}{\cf14 ;}\par
+            {\cf1\b return} result{\cf14 ;}\par
+        {\cf14 \}}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * This is a convenience method so that I can call func(x,y) instead of\par
+     * a.evalfunc(x,y)\par
+    */}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 float} {\cf3 func}{\cf14 (}{\cf7 float} x{\cf14 ,} {\cf7 float} y{\cf14 )} {\cf1\b throws} IOException {\cf14 \{}\par
+        {\cf1\b return} a{\cf14 .}{\cf22 evalfunc}{\cf14 (}x{\cf14 ,}y{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * Calculates the crossproduct of 2 vectors\par
+     * @param v1 The first vector\par
+     * @param v2 The second vector\par
+     * @return A 1D array of size 3, Representing a 3D vector\par
+     */}\par
+    {\cf1\b public} {\cf1\b static} {\cf7 float}{\cf14 [}{\cf14 ]} {\cf3 crossproduct}{\cf14 (}{\cf7 float}{\cf14 [}{\cf14 ]} v1{\cf14 ,} {\cf7 float}{\cf14 [}{\cf14 ]} v2{\cf14 )}{\cf14 \{}\par
+        {\cf7 float}{\cf14 [}{\cf14 ]} cp {\cf14 =} {\cf14 \{}v1{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 *}v2{\cf14 [}{\cf14 2}{\cf14 ]} {\cf14 -} v1{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 *}v2{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 ,}\par
+                v1{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 *}v2{\cf14 [}{\cf14 0}{\cf14 ]} {\cf14 -} v1{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 *}v2{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 ,}\par
+                v1{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 *}v2{\cf14 [}{\cf14 1}{\cf14 ]} {\cf14 -} v1{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 *}v2{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 \}}{\cf14 ;}\par
+        {\cf1\b return} cp{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * normalise a 3D vector\par
+     * @param v1 A vector to be normalised\par
+     * @return The vector v1 normalised\par
+     */}\par
+    {\cf1\b public} {\cf1\b static} {\cf7 float}{\cf14 [}{\cf14 ]} {\cf3 normalise}{\cf14 (}{\cf7 float}{\cf14 [}{\cf14 ]} v1{\cf14 )}{\cf14 \{}\par
+        {\cf7 float} mag {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )} Math{\cf14 .}{\cf22 sqrt}{\cf14 (}v1{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 *}v1{\cf14 [}{\cf14 0}{\cf14 ]} {\cf14 +} v1{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 *}v1{\cf14 [}{\cf14 1}{\cf14 ]} {\cf14 +} v1{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 *}v1{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 )}{\cf14 ;}\par
+        {\cf7 float}{\cf14 [}{\cf14 ]} resvec {\cf14 =} {\cf14 \{}v1{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 /}mag{\cf14 ,} v1{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 /}mag{\cf14 ,} v1{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 /}mag{\cf14 \}}{\cf14 ;}\par
+        {\cf1\b if} {\cf14 (}mag{\cf14 =}{\cf14 =}{\cf14 0}{\cf14 )}{\cf14 \{}\par
+            {\cf1\b return} {\cf1\b new} {\cf7 float}{\cf14 [}{\cf14 ]}{\cf14 \{}{\cf14 0}{\cf14 ,}{\cf14 0}{\cf14 ,}{\cf14 0}{\cf14 \}}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b return} resvec{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+\par
+    {\cf6\i /**\par
+     * Responsible for generating the values for the floor coords, floor colour, and floor normals.\par
+     * @throws IOException if an invalid function is used.\par
+     */}\par
+    {\cf1\b public} {\cf1\b static} {\cf7 void} {\cf3 generate}{\cf14 (}{\cf14 )} {\cf1\b throws} IOException {\cf14 \{}\par
+        values {\cf14 =} {\cf1\b new} ArrayList{\cf14 <}{\cf7 float}{\cf14 [}{\cf14 ]}{\cf14 >}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf7 int} x{\cf14 =}{\cf14 0}{\cf14 ;}\par
+        {\cf1\b while} {\cf14 (}x {\cf14 <} cols{\cf14 )}{\cf14 \{}\par
+            {\cf7 int} y {\cf14 =} {\cf14 0}{\cf14 ;}\par
+            {\cf1\b while} {\cf14 (}y {\cf14 <} rows{\cf14 )}{\cf14 \{}\par
+                {\cf7 float}{\cf14 [}{\cf14 ]} value {\cf14 =} {\cf14 \{}   {\cf14 (}minX {\cf14 +} x{\cf14 *}w{\cf14 )}{\cf14 *}scl{\cf14 ,}\par
+                                    {\cf14 (}func{\cf14 (}  minX {\cf14 +} x{\cf14 *}w {\cf14 +} offset{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 ,}\par
+                                            minY {\cf14 +} y{\cf14 *}h {\cf14 +} offset{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 )} {\cf14 +} offset{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 )}{\cf14 *}scl{\cf14 ,}\par
+                                    {\cf14 (}minY {\cf14 +} y{\cf14 *}h{\cf14 )}{\cf14 *}scl{\cf14 \}}{\cf14 ;}\par
+                values{\cf14 .}{\cf22 add}{\cf14 (}value{\cf14 )}{\cf14 ;}\par
+                y{\cf14 +}{\cf14 +}{\cf14 ;}\par
+            {\cf14 \}}\par
+            x{\cf14 +}{\cf14 +}{\cf14 ;}\par
+        {\cf14 \}}\par
+\par
+\par
+\par
+        x{\cf14 =}{\cf14 0}{\cf14 ;}\par
+        {\cf7 int} counter {\cf14 =} {\cf14 0}{\cf14 ;}\par
+        {\cf1\b while} {\cf14 (}x {\cf14 <} cols{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 \{}\par
+            {\cf7 int} y {\cf14 =} {\cf14 0}{\cf14 ;}\par
+            {\cf1\b while} {\cf14 (}y {\cf14 <} rows{\cf14 -}{\cf14 1}{\cf14 )}{\cf14 \{}\par
+                {\cf7 float}{\cf14 [}{\cf14 ]} p00 {\cf14 =} values{\cf14 .}{\cf22 get}{\cf14 (}x{\cf14 *}rows     {\cf14 +} y  {\cf14 )}{\cf14 ;}\par
+                {\cf7 float}{\cf14 [}{\cf14 ]} p01 {\cf14 =} values{\cf14 .}{\cf22 get}{\cf14 (}x{\cf14 *}rows     {\cf14 +} y{\cf14 +}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+                {\cf7 float}{\cf14 [}{\cf14 ]} p10 {\cf14 =} values{\cf14 .}{\cf22 get}{\cf14 (}{\cf14 (}x{\cf14 +}{\cf14 1}{\cf14 )}{\cf14 *}rows {\cf14 +} y  {\cf14 )}{\cf14 ;}\par
+                {\cf7 float}{\cf14 [}{\cf14 ]} p11 {\cf14 =} values{\cf14 .}{\cf22 get}{\cf14 (}{\cf14 (}x{\cf14 +}{\cf14 1}{\cf14 )}{\cf14 *}rows {\cf14 +} y{\cf14 +}{\cf14 1}{\cf14 )}{\cf14 ;}\par
+                {\cf6\i //  poo po1 p1o po1 p11 p10\par
+}                {\cf6\i //kill me\par
+}                SURFACE_COORDS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 ]}    {\cf14 =} p00{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 ;}\par
+                SURFACE_COORDS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 +}{\cf14 1}{\cf14 ]}  {\cf14 =} p00{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 ;}\par
+                SURFACE_COORDS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 +}{\cf14 2}{\cf14 ]}  {\cf14 =} p00{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 ;}\par
+                SURFACE_COORDS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 +}{\cf14 3}{\cf14 ]}  {\cf14 =} p01{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 ;}\par
+                SURFACE_COORDS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 +}{\cf14 4}{\cf14 ]}  {\cf14 =} p01{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 ;}\par
+                SURFACE_COORDS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 +}{\cf14 5}{\cf14 ]}  {\cf14 =} p01{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 ;}\par
+                SURFACE_COORDS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 +}{\cf14 6}{\cf14 ]}  {\cf14 =} p10{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 ;}\par
+                SURFACE_COORDS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 +}{\cf14 7}{\cf14 ]}  {\cf14 =} p10{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 ;}\par
+                SURFACE_COORDS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 +}{\cf14 8}{\cf14 ]}  {\cf14 =} p10{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 ;}\par
+                SURFACE_COORDS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 +}{\cf14 9}{\cf14 ]}  {\cf14 =} p01{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 ;}\par
+                SURFACE_COORDS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 +}{\cf14 10}{\cf14 ]} {\cf14 =} p01{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 ;}\par
+                SURFACE_COORDS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 +}{\cf14 11}{\cf14 ]} {\cf14 =} p01{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 ;}\par
+                SURFACE_COORDS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 +}{\cf14 12}{\cf14 ]} {\cf14 =} p11{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 ;}\par
+                SURFACE_COORDS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 +}{\cf14 13}{\cf14 ]} {\cf14 =} p11{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 ;}\par
+                SURFACE_COORDS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 +}{\cf14 14}{\cf14 ]} {\cf14 =} p11{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 ;}\par
+                SURFACE_COORDS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 +}{\cf14 15}{\cf14 ]} {\cf14 =} p10{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 ;}\par
+                SURFACE_COORDS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 +}{\cf14 16}{\cf14 ]} {\cf14 =} p10{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 ;}\par
+                SURFACE_COORDS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 +}{\cf14 17}{\cf14 ]} {\cf14 =} p10{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 ;}\par
+\par
+                {\cf7 float}{\cf14 [}{\cf14 ]} v1 {\cf14 =} {\cf14 \{}p00{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 -}p01{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 ,}p00{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 -}p01{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 ,}p00{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 -}p01{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 \}}{\cf14 ;}\par
+                {\cf7 float}{\cf14 [}{\cf14 ]} v2 {\cf14 =} {\cf14 \{}p00{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 -}p10{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 ,}p00{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 -}p10{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 ,}p00{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 -}p10{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 \}}{\cf14 ;}\par
+                {\cf7 float}{\cf14 [}{\cf14 ]} v3 {\cf14 =} {\cf14 \{}p01{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 -}p11{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 ,}p01{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 -}p11{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 ,}p01{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 -}p11{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 \}}{\cf14 ;}\par
+                {\cf7 float}{\cf14 [}{\cf14 ]} v4 {\cf14 =} {\cf14 \{}p01{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 -}p10{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 ,}p01{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 -}p10{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 ,}p01{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 -}p10{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 \}}{\cf14 ;}\par
+                {\cf7 float}{\cf14 [}{\cf14 ]} cp1 {\cf14 =} normalise{\cf14 (}crossproduct{\cf14 (}v1{\cf14 ,}v2{\cf14 )}{\cf14 )}{\cf14 ;}\par
+                {\cf7 float}{\cf14 [}{\cf14 ]} cp2 {\cf14 =} normalise{\cf14 (}crossproduct{\cf14 (}v3{\cf14 ,}v4{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+                {\cf1\b for} {\cf14 (}{\cf7 int} i {\cf14 =} {\cf14 0}{\cf14 ;} i {\cf14 <} {\cf14 9}{\cf14 ;} i{\cf14 +}{\cf14 +}{\cf14 )} {\cf14 \{}\par
+                    SURFACE_NORMALS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 +} i{\cf14 ]} {\cf14 =} cp1{\cf14 [}i{\cf14 %}{\cf14 3}{\cf14 ]}{\cf14 ;}\par
+                {\cf14 \}}\par
+                {\cf1\b for} {\cf14 (}{\cf7 int} i {\cf14 =} {\cf14 0}{\cf14 ;} i {\cf14 <} {\cf14 9}{\cf14 ;} i{\cf14 +}{\cf14 +}{\cf14 )} {\cf14 \{}\par
+                    SURFACE_NORMALS{\cf14 [}counter{\cf14 *}{\cf14 18}{\cf14 +} {\cf14 9} {\cf14 +} i{\cf14 ]} {\cf14 =} cp2{\cf14 [}i{\cf14 %}{\cf14 3}{\cf14 ]}{\cf14 ;}\par
+                {\cf14 \}}\par
+\par
+                counter{\cf14 +}{\cf14 +}{\cf14 ;}\par
+                y{\cf14 +}{\cf14 +}{\cf14 ;}\par
+            {\cf14 \}}\par
+            x{\cf14 +}{\cf14 +}{\cf14 ;}\par
+        {\cf14 \}}\par
+\par
+        {\cf1\b for} {\cf14 (}{\cf7 int} i{\cf14 =}{\cf14 0}{\cf14 ;} i{\cf14 <}SURFACE_COLORS{\cf14 .}{\cf22 length}{\cf14 /}{\cf14 4}{\cf14 ;} i{\cf14 +}{\cf14 +}{\cf14 )} {\cf14 \{}\par
+{\cf6\i //            Uncoomment for colour based on height\par
+}{\cf6\i //            float zvalue = SURFACE_COORDS[i*3+1];\par
+}{\cf6\i //            float mapZValue = 360/200*(4*zvalue+100);\par
+}{\cf6\i //            float[] rgbvalue = hslTorgb(mapZValue, 1.0f, 0.5f);\par
+}{\cf6\i //            SURFACE_COLORS[i*4] = rgbvalue[0]/255;\par
+}{\cf6\i //            SURFACE_COLORS[i*4+1] = rgbvalue[1]/255;\par
+}{\cf6\i //            SURFACE_COLORS[i*4+2] = rgbvalue[2]/255;\par
+}{\cf6\i //            SURFACE_COLORS[i*4+3] = 1.0f;\par
+}            SURFACE_COLORS{\cf14 [}i{\cf14 *}{\cf14 4}{\cf14 ]} {\cf14 =} {\cf14 0.5f}{\cf14 ;}\par
+            SURFACE_COLORS{\cf14 [}i{\cf14 *}{\cf14 4}{\cf14 +}{\cf14 1}{\cf14 ]} {\cf14 =} {\cf14 0.5f}{\cf14 ;}\par
+            SURFACE_COLORS{\cf14 [}i{\cf14 *}{\cf14 4}{\cf14 +}{\cf14 2}{\cf14 ]} {\cf14 =} {\cf14 0.5f}{\cf14 ;}\par
+            SURFACE_COLORS{\cf14 [}i{\cf14 *}{\cf14 4}{\cf14 +}{\cf14 3}{\cf14 ]} {\cf14 =} {\cf14 1.0f}{\cf14 ;}\par
+        {\cf14 \}}\par
+\par
+    {\cf14 \}}\par
+{\cf14 \}}\par
+}

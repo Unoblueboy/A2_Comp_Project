@@ -1,0 +1,89 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green128\blue0;\red186\green33\blue33;\red0\green0\blue255;\red188\green122\blue0;\red25\green23\blue124;\red64\green128\blue128;\red176\green0\blue64;\red187\green187\blue187;\red0\green0\blue128;\red160\green160\blue0;\red170\green34\blue255;\red136\green136\blue136;\red136\green0\blue0;\red102\green102\blue102;\red187\green102\blue136;\red0\green68\blue221;\red210\green65\blue58;\red255\green0\blue0;\red160\green0\blue0;\red187\green102\blue34;\red0\green160\blue0;\red125\green144\blue41;\red128\green0\blue128;\red153\green153\blue153;}\f0 {\cf14 .}{\chbrdr\chcfpat18 \\}FragmentBasics{\chbrdr\chcfpat18 \\}app{\chbrdr\chcfpat18 \\}src{\chbrdr\chcfpat18 \\}main{\chbrdr\chcfpat18 \\}java{\chbrdr\chcfpat18 \\}com{\chbrdr\chcfpat18 \\}example{\chbrdr\chcfpat18 \\}android{\chbrdr\chcfpat18 \\}fragments{\chbrdr\chcfpat18 \\}MainActivity{\cf14 .}{\cf22 java}\par
+{\cf6\i /*\par
+ * Copyright (C) 2012 The Android Open Source Project\par
+ *\par
+ * Licensed under the Apache License, Version 2.0 (the "License");\par
+ * you may not use this file except in compliance with the License.\par
+ * You may obtain a copy of the License at\par
+ *\par
+ *      http://www.apache.org/licenses/LICENSE-2.0\par
+ *\par
+ * Unless required by applicable law or agreed to in writing, software\par
+ * distributed under the License is distributed on an "AS IS" BASIS,\par
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\par
+ * See the License for the specific language governing permissions and\par
+ * limitations under the License.\par
+ */}\par
+{\cf1\b package} {\cf3\b com.example.android.fragments}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b android.os.Bundle}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.support.v4.app.FragmentActivity}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.support.v4.app.FragmentTransaction}{\cf14 ;}\par
+\par
+{\cf1\b public} {\cf1\b class} {\cf3\b MainActivity} {\cf1\b extends} FragmentActivity \par
+        {\cf1\b implements} HeadlinesFragment{\cf14 .}{\cf22 OnHeadlineSelectedListener} {\cf14 \{}\par
+\par
+    {\cf6\i /** Called when the activity is first created. */}\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 onCreate}{\cf14 (}Bundle savedInstanceState{\cf14 )} {\cf14 \{}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onCreate}{\cf14 (}savedInstanceState{\cf14 )}{\cf14 ;}\par
+        setContentView{\cf14 (}R{\cf14 .}{\cf22 layout}{\cf14 .}{\cf22 news_articles}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // Check whether the activity is using the layout version with\par
+}        {\cf6\i // the fragment_container FrameLayout. If so, we must add the first fragment\par
+}        {\cf1\b if} {\cf14 (}findViewById{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 fragment_container}{\cf14 )} {\cf14 !}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+\par
+            {\cf6\i // However, if we're being restored from a previous state,\par
+}            {\cf6\i // then we don't need to do anything and should return or else\par
+}            {\cf6\i // we could end up with overlapping fragments.\par
+}            {\cf1\b if} {\cf14 (}savedInstanceState {\cf14 !}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+                {\cf1\b return}{\cf14 ;}\par
+            {\cf14 \}}\par
+\par
+            {\cf6\i // Create an instance of ExampleFragment\par
+}            HeadlinesFragment firstFragment {\cf14 =} {\cf1\b new} HeadlinesFragment{\cf14 (}{\cf14 )}{\cf14 ;}\par
+\par
+            {\cf6\i // In case this activity was started with special instructions from an Intent,\par
+}            {\cf6\i // pass the Intent's extras to the fragment as arguments\par
+}            firstFragment{\cf14 .}{\cf22 setArguments}{\cf14 (}getIntent{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 getExtras}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+            {\cf6\i // Add the fragment to the 'fragment_container' FrameLayout\par
+}            getSupportFragmentManager{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 beginTransaction}{\cf14 (}{\cf14 )}\par
+                    {\cf14 .}{\cf22 add}{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 fragment_container}{\cf14 ,} firstFragment{\cf14 )}{\cf14 .}{\cf22 commit}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 void} {\cf3 onArticleSelected}{\cf14 (}{\cf7 int} position{\cf14 )} {\cf14 \{}\par
+        {\cf6\i // The user selected the headline of an article from the HeadlinesFragment\par
+}\par
+        {\cf6\i // Capture the article fragment from the activity layout\par
+}        ArticleFragment articleFrag {\cf14 =} {\cf14 (}ArticleFragment{\cf14 )}\par
+                getSupportFragmentManager{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 findFragmentById}{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 article_fragment}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf1\b if} {\cf14 (}articleFrag {\cf14 !}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+            {\cf6\i // If article frag is available, we're in two-pane layout...\par
+}\par
+            {\cf6\i // Call a method in the ArticleFragment to update its content\par
+}            articleFrag{\cf14 .}{\cf22 updateArticleView}{\cf14 (}position{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf14 \}} {\cf1\b else} {\cf14 \{}\par
+            {\cf6\i // If the frag is not available, we're in the one-pane layout and must swap frags...\par
+}\par
+            {\cf6\i // Create fragment and give it an argument for the selected article\par
+}            ArticleFragment newFragment {\cf14 =} {\cf1\b new} ArticleFragment{\cf14 (}{\cf14 )}{\cf14 ;}\par
+            Bundle args {\cf14 =} {\cf1\b new} Bundle{\cf14 (}{\cf14 )}{\cf14 ;}\par
+            args{\cf14 .}{\cf22 putInt}{\cf14 (}ArticleFragment{\cf14 .}{\cf22 ARG_POSITION}{\cf14 ,} position{\cf14 )}{\cf14 ;}\par
+            newFragment{\cf14 .}{\cf22 setArguments}{\cf14 (}args{\cf14 )}{\cf14 ;}\par
+            FragmentTransaction transaction {\cf14 =} getSupportFragmentManager{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 beginTransaction}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+\par
+            {\cf6\i // Replace whatever is in the fragment_container view with this fragment,\par
+}            {\cf6\i // and add the transaction to the back stack so the user can navigate back\par
+}            transaction{\cf14 .}{\cf22 replace}{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 fragment_container}{\cf14 ,} newFragment{\cf14 )}{\cf14 ;}\par
+            transaction{\cf14 .}{\cf22 addToBackStack}{\cf14 (}{\cf1\b null}{\cf14 )}{\cf14 ;}\par
+\par
+            {\cf6\i // Commit the transaction\par
+}            transaction{\cf14 .}{\cf22 commit}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+    {\cf14 \}}\par
+{\cf14 \}}\par
+}

@@ -1,0 +1,88 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green128\blue0;\red186\green33\blue33;\red0\green0\blue255;\red188\green122\blue0;\red25\green23\blue124;\red64\green128\blue128;\red176\green0\blue64;\red187\green187\blue187;\red0\green0\blue128;\red160\green160\blue0;\red170\green34\blue255;\red136\green136\blue136;\red136\green0\blue0;\red102\green102\blue102;\red187\green102\blue136;\red0\green68\blue221;\red210\green65\blue58;\red255\green0\blue0;\red160\green0\blue0;\red187\green102\blue34;\red0\green160\blue0;\red125\green144\blue41;\red128\green0\blue128;\red153\green153\blue153;}\f0 .\\A2_Comp_Project\\app\\build\\intermediates\\res\\merged\\debug\\layout\\transition_view.xml\par
+{\cf4 <?xml version="1.0" encoding="utf-8"?>}\par
+{\cf1\b <RelativeLayout} {\cf22 xmlns:android=}{\cf2 "http://schemas.android.com/apk/res/android"}\par
+    {\cf22 android:id=}{\cf2 "@+id/transition_frame"}\par
+    {\cf22 android:layout_width=}{\cf2 "match_parent"}\par
+    {\cf22 android:layout_height=}{\cf2 "match_parent"}{\cf1\b >}\par
+\par
+    {\cf1\b <ImageButton} {\cf22 xmlns:android=}{\cf2 "http://schemas.android.com/apk/res/android"}\par
+        {\cf22 android:id=}{\cf2 "@+id/back_button"}\par
+        {\cf22 style=}{\cf2 "@style/UiButton"}\par
+        {\cf22 android:src=}{\cf2 "@drawable/quantum_ic_close_white_24"}\par
+        {\cf22 android:layout_alignParentStart=}{\cf2 "true"}\par
+        {\cf22 android:layout_alignParentTop=}{\cf2 "true"}{\cf1\b />}\par
+\par
+    {\cf1\b <RelativeLayout}\par
+        {\cf22 android:id=}{\cf2 "@+id/transition_top_frame"}\par
+        {\cf22 android:layout_width=}{\cf2 "wrap_content"}\par
+        {\cf22 android:layout_height=}{\cf2 "wrap_content"}\par
+        {\cf22 android:layout_centerInParent=}{\cf2 "true"}\par
+        {\cf22 android:paddingBottom=}{\cf2 "48dp"}{\cf1\b >}\par
+\par
+        {\cf1\b <ImageView}\par
+            {\cf22 android:id=}{\cf2 "@+id/transition_icon"}\par
+            {\cf22 android:layout_width=}{\cf2 "wrap_content"}\par
+            {\cf22 android:layout_height=}{\cf2 "wrap_content"}\par
+            {\cf22 android:padding=}{\cf2 "4dp"}\par
+            {\cf22 android:layout_centerHorizontal=}{\cf2 "true"}\par
+            {\cf22 android:scaleType=}{\cf2 "center"}\par
+            {\cf22 android:src=}{\cf2 "@drawable/transition"} {\cf1\b />}\par
+        {\cf1\b <TextView}\par
+            {\cf22 android:id=}{\cf2 "@+id/transition_text"}\par
+            {\cf22 android:layout_width=}{\cf2 "match_parent"}\par
+            {\cf22 android:layout_height=}{\cf2 "wrap_content"}\par
+            {\cf22 android:layout_marginTop=}{\cf2 "32dp"}\par
+            {\cf22 android:gravity=}{\cf2 "center"}\par
+            {\cf22 android:textColor=}{\cf2 "#ffffff"}\par
+            {\cf22 android:textSize=}{\cf2 "16sp"}\par
+            {\cf22 android:layout_below=}{\cf2 "@id/transition_icon"}\par
+            {\cf22 android:text=}{\cf2 "@string/place_your_phone_into_cardboard"} {\cf1\b />}\par
+    {\cf1\b </RelativeLayout>}\par
+\par
+    {\cf6\i <!--}{\cf6\i  Note that the transition_bottom_frame element may be programmatically\par
+         hidden when the device or view layout is landscape. }{\cf6\i -->}\par
+    {\cf1\b <LinearLayout}\par
+        {\cf22 android:id=}{\cf2 "@+id/transition_bottom_frame"}\par
+        {\cf22 android:layout_width=}{\cf2 "match_parent"}\par
+        {\cf22 android:layout_height=}{\cf2 "@dimen/transition_bottom_bar_height"}\par
+        {\cf22 android:orientation=}{\cf2 "horizontal"}\par
+        {\cf22 android:layout_alignParentBottom=}{\cf2 "true"}\par
+        {\cf22 android:background=}{\cf2 "#FF546E7A"}{\cf1\b >}\par
+        {\cf1\b <TextView}\par
+            {\cf22 android:id=}{\cf2 "@+id/transition_question_text"}\par
+            {\cf22 android:layout_width=}{\cf2 "wrap_content"}\par
+            {\cf22 android:layout_height=}{\cf2 "match_parent"}\par
+            {\cf22 android:layout_below=}{\cf2 "@id/transition_icon"}\par
+            {\cf22 android:layout_marginStart=}{\cf2 "24dp"}\par
+            {\cf22 android:paddingEnd=}{\cf2 "20dp"}\par
+            {\cf22 android:gravity=}{\cf2 "start|center_vertical"}\par
+            {\cf22 android:textColor=}{\cf2 "#ffffff"}\par
+            {\cf22 android:textSize=}{\cf2 "16sp"}\par
+            {\cf22 android:text=}{\cf2 "@string/switch_viewer_prompt"}{\cf1\b />}\par
+        {\cf1\b <View}\par
+            {\cf22 android:layout_width=}{\cf2 "0dp"}\par
+            {\cf22 android:layout_height=}{\cf2 "0dp"}\par
+            {\cf22 android:layout_weight=}{\cf2 "1"}{\cf1\b />}\par
+        {\cf1\b <View}\par
+            {\cf22 android:layout_width=}{\cf2 "1dp"}\par
+            {\cf22 android:layout_height=}{\cf2 "match_parent"}\par
+            {\cf22 android:id=}{\cf2 "@+id/divider"}\par
+            {\cf22 android:background=}{\cf2 "#1F000000"}\par
+            {\cf22 android:layout_marginTop=}{\cf2 "10dp"}\par
+            {\cf22 android:layout_marginBottom=}{\cf2 "10dp"}{\cf1\b />}\par
+        {\cf1\b <TextView}\par
+            {\cf22 android:id=}{\cf2 "@+id/transition_switch_action"}\par
+            {\cf22 android:layout_width=}{\cf2 "wrap_content"}\par
+            {\cf22 android:layout_height=}{\cf2 "match_parent"}\par
+            {\cf22 android:paddingStart=}{\cf2 "20dp"}\par
+            {\cf22 android:paddingEnd=}{\cf2 "24dp"}\par
+            {\cf22 android:gravity=}{\cf2 "end|center_vertical"}\par
+            {\cf22 android:textColor=}{\cf2 "#ffffff"}\par
+            {\cf22 android:textSize=}{\cf2 "16sp"}\par
+            {\cf22 android:text=}{\cf2 "@string/switch_viewer_action"}\par
+            {\cf22 android:textAllCaps=}{\cf2 "true"}\par
+            {\cf22 android:background=}{\cf2 "?android:attr/selectableItemBackground"}{\cf1\b />}\par
+    {\cf1\b </LinearLayout>}\par
+\par
+{\cf1\b </RelativeLayout>}\par
+}

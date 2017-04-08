@@ -1,0 +1,29 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green128\blue0;\red186\green33\blue33;\red0\green0\blue255;\red188\green122\blue0;\red25\green23\blue124;\red64\green128\blue128;\red176\green0\blue64;\red187\green187\blue187;\red0\green0\blue128;\red160\green160\blue0;\red170\green34\blue255;\red136\green136\blue136;\red136\green0\blue0;\red102\green102\blue102;\red187\green102\blue136;\red0\green68\blue221;\red210\green65\blue58;\red255\green0\blue0;\red160\green0\blue0;\red187\green102\blue34;\red0\green160\blue0;\red125\green144\blue41;\red128\green0\blue128;\red153\green153\blue153;}\f0 .\\A2_Comp_Project\\app\\build\\intermediates\\res\\merged\\debug\\layout\\ui_layer_with_portrait_support.xml\par
+{\cf4 <?xml version="1.0" encoding="utf-8"?>}\par
+{\cf1\b <RelativeLayout} {\cf22 xmlns:android=}{\cf2 "http://schemas.android.com/apk/res/android"}\par
+  {\cf22 android:layout_width=}{\cf2 "match_parent"}\par
+  {\cf22 android:layout_height=}{\cf2 "match_parent"}{\cf1\b >}\par
+\par
+    {\cf6\i <!--}{\cf6\i  UiLayer layout when portrait support is enabled.\par
+         See corresponding file in layout}{\cf6\i -}{\cf6\i land/ui_layer_with_portrait_support.xml\par
+\par
+         Portrait orientation while in VR mode should be reserved for special cases,\par
+         such as widgets for fast transitions between embed and full}{\cf6\i -}{\cf6\i screen VR.\par
+         See b/26580727 for details.\par
+    }{\cf6\i -->}\par
+\par
+    {\cf1\b <include} {\cf22 layout=}{\cf2 "@layout/back_button"} {\cf22 android:id=}{\cf2 "@+id/ui_back_button"}{\cf1\b />}\par
+\par
+    {\cf1\b <RelativeLayout}\par
+      {\cf22 android:id=}{\cf2 "@+id/ui_alignment_marker"}\par
+      {\cf22 android:layout_height=}{\cf2 "@dimen/alignment_marker_thickness"}\par
+      {\cf22 android:layout_width=}{\cf2 "@dimen/alignment_marker_height"}\par
+      {\cf22 android:layout_centerVertical=}{\cf2 "true"}\par
+      {\cf22 android:layout_alignParentLeft=}{\cf2 "true"}\par
+      {\cf22 android:background=}{\cf2 "@color/alignment_marker_color"}{\cf1\b >}\par
+    {\cf1\b </RelativeLayout>}\par
+\par
+    {\cf1\b <include} {\cf22 layout=}{\cf2 "@layout/settings_button"} {\cf22 android:id=}{\cf2 "@+id/ui_settings_button"}{\cf1\b />}\par
+\par
+{\cf1\b </RelativeLayout>}\par
+}

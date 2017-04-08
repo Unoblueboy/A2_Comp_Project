@@ -1,0 +1,132 @@
+<p style="font-size:14pt;font-family:sans-serif"><strong>.\A2_Comp_Project\app\src\main\java\com\example\natha_000\a2_comp_project\Graphing_3D\Sketch3DGraph.java</strong></p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">package</span> <span style="color: #0000FF; font-weight: bold">com.example.natha_000.a2_comp_project.Graphing_3D</span><span style="color: #666666">;</span>
+
+<span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic"> * Created by Natha_000 on 22/12/2016.</span>
+<span style="color: #408080; font-style: italic"> */</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.util.Log</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.io.IOException</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">processing.core.PApplet</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Sketch3DGraph</span> <span style="color: #008000; font-weight: bold">extends</span> PApplet <span style="color: #666666">{</span>
+    <span style="color: #408080; font-style: italic">// This variable is used to store the parent activity of this fragment</span>
+    Main3DActivity parent<span style="color: #666666">;</span>
+
+    <span style="color: #408080; font-style: italic">// This variable stores the text contain the desired function</span>
+    String funcText<span style="color: #666666">;</span>
+
+    <span style="color: #408080; font-style: italic">// This is an array that stores all of the z values for all of the coordinates</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> floorVertices<span style="color: #666666">;</span>
+
+    <span style="color: #408080; font-style: italic">// This holds the colour of all of the vertices</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #B00040">float</span><span style="color: #666666">[]</span> floorColors <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">float</span><span style="color: #666666">[4];</span>
+
+    <span style="color: #408080; font-style: italic">// Stores the rotation of the user within the 3D space</span>
+    <span style="color: #408080; font-style: italic">// [rotation in x axis, rotation in y axis]</span>
+    <span style="color: #B00040">float</span><span style="color: #666666">[]</span> rotation <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">float</span><span style="color: #666666">[2];</span>
+
+    <span style="color: #408080; font-style: italic">// A constant used to change the sensitivity in rotation</span>
+    <span style="color: #B00040">float</span> DT <span style="color: #666666">=</span> <span style="color: #666666">0.001f;</span>
+
+    <span style="color: #408080; font-style: italic">// Values for the previous x and y position of the finger on the touch screen respectively</span>
+    <span style="color: #B00040">float</span> pMouseX <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+    <span style="color: #B00040">float</span> pMouseY <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+
+    <span style="color: #408080; font-style: italic">// contains the distance the finger has traveled while on the touch screen squared</span>
+    <span style="color: #408080; font-style: italic">// It is reset whenever the user raises their finger</span>
+    <span style="color: #B00040">float</span> absDistSquared <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * This sets up the general settings for the running of the app.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">settings</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        size<span style="color: #666666">(</span>displayWidth<span style="color: #666666">,</span> displayHeight<span style="color: #666666">,</span> P3D<span style="color: #666666">);</span>
+        parent <span style="color: #666666">=</span> <span style="color: #666666">(</span>Main3DActivity<span style="color: #666666">)</span> getActivity<span style="color: #666666">();</span>
+        Log<span style="color: #666666">.</span><span style="color: #7D9029">i</span><span style="color: #666666">(</span><span style="color: #BA2121">&quot;Project: Sketch3DGraph&quot;</span><span style="color: #666666">,</span><span style="color: #BA2121">&quot;settings&quot;</span><span style="color: #666666">);</span>
+        funcText <span style="color: #666666">=</span> parent<span style="color: #666666">.</span><span style="color: #7D9029">functext</span><span style="color: #666666">;</span>
+        <span style="color: #008000; font-weight: bold">try</span> <span style="color: #666666">{</span>
+            WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">setParameters</span><span style="color: #666666">(-10</span>f<span style="color: #666666">,10</span>f<span style="color: #666666">,-10</span>f<span style="color: #666666">,10</span>f<span style="color: #666666">,51,51,100</span>f<span style="color: #666666">);</span>
+            WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">setfunction</span><span style="color: #666666">(</span>funcText<span style="color: #666666">);</span>
+            WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">generate</span><span style="color: #666666">();</span>
+        <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">catch</span> <span style="color: #666666">(</span>IOException e<span style="color: #666666">)</span> <span style="color: #666666">{}</span>
+        floorVertices <span style="color: #666666">=</span> WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">SURFACE_COORDS</span><span style="color: #666666">;</span>
+        floorColors<span style="color: #666666">[0]</span> <span style="color: #666666">=</span> WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">SURFACE_COLORS</span><span style="color: #666666">[0];</span>
+        floorColors<span style="color: #666666">[1]</span> <span style="color: #666666">=</span> WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">SURFACE_COLORS</span><span style="color: #666666">[1];</span>
+        floorColors<span style="color: #666666">[2]</span> <span style="color: #666666">=</span> WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">SURFACE_COLORS</span><span style="color: #666666">[2];</span>
+        floorColors<span style="color: #666666">[3]</span> <span style="color: #666666">=</span> WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">SURFACE_COLORS</span><span style="color: #666666">[3];</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * This function is called repeatedly during run time and allows for drawing on the canvas.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">draw</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        sketchGraph<span style="color: #666666">();</span>
+        Log<span style="color: #666666">.</span><span style="color: #7D9029">i</span><span style="color: #666666">(</span><span style="color: #BA2121">&quot;Project: Sketch3DGraph&quot;</span><span style="color: #666666">,</span><span style="color: #BA2121">&quot;draw&quot;</span><span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * This function is responsible for the main drawing of the 3D graph.</span>
+<span style="color: #408080; font-style: italic">     * It first finds the current rotation, and then rotates the projection accordingly</span>
+<span style="color: #408080; font-style: italic">     * And then plots the graph within this rotated coordinate system.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">sketchGraph</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">isFlying</span><span style="color: #666666">())</span> <span style="color: #666666">{</span>
+            WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">fly</span><span style="color: #666666">(</span>rotation<span style="color: #666666">);</span>
+            <span style="color: #008000; font-weight: bold">try</span> <span style="color: #666666">{</span>
+                WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">generate</span><span style="color: #666666">();</span>
+                floorVertices <span style="color: #666666">=</span> WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">SURFACE_COORDS</span><span style="color: #666666">;</span>
+            <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">catch</span> <span style="color: #666666">(</span>IOException e<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                Log<span style="color: #666666">.</span><span style="color: #7D9029">e</span><span style="color: #666666">(</span><span style="color: #BA2121">&quot;Project: LOL&quot;</span><span style="color: #666666">,</span> <span style="color: #BA2121">&quot;An error has occurred trying to generate new co-ordinates&quot;</span><span style="color: #666666">);</span>
+            <span style="color: #666666">}</span>
+        <span style="color: #666666">}</span>
+        noStroke<span style="color: #666666">();</span>
+        Log<span style="color: #666666">.</span><span style="color: #7D9029">i</span><span style="color: #666666">(</span><span style="color: #BA2121">&quot;Project: Sketch3DGraph&quot;</span><span style="color: #666666">,</span><span style="color: #BA2121">&quot;sketchGraph&quot;</span><span style="color: #666666">);</span>
+        translate<span style="color: #666666">(</span>width<span style="color: #666666">/2,</span> height<span style="color: #666666">);</span>
+<span style="color: #408080; font-style: italic">//        float rota = map(mouseY,0,displayHeight,-PI,PI);</span>
+        rotateX<span style="color: #666666">(</span>rotation<span style="color: #666666">[0]);</span>
+        rotateY<span style="color: #666666">(</span>rotation<span style="color: #666666">[1]);</span>
+        background<span style="color: #666666">(0);</span>
+        noFill<span style="color: #666666">();</span>
+        fill<span style="color: #666666">(</span>floorColors<span style="color: #666666">[0]*255,</span>floorColors<span style="color: #666666">[1]*255,</span>floorColors<span style="color: #666666">[2]*255,</span>floorColors<span style="color: #666666">[3]*255);</span>
+        lights<span style="color: #666666">();</span>
+        <span style="color: #B00040">float</span> off <span style="color: #666666">=</span> map<span style="color: #666666">(</span>mouseX<span style="color: #666666">,0,</span>displayWidth<span style="color: #666666">,-10,10);</span>
+        beginShape<span style="color: #666666">(</span>TRIANGLES<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span><span style="color: #B00040">int</span> i<span style="color: #666666">=0;</span> i<span style="color: #666666">&lt;</span>floorVertices<span style="color: #666666">.</span><span style="color: #7D9029">length</span><span style="color: #666666">/3;</span> i<span style="color: #666666">++)</span> <span style="color: #666666">{</span>
+            vertex<span style="color: #666666">(</span>floorVertices<span style="color: #666666">[</span>i<span style="color: #666666">*3],</span> <span style="color: #666666">(-</span>floorVertices<span style="color: #666666">[</span>i<span style="color: #666666">*3</span> <span style="color: #666666">+</span> <span style="color: #666666">1]+</span> off<span style="color: #666666">),</span> floorVertices<span style="color: #666666">[</span>i<span style="color: #666666">*3</span> <span style="color: #666666">+</span> <span style="color: #666666">2]);</span>
+        <span style="color: #666666">}</span>
+        endShape<span style="color: #666666">();</span>
+        fill<span style="color: #666666">(255);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * This function is responsible for resetting the varirable pMouseX and pMouseY to 0</span>
+<span style="color: #408080; font-style: italic">     * It is also responsible for determining whether the user should start moving through the graph</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">mouseReleased</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        pMouseX <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+        pMouseY <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+        Log<span style="color: #666666">.</span><span style="color: #7D9029">i</span><span style="color: #666666">(</span><span style="color: #BA2121">&quot;Project: mouseReleased&quot;</span><span style="color: #666666">,</span><span style="color: #BA2121">&quot;Screen has been released and absDist is &quot;</span> <span style="color: #666666">+</span> Float<span style="color: #666666">.</span><span style="color: #7D9029">toString</span><span style="color: #666666">(</span>absDistSquared<span style="color: #666666">));</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>absDistSquared <span style="color: #666666">&lt;=5)</span> <span style="color: #666666">{</span>
+            WorldLayoutData<span style="color: #666666">.</span><span style="color: #7D9029">toggleFlying</span><span style="color: #666666">();</span>
+        <span style="color: #666666">}</span>
+        absDistSquared <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * This function is responsible for changing the rotation depending on how the user drags their finger around the screen.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">mouseDragged</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>pMouseX <span style="color: #666666">!=</span> <span style="color: #666666">0</span> <span style="color: #666666">||</span> pMouseY <span style="color: #666666">!=</span> <span style="color: #666666">0)</span> <span style="color: #666666">{</span>
+            <span style="color: #B00040">float</span> deltaX <span style="color: #666666">=</span> mouseX <span style="color: #666666">-</span> pmouseX<span style="color: #666666">;</span>
+            <span style="color: #B00040">float</span> deltaY <span style="color: #666666">=</span> mouseY <span style="color: #666666">-</span> pmouseY<span style="color: #666666">;</span>
+            rotation<span style="color: #666666">[1]</span> <span style="color: #666666">-=</span> deltaX <span style="color: #666666">*</span> DT<span style="color: #666666">;</span>
+            rotation<span style="color: #666666">[0]</span> <span style="color: #666666">+=</span> deltaY <span style="color: #666666">*</span> DT<span style="color: #666666">;</span>
+            absDistSquared <span style="color: #666666">+=</span> deltaX <span style="color: #666666">*</span> deltaX <span style="color: #666666">+</span> deltaY <span style="color: #666666">*</span> deltaY<span style="color: #666666">;</span>
+        <span style="color: #666666">}</span>
+        pMouseX <span style="color: #666666">=</span> mouseX<span style="color: #666666">;</span>
+        pMouseY <span style="color: #666666">=</span> mouseY<span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre></div>

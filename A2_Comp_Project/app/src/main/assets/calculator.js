@@ -1,6 +1,6 @@
 if (!window.Desmos) window.Desmos = {};
 window.Desmos.enabledFeatures = {"FourFunctionCalculator": true, "ScientificCalculator": true, "GraphingCalculator": true};
-var Desmos = window.Desmos || {};
+if (!window.Desmos) window.Desmos = {};
 if (!Desmos.config) Desmos.config = {};
 ;(function () {
   var elt = document.createElement('style');

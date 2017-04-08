@@ -69,17 +69,18 @@ public class SketchCumFreq extends PApplet {
             cumfreq[i*2+1] = cumfreq[(i)*2]+sClasses.get(i).frequency;
         }
 
-        float[] xresults = GraphingMethods.scaling(GraphingMethods.getMin(bounds), GraphingMethods.getMax(bounds), xtick);
+        float[] xresults = GraphingMethods.scaling(0, GraphingMethods.getMax(bounds), xtick);
         xAxisLB = xresults[0];
         xAxisUB = xresults[1];
         xScale = xresults[2];
         xtick = (int) xresults[3];
 
-        float[] yresults = GraphingMethods.scaling(0, GraphingMethods.getMax(freqdens), ytick);
+
+        float[] yresults = GraphingMethods.scaling(0, GraphingMethods.getMax(cumfreq), ytick);
         yAxisLB = 0;
         yAxisUB = yresults[1];
         yScale = yresults[2];
-        ytick = (int) xresults[3];
+        ytick = (int) yresults[3];
 
         xtickdist = w*(1 - rmargin - lmargin)/(xtick-1);
         ytickdist = h*(1 - tmargin - bmargin)/(ytick-1);
@@ -219,9 +220,9 @@ public class SketchCumFreq extends PApplet {
     }
 
     public void setUserVisibleHint(boolean hidden) {
-        Log.i("CumFreq","I've changed visibility my dudes");
         super.setUserVisibleHint(hidden);
         if (hidden==false) {
+            startUp(sketchWidth(),sketchHeight());
             redraw();
         }
     }

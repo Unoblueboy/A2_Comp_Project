@@ -1,0 +1,425 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green128\blue0;\red186\green33\blue33;\red0\green0\blue255;\red188\green122\blue0;\red25\green23\blue124;\red64\green128\blue128;\red176\green0\blue64;\red187\green187\blue187;\red0\green0\blue128;\red160\green160\blue0;\red170\green34\blue255;\red136\green136\blue136;\red136\green0\blue0;\red102\green102\blue102;\red187\green102\blue136;\red0\green68\blue221;\red210\green65\blue58;\red255\green0\blue0;\red160\green0\blue0;\red187\green102\blue34;\red0\green160\blue0;\red125\green144\blue41;\red128\green0\blue128;\red153\green153\blue153;}\f0 {\cf14 .}{\chbrdr\chcfpat18 \\}A2_Comp_Project{\chbrdr\chcfpat18 \\}app{\chbrdr\chcfpat18 \\}src{\chbrdr\chcfpat18 \\}main{\chbrdr\chcfpat18 \\}java{\chbrdr\chcfpat18 \\}com{\chbrdr\chcfpat18 \\}example{\chbrdr\chcfpat18 \\}natha_000{\chbrdr\chcfpat18 \\}a2_comp_project{\chbrdr\chcfpat18 \\}Graphing_3D{\chbrdr\chcfpat18 \\}Main3DVRActivity{\cf14 .}{\cf22 java}\par
+{\cf1\b package} {\cf3\b com.example.natha_000.a2_comp_project.Graphing_3D}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b android.content.Context}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.content.Intent}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.opengl.GLES20}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.opengl.Matrix}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.os.Bundle}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.os.Vibrator}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.util.Log}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b com.example.natha_000.a2_comp_project.R}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b com.google.vr.sdk.base.AndroidCompat}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b com.google.vr.sdk.base.Eye}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b com.google.vr.sdk.base.GvrActivity}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b com.google.vr.sdk.base.GvrView}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b com.google.vr.sdk.base.HeadTransform}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b com.google.vr.sdk.base.Viewport}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b java.io.BufferedReader}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.io.IOException}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.io.InputStream}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.io.InputStreamReader}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.nio.ByteBuffer}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.nio.ByteOrder}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.nio.FloatBuffer}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b javax.microedition.khronos.egl.EGLConfig}{\cf14 ;}\par
+\par
+{\cf6\i /**\par
+ * A class suitable for the drawing of the 3D graph within virtual reality\par
+ */}\par
+{\cf1\b public} {\cf1\b class} {\cf3\b Main3DVRActivity} {\cf1\b extends} GvrActivity {\cf1\b implements} GvrView{\cf14 .}{\cf22 StereoRenderer} {\cf14 \{}\par
+\par
+    {\cf1\b protected} {\cf7 float}{\cf14 [}{\cf14 ]} modelCube{\cf14 ;}\par
+    {\cf1\b protected} {\cf7 float}{\cf14 [}{\cf14 ]} modelPosition{\cf14 ;}\par
+\par
+    {\cf1\b private} {\cf1\b static} {\cf1\b final} String TAG {\cf14 =} {\cf2 "TreasureHuntActivity"}{\cf14 ;}\par
+\par
+    {\cf1\b private} {\cf1\b static} {\cf1\b final} {\cf7 float} Z_NEAR {\cf14 =} {\cf14 0.1f}{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf1\b final} {\cf7 float} Z_FAR {\cf14 =} {\cf14 100.0f}{\cf14 ;}\par
+\par
+    {\cf1\b private} {\cf1\b static} {\cf1\b final} {\cf7 float} CAMERA_Z {\cf14 =} {\cf14 0.01f}{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf1\b final} {\cf7 float} TIME_DELTA {\cf14 =} {\cf14 0.3f}{\cf14 ;}\par
+\par
+    {\cf1\b private} {\cf1\b static} {\cf1\b final} {\cf7 float} YAW_LIMIT {\cf14 =} {\cf14 0.12f}{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf1\b final} {\cf7 float} PITCH_LIMIT {\cf14 =} {\cf14 0.12f}{\cf14 ;}\par
+\par
+    {\cf1\b private} {\cf1\b static} {\cf1\b final} {\cf7 int} COORDS_PER_VERTEX {\cf14 =} {\cf14 3}{\cf14 ;}\par
+\par
+    {\cf6\i // The light will be kept in a position just above the user.\par
+}    {\cf1\b private} {\cf1\b static} {\cf1\b final} {\cf7 float}{\cf14 [}{\cf14 ]} LIGHT_POS_IN_WORLD_SPACE {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}{\cf14 ]} {\cf14 \{}{\cf14 0.0f}{\cf14 ,} {\cf14 2.0f}{\cf14 ,} {\cf14 0.0f}{\cf14 ,} {\cf14 1.0f}{\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf6\i // Convenience vector for extracting the position from a matrix via multiplication.\par
+}    {\cf1\b private} {\cf1\b static} {\cf1\b final} {\cf7 float}{\cf14 [}{\cf14 ]} POS_MATRIX_MULTIPLY_VEC {\cf14 =} {\cf14 \{}{\cf14 0}{\cf14 ,} {\cf14 0}{\cf14 ,} {\cf14 0}{\cf14 ,} {\cf14 1.0f}{\cf14 \}}{\cf14 ;}\par
+\par
+    {\cf1\b private} {\cf1\b static} {\cf1\b final} {\cf7 float} MIN_MODEL_DISTANCE {\cf14 =} {\cf14 3.0f}{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf1\b final} {\cf7 float} MAX_MODEL_DISTANCE {\cf14 =} {\cf14 7.0f}{\cf14 ;}\par
+\par
+\par
+    {\cf1\b private} {\cf1\b final} {\cf7 float}{\cf14 [}{\cf14 ]} lightPosInEyeSpace {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}{\cf14 4}{\cf14 ]}{\cf14 ;}\par
+\par
+    {\cf1\b private} FloatBuffer surfaceVertices{\cf14 ;}\par
+    {\cf1\b private} FloatBuffer surfaceColors{\cf14 ;}\par
+    {\cf1\b private} FloatBuffer surfaceNormals{\cf14 ;}\par
+\par
+    {\cf1\b private} HeadTransform ht{\cf14 ;}\par
+\par
+    {\cf1\b private} {\cf7 int} surfaceProgram{\cf14 ;}\par
+\par
+    {\cf1\b private} {\cf7 int} surfacePositionParam{\cf14 ;}\par
+    {\cf1\b private} {\cf7 int} surfaceNormalParam{\cf14 ;}\par
+    {\cf1\b private} {\cf7 int} surfaceColorParam{\cf14 ;}\par
+    {\cf1\b private} {\cf7 int} surfaceModelParam{\cf14 ;}\par
+    {\cf1\b private} {\cf7 int} surfaceModelViewParam{\cf14 ;}\par
+    {\cf1\b private} {\cf7 int} surfaceModelViewProjectionParam{\cf14 ;}\par
+    {\cf1\b private} {\cf7 int} surfaceLightPosParam{\cf14 ;}\par
+\par
+    {\cf1\b private} {\cf7 float}{\cf14 [}{\cf14 ]} camera{\cf14 ;}\par
+    {\cf1\b private} {\cf7 float}{\cf14 [}{\cf14 ]} view{\cf14 ;}\par
+    {\cf1\b private} {\cf7 float}{\cf14 [}{\cf14 ]} headView{\cf14 ;}\par
+    {\cf1\b private} {\cf7 float}{\cf14 [}{\cf14 ]} modelViewProjection{\cf14 ;}\par
+    {\cf1\b private} {\cf7 float}{\cf14 [}{\cf14 ]} modelView{\cf14 ;}\par
+    {\cf1\b private} {\cf7 float}{\cf14 [}{\cf14 ]} modelSurface{\cf14 ;}\par
+\par
+    {\cf1\b private} {\cf7 float}{\cf14 [}{\cf14 ]} tempPosition{\cf14 ;}\par
+    {\cf1\b private} {\cf7 float}{\cf14 [}{\cf14 ]} headRotation{\cf14 ;}\par
+\par
+    {\cf1\b private} {\cf7 float} objectDistance {\cf14 =} MAX_MODEL_DISTANCE {\cf14 /} {\cf14 2.0f}{\cf14 ;}\par
+    {\cf1\b private} {\cf7 float} surfaceDepth {\cf14 =} {\cf14 20}f{\cf14 ;}\par
+\par
+    {\cf1\b private} Vibrator vibrator{\cf14 ;}\par
+\par
+\par
+    {\cf6\i /**\par
+     * Converts a raw text file, saved as a resource, into an OpenGL ES shader.\par
+     *\par
+     * @param type The type of shader I will be creating.\par
+     * @param resId The resource ID of the raw text file about to be turned into a shader.\par
+     * @return The shader object handler.\par
+     */}\par
+    {\cf1\b private} {\cf7 int} {\cf3 loadGLShader}{\cf14 (}{\cf7 int} type{\cf14 ,} {\cf7 int} resId{\cf14 )} {\cf14 \{}\par
+        String code {\cf14 =} readRawTextFile{\cf14 (}resId{\cf14 )}{\cf14 ;}\par
+        {\cf7 int} shader {\cf14 =} GLES20{\cf14 .}{\cf22 glCreateShader}{\cf14 (}type{\cf14 )}{\cf14 ;}\par
+        GLES20{\cf14 .}{\cf22 glShaderSource}{\cf14 (}shader{\cf14 ,} code{\cf14 )}{\cf14 ;}\par
+        GLES20{\cf14 .}{\cf22 glCompileShader}{\cf14 (}shader{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // Get the compilation status.\par
+}        {\cf1\b final} {\cf7 int}{\cf14 [}{\cf14 ]} compileStatus {\cf14 =} {\cf1\b new} {\cf7 int}{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 ;}\par
+        GLES20{\cf14 .}{\cf22 glGetShaderiv}{\cf14 (}shader{\cf14 ,} GLES20{\cf14 .}{\cf22 GL_COMPILE_STATUS}{\cf14 ,} compileStatus{\cf14 ,} {\cf14 0}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // If the compilation failed, delete the shader.\par
+}        {\cf1\b if} {\cf14 (}compileStatus{\cf14 [}{\cf14 0}{\cf14 ]} {\cf14 =}{\cf14 =} {\cf14 0}{\cf14 )} {\cf14 \{}\par
+            Log{\cf14 .}{\cf22 e}{\cf14 (}TAG{\cf14 ,} {\cf2 "Error compiling shader: "} {\cf14 +} GLES20{\cf14 .}{\cf22 glGetShaderInfoLog}{\cf14 (}shader{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            GLES20{\cf14 .}{\cf22 glDeleteShader}{\cf14 (}shader{\cf14 )}{\cf14 ;}\par
+            shader {\cf14 =} {\cf14 0}{\cf14 ;}\par
+        {\cf14 \}}\par
+\par
+        {\cf1\b if} {\cf14 (}shader {\cf14 =}{\cf14 =} {\cf14 0}{\cf14 )} {\cf14 \{}\par
+            {\cf1\b throw} {\cf1\b new} RuntimeException{\cf14 (}{\cf2 "Error creating shader."}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+\par
+        {\cf1\b return} shader{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * Checks if there's an error inside of OpenGL ES, and if so what that error is.\par
+     *\par
+     * @param label Label to report in case of error.\par
+     */}\par
+    {\cf1\b private} {\cf1\b static} {\cf7 void} {\cf3 checkGLError}{\cf14 (}String label{\cf14 )} {\cf14 \{}\par
+        {\cf7 int} error{\cf14 ;}\par
+        {\cf1\b while} {\cf14 (}{\cf14 (}error {\cf14 =} GLES20{\cf14 .}{\cf22 glGetError}{\cf14 (}{\cf14 )}{\cf14 )} {\cf14 !}{\cf14 =} GLES20{\cf14 .}{\cf22 GL_NO_ERROR}{\cf14 )} {\cf14 \{}\par
+            Log{\cf14 .}{\cf22 e}{\cf14 (}TAG{\cf14 ,} label {\cf14 +} {\cf2 ": glError "} {\cf14 +} error{\cf14 )}{\cf14 ;}\par
+            {\cf1\b throw} {\cf1\b new} RuntimeException{\cf14 (}label {\cf14 +} {\cf2 ": glError "} {\cf14 +} error{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * Sets the view to our GvrView and initializes the transformation matrices I will use\par
+     * to render the scene.\par
+     */}\par
+    {\cf11 @Override}\par
+    {\cf1\b protected} {\cf7 void} {\cf3 onCreate}{\cf14 (}Bundle savedInstanceState{\cf14 )} {\cf14 \{}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onCreate}{\cf14 (}savedInstanceState{\cf14 )}{\cf14 ;}\par
+\par
+        Intent intent {\cf14 =} getIntent{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        String message {\cf14 =} intent{\cf14 .}{\cf22 getStringExtra}{\cf14 (}Intemediary3D{\cf14 .}{\cf22 EXTRA_MESSAGE}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf1\b try} {\cf14 \{}\par
+            WorldLayoutData{\cf14 .}{\cf22 setParameters}{\cf14 (}{\cf14 -}{\cf14 10}f{\cf14 ,}{\cf14 10}f{\cf14 ,}{\cf14 -}{\cf14 10}f{\cf14 ,}{\cf14 10}f{\cf14 ,}{\cf14 61}{\cf14 ,}{\cf14 61}{\cf14 ,}{\cf14 10}f{\cf14 )}{\cf14 ;}\par
+            WorldLayoutData{\cf14 .}{\cf22 setfunction}{\cf14 (}message{\cf14 )}{\cf14 ;}\par
+            WorldLayoutData{\cf14 .}{\cf22 generate}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b catch} {\cf14 (}IOException e{\cf14 )} {\cf14 \{}\par
+            Log{\cf14 .}{\cf22 e}{\cf14 (}{\cf2 "Project: Parameter Data"}{\cf14 ,} e{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+\par
+        initializeGvrView{\cf14 (}{\cf14 )}{\cf14 ;}\par
+\par
+        modelCube {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}{\cf14 16}{\cf14 ]}{\cf14 ;}\par
+        camera {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}{\cf14 16}{\cf14 ]}{\cf14 ;}\par
+        view {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}{\cf14 16}{\cf14 ]}{\cf14 ;}\par
+        modelViewProjection {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}{\cf14 16}{\cf14 ]}{\cf14 ;}\par
+        modelView {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}{\cf14 16}{\cf14 ]}{\cf14 ;}\par
+        modelSurface {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}{\cf14 16}{\cf14 ]}{\cf14 ;}\par
+        tempPosition {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}{\cf14 4}{\cf14 ]}{\cf14 ;}\par
+        {\cf6\i // Model first appears directly in front of user.\par
+}        modelPosition {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}{\cf14 ]} {\cf14 \{}{\cf14 0.0f}{\cf14 ,} {\cf14 0.0f}{\cf14 ,} {\cf14 -}MAX_MODEL_DISTANCE {\cf14 /} {\cf14 2.0f}{\cf14 \}}{\cf14 ;}\par
+        headRotation {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}{\cf14 4}{\cf14 ]}{\cf14 ;}\par
+        headView {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}{\cf14 16}{\cf14 ]}{\cf14 ;}\par
+        vibrator {\cf14 =} {\cf14 (}Vibrator{\cf14 )} getSystemService{\cf14 (}Context{\cf14 .}{\cf22 VIBRATOR_SERVICE}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 void} {\cf3 initializeGvrView}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        setContentView{\cf14 (}R{\cf14 .}{\cf22 layout}{\cf14 .}{\cf22 activity_main3dvr}{\cf14 )}{\cf14 ;}\par
+\par
+        GvrView gvrView {\cf14 =} {\cf14 (}GvrView{\cf14 )} findViewById{\cf14 (}R{\cf14 .}{\cf22 id}{\cf14 .}{\cf22 gvr_view}{\cf14 )}{\cf14 ;}\par
+        gvrView{\cf14 .}{\cf22 setEGLConfigChooser}{\cf14 (}{\cf14 8}{\cf14 ,} {\cf14 8}{\cf14 ,} {\cf14 8}{\cf14 ,} {\cf14 8}{\cf14 ,} {\cf14 16}{\cf14 ,} {\cf14 8}{\cf14 )}{\cf14 ;}\par
+\par
+        gvrView{\cf14 .}{\cf22 setRenderer}{\cf14 (}{\cf1\b this}{\cf14 )}{\cf14 ;}\par
+        gvrView{\cf14 .}{\cf22 setTransitionViewEnabled}{\cf14 (}{\cf1\b true}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // Enable Cardboard-trigger feedback with Daydream headsets.\par
+}        gvrView{\cf14 .}{\cf22 enableCardboardTriggerEmulation}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf1\b if} {\cf14 (}gvrView{\cf14 .}{\cf22 setAsyncReprojectionEnabled}{\cf14 (}{\cf1\b true}{\cf14 )}{\cf14 )} {\cf14 \{}\par
+            {\cf6\i // Async reprojection decouples the app framerate from the display framerate,\par
+}            {\cf6\i // allowing immersive interaction even at the throttled clockrates set by\par
+}            {\cf6\i // sustained performance mode.\par
+}            AndroidCompat{\cf14 .}{\cf22 setSustainedPerformanceMode}{\cf14 (}{\cf1\b this}{\cf14 ,} {\cf1\b true}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+\par
+        setGvrView{\cf14 (}gvrView{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b protected} {\cf7 void} {\cf3 onPause}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onPause}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b protected} {\cf7 void} {\cf3 onResume}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        {\cf1\b super}{\cf14 .}{\cf22 onResume}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 onRendererShutdown}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        WorldLayoutData{\cf14 .}{\cf22 reset}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 onSurfaceChanged}{\cf14 (}{\cf7 int} width{\cf14 ,} {\cf7 int} height{\cf14 )} {\cf14 \{}\par
+    {\cf14 \}}\par
+\par
+\par
+    {\cf1\b private} {\cf7 void} {\cf3 defineBuffers}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}TAG{\cf14 ,}Float{\cf14 .}{\cf22 toString}{\cf14 (}WorldLayoutData{\cf14 .}{\cf22 SURFACE_COORDS}{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 )}{\cf14 +} {\cf2 ", "} {\cf14 +} Float{\cf14 .}{\cf22 toString}{\cf14 (}WorldLayoutData{\cf14 .}{\cf22 SURFACE_COORDS}{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 )} {\cf14 +} {\cf2 ", "} {\cf14 +} Float{\cf14 .}{\cf22 toString}{\cf14 (}WorldLayoutData{\cf14 .}{\cf22 SURFACE_COORDS}{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}TAG{\cf14 ,}Float{\cf14 .}{\cf22 toString}{\cf14 (}WorldLayoutData{\cf14 .}{\cf22 getOffset}{\cf14 (}{\cf14 )}{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 )}{\cf14 +} {\cf2 ", "} {\cf14 +} Float{\cf14 .}{\cf22 toString}{\cf14 (}WorldLayoutData{\cf14 .}{\cf22 getOffset}{\cf14 (}{\cf14 )}{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 )} {\cf14 +} {\cf2 ", "} {\cf14 +} Float{\cf14 .}{\cf22 toString}{\cf14 (}WorldLayoutData{\cf14 .}{\cf22 getOffset}{\cf14 (}{\cf14 )}{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+        ByteBuffer bbSurfaceVertices {\cf14 =} ByteBuffer{\cf14 .}{\cf22 allocateDirect}{\cf14 (}WorldLayoutData{\cf14 .}{\cf22 SURFACE_COORDS}{\cf14 .}{\cf22 length} {\cf14 *} {\cf14 4}{\cf14 )}{\cf14 ;}\par
+        bbSurfaceVertices{\cf14 .}{\cf22 order}{\cf14 (}ByteOrder{\cf14 .}{\cf22 nativeOrder}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        surfaceVertices {\cf14 =} bbSurfaceVertices{\cf14 .}{\cf22 asFloatBuffer}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        surfaceVertices{\cf14 .}{\cf22 put}{\cf14 (}WorldLayoutData{\cf14 .}{\cf22 SURFACE_COORDS}{\cf14 )}{\cf14 ;}\par
+        surfaceVertices{\cf14 .}{\cf22 position}{\cf14 (}{\cf14 0}{\cf14 )}{\cf14 ;}\par
+\par
+        ByteBuffer bbSurfaceNormals {\cf14 =} ByteBuffer{\cf14 .}{\cf22 allocateDirect}{\cf14 (}WorldLayoutData{\cf14 .}{\cf22 SURFACE_NORMALS}{\cf14 .}{\cf22 length} {\cf14 *} {\cf14 4}{\cf14 )}{\cf14 ;}\par
+        bbSurfaceNormals{\cf14 .}{\cf22 order}{\cf14 (}ByteOrder{\cf14 .}{\cf22 nativeOrder}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        surfaceNormals {\cf14 =} bbSurfaceNormals{\cf14 .}{\cf22 asFloatBuffer}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        surfaceNormals{\cf14 .}{\cf22 put}{\cf14 (}WorldLayoutData{\cf14 .}{\cf22 SURFACE_NORMALS}{\cf14 )}{\cf14 ;}\par
+        surfaceNormals{\cf14 .}{\cf22 position}{\cf14 (}{\cf14 0}{\cf14 )}{\cf14 ;}\par
+\par
+        ByteBuffer bbSurfaceColors {\cf14 =} ByteBuffer{\cf14 .}{\cf22 allocateDirect}{\cf14 (}WorldLayoutData{\cf14 .}{\cf22 SURFACE_COLORS}{\cf14 .}{\cf22 length} {\cf14 *} {\cf14 4}{\cf14 )}{\cf14 ;}\par
+        bbSurfaceColors{\cf14 .}{\cf22 order}{\cf14 (}ByteOrder{\cf14 .}{\cf22 nativeOrder}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        surfaceColors {\cf14 =} bbSurfaceColors{\cf14 .}{\cf22 asFloatBuffer}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        surfaceColors{\cf14 .}{\cf22 put}{\cf14 (}WorldLayoutData{\cf14 .}{\cf22 SURFACE_COLORS}{\cf14 )}{\cf14 ;}\par
+        surfaceColors{\cf14 .}{\cf22 position}{\cf14 (}{\cf14 0}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * Creates the buffers used to store information about the 3D world.\par
+     *\par
+     * OpenGL doesn't use Java arrays, but rather needs data in a format it can understand.\par
+     * Hence I use ByteBuffers.\par
+     *\par
+     * @param config The EGL configuration used when creating the surface.\par
+     */}\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 onSurfaceCreated}{\cf14 (}EGLConfig config{\cf14 )} {\cf14 \{}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}TAG{\cf14 ,} {\cf2 "onSurfaceCreated"}{\cf14 )}{\cf14 ;}\par
+        GLES20{\cf14 .}{\cf22 glClearColor}{\cf14 (}{\cf14 0.1f}{\cf14 ,} {\cf14 0.1f}{\cf14 ,} {\cf14 0.1f}{\cf14 ,} {\cf14 0.5f}{\cf14 )}{\cf14 ;} {\cf6\i // Dark background so text shows up well.\par
+}\par
+        {\cf6\i // Defines the buffers responsible for drawing the surface\par
+}        defineBuffers{\cf14 (}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf7 int} vertexShader {\cf14 =} loadGLShader{\cf14 (}GLES20{\cf14 .}{\cf22 GL_VERTEX_SHADER}{\cf14 ,} R{\cf14 .}{\cf22 raw}{\cf14 .}{\cf22 light_vertex}{\cf14 )}{\cf14 ;}\par
+        {\cf7 int} gridShader {\cf14 =} loadGLShader{\cf14 (}GLES20{\cf14 .}{\cf22 GL_FRAGMENT_SHADER}{\cf14 ,} R{\cf14 .}{\cf22 raw}{\cf14 .}{\cf22 grid_fragment}{\cf14 )}{\cf14 ;}\par
+        {\cf7 int} passthroughShader {\cf14 =} loadGLShader{\cf14 (}GLES20{\cf14 .}{\cf22 GL_FRAGMENT_SHADER}{\cf14 ,} R{\cf14 .}{\cf22 raw}{\cf14 .}{\cf22 passthrough_fragment}{\cf14 )}{\cf14 ;}\par
+\par
+        surfaceProgram {\cf14 =} GLES20{\cf14 .}{\cf22 glCreateProgram}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        GLES20{\cf14 .}{\cf22 glAttachShader}{\cf14 (}surfaceProgram{\cf14 ,} vertexShader{\cf14 )}{\cf14 ;}\par
+        GLES20{\cf14 .}{\cf22 glAttachShader}{\cf14 (}surfaceProgram{\cf14 ,} passthroughShader{\cf14 )}{\cf14 ;}\par
+        GLES20{\cf14 .}{\cf22 glLinkProgram}{\cf14 (}surfaceProgram{\cf14 )}{\cf14 ;}\par
+        GLES20{\cf14 .}{\cf22 glUseProgram}{\cf14 (}surfaceProgram{\cf14 )}{\cf14 ;}\par
+\par
+        checkGLError{\cf14 (}{\cf2 "Surface program"}{\cf14 )}{\cf14 ;}\par
+\par
+        surfaceModelParam {\cf14 =} GLES20{\cf14 .}{\cf22 glGetUniformLocation}{\cf14 (}surfaceProgram{\cf14 ,} {\cf2 "u_Model"}{\cf14 )}{\cf14 ;}\par
+        surfaceModelViewParam {\cf14 =} GLES20{\cf14 .}{\cf22 glGetUniformLocation}{\cf14 (}surfaceProgram{\cf14 ,} {\cf2 "u_MVMatrix"}{\cf14 )}{\cf14 ;}\par
+        surfaceModelViewProjectionParam {\cf14 =} GLES20{\cf14 .}{\cf22 glGetUniformLocation}{\cf14 (}surfaceProgram{\cf14 ,} {\cf2 "u_MVP"}{\cf14 )}{\cf14 ;}\par
+        surfaceLightPosParam {\cf14 =} GLES20{\cf14 .}{\cf22 glGetUniformLocation}{\cf14 (}surfaceProgram{\cf14 ,} {\cf2 "u_LightPos"}{\cf14 )}{\cf14 ;}\par
+\par
+        surfacePositionParam {\cf14 =} GLES20{\cf14 .}{\cf22 glGetAttribLocation}{\cf14 (}surfaceProgram{\cf14 ,} {\cf2 "a_Position"}{\cf14 )}{\cf14 ;}\par
+        surfaceNormalParam {\cf14 =} GLES20{\cf14 .}{\cf22 glGetAttribLocation}{\cf14 (}surfaceProgram{\cf14 ,} {\cf2 "a_Normal"}{\cf14 )}{\cf14 ;}\par
+        surfaceColorParam {\cf14 =} GLES20{\cf14 .}{\cf22 glGetAttribLocation}{\cf14 (}surfaceProgram{\cf14 ,} {\cf2 "a_Color"}{\cf14 )}{\cf14 ;}\par
+\par
+        checkGLError{\cf14 (}{\cf2 "Surface program params"}{\cf14 )}{\cf14 ;}\par
+\par
+        Matrix{\cf14 .}{\cf22 setIdentityM}{\cf14 (}modelSurface{\cf14 ,} {\cf14 0}{\cf14 )}{\cf14 ;}\par
+        Matrix{\cf14 .}{\cf22 translateM}{\cf14 (}modelSurface{\cf14 ,} {\cf14 0}{\cf14 ,} {\cf14 0}{\cf14 ,} {\cf14 -}surfaceDepth{\cf14 ,} {\cf14 0}{\cf14 )}{\cf14 ;} {\cf6\i // Surface appears below user.\par
+}\par
+        checkGLError{\cf14 (}{\cf2 "onSurfaceCreated"}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * Converts a raw text file into a string.\par
+     *\par
+     * @param resId The resource ID of the raw text file about to be turned into a shader.\par
+     * @return The context of the text file, or null in case of error.\par
+     */}\par
+    {\cf1\b private} String {\cf3 readRawTextFile}{\cf14 (}{\cf7 int} resId{\cf14 )} {\cf14 \{}\par
+        InputStream inputStream {\cf14 =} getResources{\cf14 (}{\cf14 )}{\cf14 .}{\cf22 openRawResource}{\cf14 (}resId{\cf14 )}{\cf14 ;}\par
+        {\cf1\b try} {\cf14 \{}\par
+            BufferedReader reader {\cf14 =} {\cf1\b new} BufferedReader{\cf14 (}{\cf1\b new} InputStreamReader{\cf14 (}inputStream{\cf14 )}{\cf14 )}{\cf14 ;}\par
+            StringBuilder sb {\cf14 =} {\cf1\b new} StringBuilder{\cf14 (}{\cf14 )}{\cf14 ;}\par
+            String line{\cf14 ;}\par
+            {\cf1\b while} {\cf14 (}{\cf14 (}line {\cf14 =} reader{\cf14 .}{\cf22 readLine}{\cf14 (}{\cf14 )}{\cf14 )} {\cf14 !}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+                sb{\cf14 .}{\cf22 append}{\cf14 (}line{\cf14 )}{\cf14 .}{\cf22 append}{\cf14 (}{\cf2 "\\n"}{\cf14 )}{\cf14 ;}\par
+            {\cf14 \}}\par
+            reader{\cf14 .}{\cf22 close}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+            {\cf1\b return} sb{\cf14 .}{\cf22 toString}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b catch} {\cf14 (}IOException e{\cf14 )} {\cf14 \{}\par
+            e{\cf14 .}{\cf22 printStackTrace}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b return} {\cf1\b null}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * Prepares OpenGL ES before I draw a frame.\par
+     *\par
+     * @param headTransform The head transformation in the new frame.\par
+     */}\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 onNewFrame}{\cf14 (}HeadTransform headTransform{\cf14 )} {\cf14 \{}\par
+{\cf6\i //        setCubeRotation();\par
+}{\cf6\i //        Log.i(TAG, "onNewFrame");\par
+}        ht {\cf14 =} headTransform{\cf14 ;}\par
+\par
+\par
+        {\cf6\i // Build the camera matrix and apply it to the ModelView.\par
+}        Matrix{\cf14 .}{\cf22 setLookAtM}{\cf14 (}camera{\cf14 ,} {\cf14 0}{\cf14 ,} {\cf14 0.0f}{\cf14 ,} {\cf14 0.0f}{\cf14 ,} CAMERA_Z{\cf14 ,} {\cf14 0.0f}{\cf14 ,} {\cf14 0.0f}{\cf14 ,} {\cf14 0.0f}{\cf14 ,} {\cf14 0.0f}{\cf14 ,} {\cf14 1.0f}{\cf14 ,} {\cf14 0.0f}{\cf14 )}{\cf14 ;}\par
+\par
+        headTransform{\cf14 .}{\cf22 getHeadView}{\cf14 (}headView{\cf14 ,} {\cf14 0}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // Update the 3d audio engine with the most recent head rotation.\par
+}        headTransform{\cf14 .}{\cf22 getQuaternion}{\cf14 (}headRotation{\cf14 ,} {\cf14 0}{\cf14 )}{\cf14 ;}\par
+\par
+        checkGLError{\cf14 (}{\cf2 "onReadyToDraw"}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+\par
+    {\cf6\i /**\par
+     * Draws a frame for an eye.\par
+     *\par
+     * @param eye The eye to render. Includes all required transformations.\par
+     */}\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 onDrawEye}{\cf14 (}Eye eye{\cf14 )} {\cf14 \{}\par
+\par
+        {\cf1\b if} {\cf14 (}WorldLayoutData{\cf14 .}{\cf22 isFlying}{\cf14 (}{\cf14 )}{\cf14 )} {\cf14 \{}\par
+            WorldLayoutData{\cf14 .}{\cf22 fly}{\cf14 (}ht{\cf14 )}{\cf14 ;}\par
+            {\cf1\b try} {\cf14 \{}\par
+                WorldLayoutData{\cf14 .}{\cf22 generate}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+                defineBuffers{\cf14 (}{\cf14 )}{\cf14 ;}\par
+            {\cf14 \}} {\cf1\b catch} {\cf14 (}IOException e{\cf14 )} {\cf14 \{}\par
+                Log{\cf14 .}{\cf22 e}{\cf14 (}TAG{\cf14 ,} {\cf2 "An error has occurred trying to generate new co-ordinates"}{\cf14 )}{\cf14 ;}\par
+            {\cf14 \}}\par
+        {\cf14 \}}\par
+\par
+\par
+        GLES20{\cf14 .}{\cf22 glEnable}{\cf14 (}GLES20{\cf14 .}{\cf22 GL_DEPTH_TEST}{\cf14 )}{\cf14 ;}\par
+        GLES20{\cf14 .}{\cf22 glClear}{\cf14 (}GLES20{\cf14 .}{\cf22 GL_COLOR_BUFFER_BIT} {\cf14 |} GLES20{\cf14 .}{\cf22 GL_DEPTH_BUFFER_BIT}{\cf14 )}{\cf14 ;}\par
+\par
+        checkGLError{\cf14 (}{\cf2 "colorParam"}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // Apply the eye transformation to the camera.\par
+}        Matrix{\cf14 .}{\cf22 multiplyMM}{\cf14 (}view{\cf14 ,} {\cf14 0}{\cf14 ,} eye{\cf14 .}{\cf22 getEyeView}{\cf14 (}{\cf14 )}{\cf14 ,} {\cf14 0}{\cf14 ,} camera{\cf14 ,} {\cf14 0}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // Set the position of the light\par
+}        Matrix{\cf14 .}{\cf22 multiplyMV}{\cf14 (}lightPosInEyeSpace{\cf14 ,} {\cf14 0}{\cf14 ,} view{\cf14 ,} {\cf14 0}{\cf14 ,} LIGHT_POS_IN_WORLD_SPACE{\cf14 ,} {\cf14 0}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // Build the ModelView and ModelViewProjection matrices\par
+}        {\cf6\i // for calculating cube position and light.\par
+}        {\cf7 float}{\cf14 [}{\cf14 ]} perspective {\cf14 =} eye{\cf14 .}{\cf22 getPerspective}{\cf14 (}Z_NEAR{\cf14 ,} Z_FAR{\cf14 )}{\cf14 ;}\par
+{\cf6\i //        Matrix.multiplyMM(modelView, 0, view, 0, modelCube, 0);\par
+}{\cf6\i //        Matrix.multiplyMM(modelViewProjection, 0, perspective, 0, modelView, 0);\par
+}{\cf6\i //    drawCube();\par
+}\par
+        {\cf6\i // Set modelView for the surface, so I draw surface in the correct location\par
+}        Matrix{\cf14 .}{\cf22 multiplyMM}{\cf14 (}modelView{\cf14 ,} {\cf14 0}{\cf14 ,} view{\cf14 ,} {\cf14 0}{\cf14 ,} modelSurface{\cf14 ,} {\cf14 0}{\cf14 )}{\cf14 ;}\par
+        Matrix{\cf14 .}{\cf22 multiplyMM}{\cf14 (}modelViewProjection{\cf14 ,} {\cf14 0}{\cf14 ,} perspective{\cf14 ,} {\cf14 0}{\cf14 ,} modelView{\cf14 ,} {\cf14 0}{\cf14 )}{\cf14 ;}\par
+        drawSurface{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 onFinishFrame}{\cf14 (}Viewport viewport{\cf14 )} {\cf14 \{}{\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * Draw the surface.\par
+     *\par
+     * <p>This feeds in data for the surface into the shader. Note that this doesn't feed in data about\par
+     * position of the light, so if I rewrite our code to draw the surface first, the lighting might\par
+     * look strange.\par
+     */}\par
+    {\cf1\b public} {\cf7 void} {\cf3 drawSurface}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        GLES20{\cf14 .}{\cf22 glUseProgram}{\cf14 (}surfaceProgram{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // Set ModelView, MVP, position, normals, and color.\par
+}        GLES20{\cf14 .}{\cf22 glUniform3fv}{\cf14 (}surfaceLightPosParam{\cf14 ,} {\cf14 1}{\cf14 ,} lightPosInEyeSpace{\cf14 ,} {\cf14 0}{\cf14 )}{\cf14 ;}\par
+        GLES20{\cf14 .}{\cf22 glUniformMatrix4fv}{\cf14 (}surfaceModelParam{\cf14 ,} {\cf14 1}{\cf14 ,} {\cf1\b false}{\cf14 ,} modelSurface{\cf14 ,} {\cf14 0}{\cf14 )}{\cf14 ;}\par
+        GLES20{\cf14 .}{\cf22 glUniformMatrix4fv}{\cf14 (}surfaceModelViewParam{\cf14 ,} {\cf14 1}{\cf14 ,} {\cf1\b false}{\cf14 ,} modelView{\cf14 ,} {\cf14 0}{\cf14 )}{\cf14 ;}\par
+        GLES20{\cf14 .}{\cf22 glUniformMatrix4fv}{\cf14 (}surfaceModelViewProjectionParam{\cf14 ,} {\cf14 1}{\cf14 ,} {\cf1\b false}{\cf14 ,} modelViewProjection{\cf14 ,} {\cf14 0}{\cf14 )}{\cf14 ;}\par
+        GLES20{\cf14 .}{\cf22 glVertexAttribPointer}{\cf14 (}\par
+                surfacePositionParam{\cf14 ,} COORDS_PER_VERTEX{\cf14 ,} GLES20{\cf14 .}{\cf22 GL_FLOAT}{\cf14 ,} {\cf1\b false}{\cf14 ,} {\cf14 0}{\cf14 ,} surfaceVertices{\cf14 )}{\cf14 ;}\par
+        GLES20{\cf14 .}{\cf22 glVertexAttribPointer}{\cf14 (}surfaceNormalParam{\cf14 ,} {\cf14 3}{\cf14 ,} GLES20{\cf14 .}{\cf22 GL_FLOAT}{\cf14 ,} {\cf1\b false}{\cf14 ,} {\cf14 0}{\cf14 ,} surfaceNormals{\cf14 )}{\cf14 ;}\par
+        GLES20{\cf14 .}{\cf22 glVertexAttribPointer}{\cf14 (}surfaceColorParam{\cf14 ,} {\cf14 4}{\cf14 ,} GLES20{\cf14 .}{\cf22 GL_FLOAT}{\cf14 ,} {\cf1\b false}{\cf14 ,} {\cf14 0}{\cf14 ,} surfaceColors{\cf14 )}{\cf14 ;}\par
+\par
+        GLES20{\cf14 .}{\cf22 glEnableVertexAttribArray}{\cf14 (}surfacePositionParam{\cf14 )}{\cf14 ;}\par
+        GLES20{\cf14 .}{\cf22 glEnableVertexAttribArray}{\cf14 (}surfaceNormalParam{\cf14 )}{\cf14 ;}\par
+        GLES20{\cf14 .}{\cf22 glEnableVertexAttribArray}{\cf14 (}surfaceColorParam{\cf14 )}{\cf14 ;}\par
+\par
+        GLES20{\cf14 .}{\cf22 glDrawArrays}{\cf14 (}GLES20{\cf14 .}{\cf22 GL_TRIANGLES}{\cf14 ,} {\cf14 0}{\cf14 ,} WorldLayoutData{\cf14 .}{\cf22 SURFACE_COORDS}{\cf14 .}{\cf22 length}{\cf14 /}{\cf14 3}{\cf14 )}{\cf14 ;}\par
+\par
+        GLES20{\cf14 .}{\cf22 glDisableVertexAttribArray}{\cf14 (}surfacePositionParam{\cf14 )}{\cf14 ;}\par
+        GLES20{\cf14 .}{\cf22 glDisableVertexAttribArray}{\cf14 (}surfaceNormalParam{\cf14 )}{\cf14 ;}\par
+        GLES20{\cf14 .}{\cf22 glDisableVertexAttribArray}{\cf14 (}surfaceColorParam{\cf14 )}{\cf14 ;}\par
+\par
+        checkGLError{\cf14 (}{\cf2 "drawing surface"}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * Called when the Cardboard trigger is pulled.\par
+     */}\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 onCardboardTrigger}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        WorldLayoutData{\cf14 .}{\cf22 toggleFlying}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+{\cf6\i //        WorldLayoutData.changeResolution();\par
+}        Log{\cf14 .}{\cf22 i}{\cf14 (}TAG{\cf14 ,} {\cf2 "onCardboardTrigger: "} {\cf14 +} Boolean{\cf14 .}{\cf22 toString}{\cf14 (}WorldLayoutData{\cf14 .}{\cf22 isFlying}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf6\i // Always give user feedback.\par
+}        vibrator{\cf14 .}{\cf22 vibrate}{\cf14 (}{\cf14 50}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+\par
+{\cf14 \}}\par
+}

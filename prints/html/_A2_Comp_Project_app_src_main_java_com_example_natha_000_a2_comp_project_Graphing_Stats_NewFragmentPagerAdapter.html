@@ -1,0 +1,182 @@
+<p style="font-size:14pt;font-family:sans-serif"><strong>.\A2_Comp_Project\app\src\main\java\com\example\natha_000\a2_comp_project\Graphing_Stats\NewFragmentPagerAdapter.java</strong></p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">package</span> <span style="color: #0000FF; font-weight: bold">com.example.natha_000.a2_comp_project.Graphing_Stats</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.app.Fragment</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.app.FragmentManager</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.app.FragmentTransaction</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.os.Bundle</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.os.Parcelable</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.support.v4.view.PagerAdapter</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.util.Log</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.view.View</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.view.ViewGroup</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.util.ArrayList</span><span style="color: #666666">;</span>
+
+
+<span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic"> * Created by Natha_000 on 11/02/2017.</span>
+<span style="color: #408080; font-style: italic"> */</span>
+
+<span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">abstract</span> <span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">NewFragmentPagerAdapter</span> <span style="color: #008000; font-weight: bold">extends</span> PagerAdapter <span style="color: #666666">{</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #008000; font-weight: bold">final</span> String TAG <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;NewFragmentPagerAdapter&quot;</span><span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #008000; font-weight: bold">final</span> <span style="color: #B00040">boolean</span> DEBUG <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">;</span>
+
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">final</span> FragmentManager mFragmentManager<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">private</span> FragmentTransaction mCurTransaction <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">;</span>
+
+    <span style="color: #008000; font-weight: bold">private</span> ArrayList<span style="color: #666666">&lt;</span>Fragment<span style="color: #666666">.</span><span style="color: #7D9029">SavedState</span><span style="color: #666666">&gt;</span> mSavedState <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> ArrayList<span style="color: #666666">&lt;</span>Fragment<span style="color: #666666">.</span><span style="color: #7D9029">SavedState</span><span style="color: #666666">&gt;();</span>
+    <span style="color: #008000; font-weight: bold">private</span> ArrayList<span style="color: #666666">&lt;</span>Fragment<span style="color: #666666">&gt;</span> mFragments <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> ArrayList<span style="color: #666666">&lt;</span>Fragment<span style="color: #666666">&gt;();</span>
+    <span style="color: #008000; font-weight: bold">private</span> Fragment mCurrentPrimaryItem <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">;</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #0000FF">NewFragmentPagerAdapter</span><span style="color: #666666">(</span>FragmentManager fm<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        mFragmentManager <span style="color: #666666">=</span> fm<span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * Return the Fragment associated with a specified position.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">abstract</span> Fragment <span style="color: #0000FF">getItem</span><span style="color: #666666">(</span><span style="color: #B00040">int</span> position<span style="color: #666666">);</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">startUpdate</span><span style="color: #666666">(</span>ViewGroup container<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> Object <span style="color: #0000FF">instantiateItem</span><span style="color: #666666">(</span>ViewGroup container<span style="color: #666666">,</span> <span style="color: #B00040">int</span> position<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #408080; font-style: italic">// If we already have this item instantiated, there is nothing</span>
+        <span style="color: #408080; font-style: italic">// to do.  This can happen when we are restoring the entire pager</span>
+        <span style="color: #408080; font-style: italic">// from its saved state, where the fragment manager has already</span>
+        <span style="color: #408080; font-style: italic">// taken care of restoring the fragments we previously had instantiated.</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>mFragments<span style="color: #666666">.</span><span style="color: #7D9029">size</span><span style="color: #666666">()</span> <span style="color: #666666">&gt;</span> position<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            Fragment f <span style="color: #666666">=</span> mFragments<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>position<span style="color: #666666">);</span>
+            <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>f <span style="color: #666666">!=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                <span style="color: #008000; font-weight: bold">return</span> f<span style="color: #666666">;</span>
+            <span style="color: #666666">}</span>
+        <span style="color: #666666">}</span>
+
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>mCurTransaction <span style="color: #666666">==</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            mCurTransaction <span style="color: #666666">=</span> mFragmentManager<span style="color: #666666">.</span><span style="color: #7D9029">beginTransaction</span><span style="color: #666666">();</span>
+        <span style="color: #666666">}</span>
+
+        Fragment fragment <span style="color: #666666">=</span> getItem<span style="color: #666666">(</span>position<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>DEBUG<span style="color: #666666">)</span> Log<span style="color: #666666">.</span><span style="color: #7D9029">v</span><span style="color: #666666">(</span>TAG<span style="color: #666666">,</span> <span style="color: #BA2121">&quot;Adding item #&quot;</span> <span style="color: #666666">+</span> position <span style="color: #666666">+</span> <span style="color: #BA2121">&quot;: f=&quot;</span> <span style="color: #666666">+</span> fragment<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>mSavedState<span style="color: #666666">.</span><span style="color: #7D9029">size</span><span style="color: #666666">()</span> <span style="color: #666666">&gt;</span> position<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            Fragment<span style="color: #666666">.</span><span style="color: #7D9029">SavedState</span> fss <span style="color: #666666">=</span> mSavedState<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>position<span style="color: #666666">);</span>
+            <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>fss <span style="color: #666666">!=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                fragment<span style="color: #666666">.</span><span style="color: #7D9029">setInitialSavedState</span><span style="color: #666666">(</span>fss<span style="color: #666666">);</span>
+            <span style="color: #666666">}</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">while</span> <span style="color: #666666">(</span>mFragments<span style="color: #666666">.</span><span style="color: #7D9029">size</span><span style="color: #666666">()</span> <span style="color: #666666">&lt;=</span> position<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            mFragments<span style="color: #666666">.</span><span style="color: #7D9029">add</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">);</span>
+        <span style="color: #666666">}</span>
+        fragment<span style="color: #666666">.</span><span style="color: #7D9029">setMenuVisibility</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">);</span>
+        fragment<span style="color: #666666">.</span><span style="color: #7D9029">setUserVisibleHint</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">);</span>
+        mFragments<span style="color: #666666">.</span><span style="color: #7D9029">set</span><span style="color: #666666">(</span>position<span style="color: #666666">,</span> fragment<span style="color: #666666">);</span>
+        mCurTransaction<span style="color: #666666">.</span><span style="color: #7D9029">add</span><span style="color: #666666">(</span>container<span style="color: #666666">.</span><span style="color: #7D9029">getId</span><span style="color: #666666">(),</span> fragment<span style="color: #666666">);</span>
+
+        <span style="color: #008000; font-weight: bold">return</span> fragment<span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">destroyItem</span><span style="color: #666666">(</span>ViewGroup container<span style="color: #666666">,</span> <span style="color: #B00040">int</span> position<span style="color: #666666">,</span> Object object<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        Fragment fragment <span style="color: #666666">=</span> <span style="color: #666666">(</span>Fragment<span style="color: #666666">)</span>object<span style="color: #666666">;</span>
+
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>mCurTransaction <span style="color: #666666">==</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            mCurTransaction <span style="color: #666666">=</span> mFragmentManager<span style="color: #666666">.</span><span style="color: #7D9029">beginTransaction</span><span style="color: #666666">();</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>DEBUG<span style="color: #666666">)</span> Log<span style="color: #666666">.</span><span style="color: #7D9029">v</span><span style="color: #666666">(</span>TAG<span style="color: #666666">,</span> <span style="color: #BA2121">&quot;Removing item #&quot;</span> <span style="color: #666666">+</span> position <span style="color: #666666">+</span> <span style="color: #BA2121">&quot;: f=&quot;</span> <span style="color: #666666">+</span> object
+                <span style="color: #666666">+</span> <span style="color: #BA2121">&quot; v=&quot;</span> <span style="color: #666666">+</span> <span style="color: #666666">((</span>Fragment<span style="color: #666666">)</span>object<span style="color: #666666">).</span><span style="color: #7D9029">getView</span><span style="color: #666666">());</span>
+        <span style="color: #008000; font-weight: bold">while</span> <span style="color: #666666">(</span>mSavedState<span style="color: #666666">.</span><span style="color: #7D9029">size</span><span style="color: #666666">()</span> <span style="color: #666666">&lt;=</span> position<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            mSavedState<span style="color: #666666">.</span><span style="color: #7D9029">add</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">);</span>
+        <span style="color: #666666">}</span>
+        mSavedState<span style="color: #666666">.</span><span style="color: #7D9029">set</span><span style="color: #666666">(</span>position<span style="color: #666666">,</span> mFragmentManager<span style="color: #666666">.</span><span style="color: #7D9029">saveFragmentInstanceState</span><span style="color: #666666">(</span>fragment<span style="color: #666666">));</span>
+        mFragments<span style="color: #666666">.</span><span style="color: #7D9029">set</span><span style="color: #666666">(</span>position<span style="color: #666666">,</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">);</span>
+
+        mCurTransaction<span style="color: #666666">.</span><span style="color: #7D9029">remove</span><span style="color: #666666">(</span>fragment<span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">setPrimaryItem</span><span style="color: #666666">(</span>ViewGroup container<span style="color: #666666">,</span> <span style="color: #B00040">int</span> position<span style="color: #666666">,</span> Object object<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        Fragment fragment <span style="color: #666666">=</span> <span style="color: #666666">(</span>Fragment<span style="color: #666666">)</span>object<span style="color: #666666">;</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>fragment <span style="color: #666666">!=</span> mCurrentPrimaryItem<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>mCurrentPrimaryItem <span style="color: #666666">!=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                mCurrentPrimaryItem<span style="color: #666666">.</span><span style="color: #7D9029">setMenuVisibility</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">);</span>
+                mCurrentPrimaryItem<span style="color: #666666">.</span><span style="color: #7D9029">setUserVisibleHint</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">);</span>
+            <span style="color: #666666">}</span>
+            <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>fragment <span style="color: #666666">!=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                fragment<span style="color: #666666">.</span><span style="color: #7D9029">setMenuVisibility</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">);</span>
+                fragment<span style="color: #666666">.</span><span style="color: #7D9029">setUserVisibleHint</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">);</span>
+            <span style="color: #666666">}</span>
+            mCurrentPrimaryItem <span style="color: #666666">=</span> fragment<span style="color: #666666">;</span>
+        <span style="color: #666666">}</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">finishUpdate</span><span style="color: #666666">(</span>ViewGroup container<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>mCurTransaction <span style="color: #666666">!=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            mCurTransaction<span style="color: #666666">.</span><span style="color: #7D9029">commitAllowingStateLoss</span><span style="color: #666666">();</span>
+            mCurTransaction <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">;</span>
+            mFragmentManager<span style="color: #666666">.</span><span style="color: #7D9029">executePendingTransactions</span><span style="color: #666666">();</span>
+        <span style="color: #666666">}</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">boolean</span> <span style="color: #0000FF">isViewFromObject</span><span style="color: #666666">(</span>View view<span style="color: #666666">,</span> Object object<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #666666">((</span>Fragment<span style="color: #666666">)</span>object<span style="color: #666666">).</span><span style="color: #7D9029">getView</span><span style="color: #666666">()</span> <span style="color: #666666">==</span> view<span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> Parcelable <span style="color: #0000FF">saveState</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        Bundle state <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">;</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>mSavedState<span style="color: #666666">.</span><span style="color: #7D9029">size</span><span style="color: #666666">()</span> <span style="color: #666666">&gt;</span> <span style="color: #666666">0)</span> <span style="color: #666666">{</span>
+            state <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> Bundle<span style="color: #666666">();</span>
+            Fragment<span style="color: #666666">.</span><span style="color: #7D9029">SavedState</span><span style="color: #666666">[]</span> fss <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> Fragment<span style="color: #666666">.</span><span style="color: #7D9029">SavedState</span><span style="color: #666666">[</span>mSavedState<span style="color: #666666">.</span><span style="color: #7D9029">size</span><span style="color: #666666">()];</span>
+            mSavedState<span style="color: #666666">.</span><span style="color: #7D9029">toArray</span><span style="color: #666666">(</span>fss<span style="color: #666666">);</span>
+            state<span style="color: #666666">.</span><span style="color: #7D9029">putParcelableArray</span><span style="color: #666666">(</span><span style="color: #BA2121">&quot;states&quot;</span><span style="color: #666666">,</span> fss<span style="color: #666666">);</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span><span style="color: #B00040">int</span> i<span style="color: #666666">=0;</span> i<span style="color: #666666">&lt;</span>mFragments<span style="color: #666666">.</span><span style="color: #7D9029">size</span><span style="color: #666666">();</span> i<span style="color: #666666">++)</span> <span style="color: #666666">{</span>
+            Fragment f <span style="color: #666666">=</span> mFragments<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>i<span style="color: #666666">);</span>
+            <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>f <span style="color: #666666">!=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>state <span style="color: #666666">==</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                    state <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> Bundle<span style="color: #666666">();</span>
+                <span style="color: #666666">}</span>
+                String key <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;f&quot;</span> <span style="color: #666666">+</span> i<span style="color: #666666">;</span>
+                mFragmentManager<span style="color: #666666">.</span><span style="color: #7D9029">putFragment</span><span style="color: #666666">(</span>state<span style="color: #666666">,</span> key<span style="color: #666666">,</span> f<span style="color: #666666">);</span>
+            <span style="color: #666666">}</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">return</span> state<span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">restoreState</span><span style="color: #666666">(</span>Parcelable state<span style="color: #666666">,</span> ClassLoader loader<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>state <span style="color: #666666">!=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            Bundle bundle <span style="color: #666666">=</span> <span style="color: #666666">(</span>Bundle<span style="color: #666666">)</span>state<span style="color: #666666">;</span>
+            bundle<span style="color: #666666">.</span><span style="color: #7D9029">setClassLoader</span><span style="color: #666666">(</span>loader<span style="color: #666666">);</span>
+            Parcelable<span style="color: #666666">[]</span> fss <span style="color: #666666">=</span> bundle<span style="color: #666666">.</span><span style="color: #7D9029">getParcelableArray</span><span style="color: #666666">(</span><span style="color: #BA2121">&quot;states&quot;</span><span style="color: #666666">);</span>
+            mSavedState<span style="color: #666666">.</span><span style="color: #7D9029">clear</span><span style="color: #666666">();</span>
+            mFragments<span style="color: #666666">.</span><span style="color: #7D9029">clear</span><span style="color: #666666">();</span>
+            <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>fss <span style="color: #666666">!=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                <span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span><span style="color: #B00040">int</span> i<span style="color: #666666">=0;</span> i<span style="color: #666666">&lt;</span>fss<span style="color: #666666">.</span><span style="color: #7D9029">length</span><span style="color: #666666">;</span> i<span style="color: #666666">++)</span> <span style="color: #666666">{</span>
+                    mSavedState<span style="color: #666666">.</span><span style="color: #7D9029">add</span><span style="color: #666666">((</span>Fragment<span style="color: #666666">.</span><span style="color: #7D9029">SavedState</span><span style="color: #666666">)</span>fss<span style="color: #666666">[</span>i<span style="color: #666666">]);</span>
+                <span style="color: #666666">}</span>
+            <span style="color: #666666">}</span>
+            Iterable<span style="color: #666666">&lt;</span>String<span style="color: #666666">&gt;</span> keys <span style="color: #666666">=</span> bundle<span style="color: #666666">.</span><span style="color: #7D9029">keySet</span><span style="color: #666666">();</span>
+            <span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span>String key<span style="color: #666666">:</span> keys<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>key<span style="color: #666666">.</span><span style="color: #7D9029">startsWith</span><span style="color: #666666">(</span><span style="color: #BA2121">&quot;f&quot;</span><span style="color: #666666">))</span> <span style="color: #666666">{</span>
+                    <span style="color: #B00040">int</span> index <span style="color: #666666">=</span> Integer<span style="color: #666666">.</span><span style="color: #7D9029">parseInt</span><span style="color: #666666">(</span>key<span style="color: #666666">.</span><span style="color: #7D9029">substring</span><span style="color: #666666">(1));</span>
+                    Fragment f <span style="color: #666666">=</span> mFragmentManager<span style="color: #666666">.</span><span style="color: #7D9029">getFragment</span><span style="color: #666666">(</span>bundle<span style="color: #666666">,</span> key<span style="color: #666666">);</span>
+                    <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>f <span style="color: #666666">!=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                        <span style="color: #008000; font-weight: bold">while</span> <span style="color: #666666">(</span>mFragments<span style="color: #666666">.</span><span style="color: #7D9029">size</span><span style="color: #666666">()</span> <span style="color: #666666">&lt;=</span> index<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                            mFragments<span style="color: #666666">.</span><span style="color: #7D9029">add</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">);</span>
+                        <span style="color: #666666">}</span>
+                        f<span style="color: #666666">.</span><span style="color: #7D9029">setMenuVisibility</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">);</span>
+                        mFragments<span style="color: #666666">.</span><span style="color: #7D9029">set</span><span style="color: #666666">(</span>index<span style="color: #666666">,</span> f<span style="color: #666666">);</span>
+                    <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #666666">{</span>
+                        Log<span style="color: #666666">.</span><span style="color: #7D9029">w</span><span style="color: #666666">(</span>TAG<span style="color: #666666">,</span> <span style="color: #BA2121">&quot;Bad fragment at key &quot;</span> <span style="color: #666666">+</span> key<span style="color: #666666">);</span>
+                    <span style="color: #666666">}</span>
+                <span style="color: #666666">}</span>
+            <span style="color: #666666">}</span>
+        <span style="color: #666666">}</span>
+    <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre></div>

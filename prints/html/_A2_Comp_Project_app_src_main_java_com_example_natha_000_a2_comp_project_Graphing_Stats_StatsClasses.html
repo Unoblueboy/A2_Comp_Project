@@ -1,0 +1,191 @@
+<p style="font-size:14pt;font-family:sans-serif"><strong>.\A2_Comp_Project\app\src\main\java\com\example\natha_000\a2_comp_project\Graphing_Stats\StatsClasses.java</strong></p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">package</span> <span style="color: #0000FF; font-weight: bold">com.example.natha_000.a2_comp_project.Graphing_Stats</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.util.ArrayList</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.util.List</span><span style="color: #666666">;</span>
+
+<span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic"> * Created by Natha_000 on 05/02/2017.</span>
+<span style="color: #408080; font-style: italic"> */</span>
+
+<span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">StatsClasses</span> <span style="color: #666666">{</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> List<span style="color: #666666">&lt;</span>StatsClasses<span style="color: #666666">&gt;</span> classes <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> ArrayList<span style="color: #666666">&lt;</span>StatsClasses<span style="color: #666666">&gt;();</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">int</span> nextID <span style="color: #666666">=</span> <span style="color: #666666">1;</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">int</span> id<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">float</span> classwidth<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">float</span> lowerbound<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">float</span> upperbound<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">int</span> frequency<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">float</span> freqdensity<span style="color: #666666">;</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">int</span> noOfClasses <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #0000FF">StatsClasses</span><span style="color: #666666">(</span><span style="color: #B00040">float</span> lb<span style="color: #666666">,</span> <span style="color: #B00040">float</span> ub<span style="color: #666666">,</span> <span style="color: #B00040">int</span> freq<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">id</span> <span style="color: #666666">=</span> nextID<span style="color: #666666">;</span>
+        <span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">lowerbound</span> <span style="color: #666666">=</span> lb<span style="color: #666666">;</span>
+        <span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">upperbound</span> <span style="color: #666666">=</span> ub<span style="color: #666666">;</span>
+        <span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">frequency</span> <span style="color: #666666">=</span> freq<span style="color: #666666">;</span>
+        <span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">classwidth</span> <span style="color: #666666">=</span> ub<span style="color: #666666">-</span>lb<span style="color: #666666">;</span>
+        <span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">freqdensity</span> <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #B00040">float</span><span style="color: #666666">)</span>freq<span style="color: #666666">/</span><span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">classwidth</span><span style="color: #666666">;</span>
+        addClass<span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">);</span>
+        nextID<span style="color: #666666">++;</span>
+        noOfClasses<span style="color: #666666">++;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">addClass</span><span style="color: #666666">(</span>StatsClasses class_<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        classes<span style="color: #666666">.</span><span style="color: #7D9029">add</span><span style="color: #666666">(</span>class_<span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">boolean</span> <span style="color: #0000FF">contains</span><span style="color: #666666">(</span><span style="color: #B00040">float</span> bound<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">lowerbound</span> <span style="color: #666666">&lt;</span> bound <span style="color: #666666">&amp;&amp;</span> <span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">upperbound</span> <span style="color: #666666">&gt;</span> bound<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">;</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">boolean</span> <span style="color: #0000FF">contains</span><span style="color: #666666">(</span>StatsClasses other<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">return</span> contains<span style="color: #666666">(</span>other<span style="color: #666666">.</span><span style="color: #7D9029">lowerbound</span><span style="color: #666666">,</span>other<span style="color: #666666">.</span><span style="color: #7D9029">upperbound</span><span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">boolean</span> <span style="color: #0000FF">contains</span><span style="color: #666666">(</span><span style="color: #B00040">float</span> lb<span style="color: #666666">,</span> <span style="color: #B00040">float</span> ub<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">lowerbound</span> <span style="color: #666666">&lt;=</span> lb <span style="color: #666666">&amp;&amp;</span> <span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">upperbound</span> <span style="color: #666666">&gt;=</span> ub<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">;</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">boolean</span> <span style="color: #0000FF">surrounds</span><span style="color: #666666">(</span>StatsClasses other<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">lowerbound</span> <span style="color: #666666">&gt;=</span> other<span style="color: #666666">.</span><span style="color: #7D9029">lowerbound</span> <span style="color: #666666">&amp;&amp;</span> <span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">upperbound</span> <span style="color: #666666">&lt;=</span> other<span style="color: #666666">.</span><span style="color: #7D9029">upperbound</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">;</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">boolean</span> <span style="color: #0000FF">surrounds</span><span style="color: #666666">(</span><span style="color: #B00040">float</span> lb<span style="color: #666666">,</span> <span style="color: #B00040">float</span> ub<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">lowerbound</span> <span style="color: #666666">&gt;=</span> lb <span style="color: #666666">&amp;&amp;</span> <span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">upperbound</span> <span style="color: #666666">&lt;=</span> ub<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">;</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">boolean</span> <span style="color: #0000FF">setLB</span><span style="color: #666666">(</span><span style="color: #B00040">float</span> lb<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>validBound<span style="color: #666666">(</span>lb<span style="color: #666666">)</span> <span style="color: #666666">&amp;&amp;</span> validBounds<span style="color: #666666">(</span>lb<span style="color: #666666">,</span><span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">upperbound</span><span style="color: #666666">))</span> <span style="color: #666666">{</span>
+            <span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">lowerbound</span> <span style="color: #666666">=</span> lb<span style="color: #666666">;</span>
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">;</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">boolean</span> <span style="color: #0000FF">setUB</span><span style="color: #666666">(</span><span style="color: #B00040">float</span> ub<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>validBound<span style="color: #666666">(</span>ub<span style="color: #666666">)</span> <span style="color: #666666">&amp;&amp;</span> validBounds<span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">lowerbound</span><span style="color: #666666">,</span>ub<span style="color: #666666">))</span> <span style="color: #666666">{</span>
+            <span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">upperbound</span> <span style="color: #666666">=</span> ub<span style="color: #666666">;</span>
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">;</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">boolean</span> <span style="color: #0000FF">validBound</span><span style="color: #666666">(</span><span style="color: #B00040">float</span> bound<span style="color: #666666">){</span>
+        <span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span>StatsClasses class_ <span style="color: #666666">:</span> classes<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>class_<span style="color: #666666">.</span><span style="color: #7D9029">contains</span><span style="color: #666666">(</span>bound<span style="color: #666666">))</span> <span style="color: #666666">{</span>
+                <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">;</span>
+            <span style="color: #666666">}</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">boolean</span> <span style="color: #0000FF">validBounds</span><span style="color: #666666">(</span><span style="color: #B00040">float</span> lb<span style="color: #666666">,</span> <span style="color: #B00040">float</span> ub<span style="color: #666666">){</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>ub<span style="color: #666666">-</span>lb<span style="color: #666666">&lt;=0){</span>
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">;</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span>StatsClasses class_ <span style="color: #666666">:</span> classes<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>class_<span style="color: #666666">.</span><span style="color: #7D9029">contains</span><span style="color: #666666">(</span>lb<span style="color: #666666">,</span>ub<span style="color: #666666">)</span> <span style="color: #666666">||</span> class_<span style="color: #666666">.</span><span style="color: #7D9029">surrounds</span><span style="color: #666666">(</span>lb<span style="color: #666666">,</span>ub<span style="color: #666666">)</span> <span style="color: #666666">||</span> <span style="color: #666666">!</span>validBound<span style="color: #666666">(</span>lb<span style="color: #666666">)</span> <span style="color: #666666">||</span> <span style="color: #666666">!</span>validBound<span style="color: #666666">(</span>ub<span style="color: #666666">))</span> <span style="color: #666666">{</span>
+                <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">;</span>
+            <span style="color: #666666">}</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">boolean</span> <span style="color: #0000FF">equals</span><span style="color: #666666">(</span>StatsClasses other<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">id</span> <span style="color: #666666">==</span> other<span style="color: #666666">.</span><span style="color: #7D9029">id</span><span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">int</span> <span style="color: #0000FF">findClassIndexById</span><span style="color: #666666">(</span><span style="color: #B00040">int</span> id<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">boolean</span> found <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">;</span>
+        <span style="color: #B00040">boolean</span> failed <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">;</span>
+        <span style="color: #B00040">int</span> l <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+        <span style="color: #B00040">int</span> r <span style="color: #666666">=</span> classes<span style="color: #666666">.</span><span style="color: #7D9029">size</span><span style="color: #666666">()-1;</span>
+        <span style="color: #008000; font-weight: bold">while</span> <span style="color: #666666">(!</span>found <span style="color: #666666">&amp;&amp;</span> <span style="color: #666666">!</span>failed<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            <span style="color: #B00040">int</span> m <span style="color: #666666">=</span> <span style="color: #666666">(</span>l<span style="color: #666666">+</span>r<span style="color: #666666">)/2;</span>
+            <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>l<span style="color: #666666">&gt;</span>r<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                failed <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">;</span>
+            <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>classes<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>m<span style="color: #666666">).</span><span style="color: #7D9029">id</span><span style="color: #666666">&lt;</span>id<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                l<span style="color: #666666">=</span>m<span style="color: #666666">+1;</span>
+            <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>classes<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>m<span style="color: #666666">).</span><span style="color: #7D9029">id</span><span style="color: #666666">&gt;</span>id<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                r<span style="color: #666666">=</span>m<span style="color: #666666">-1;</span>
+            <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>classes<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>m<span style="color: #666666">).</span><span style="color: #7D9029">id</span><span style="color: #666666">==</span>id<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                <span style="color: #008000; font-weight: bold">return</span> m<span style="color: #666666">;</span>
+            <span style="color: #666666">}</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #666666">-1;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> StatsClasses <span style="color: #0000FF">getClassById</span><span style="color: #666666">(</span><span style="color: #B00040">int</span> id<span style="color: #666666">){</span>
+        <span style="color: #B00040">int</span> classIndex <span style="color: #666666">=</span> findClassIndexById<span style="color: #666666">(</span>id<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>classIndex <span style="color: #666666">==</span> <span style="color: #666666">-1)</span> <span style="color: #666666">{</span>
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">;</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">return</span> classes<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>classIndex<span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">int</span> <span style="color: #0000FF">findClassIndexByLb</span><span style="color: #666666">(</span><span style="color: #B00040">float</span> lb<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">boolean</span> found <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">;</span>
+        <span style="color: #B00040">boolean</span> failed <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">;</span>
+        <span style="color: #B00040">int</span> l <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+        <span style="color: #B00040">int</span> r <span style="color: #666666">=</span> classes<span style="color: #666666">.</span><span style="color: #7D9029">size</span><span style="color: #666666">()-1;</span>
+        <span style="color: #008000; font-weight: bold">while</span> <span style="color: #666666">(!</span>found <span style="color: #666666">&amp;&amp;</span> <span style="color: #666666">!</span>failed<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            <span style="color: #B00040">int</span> m <span style="color: #666666">=</span> <span style="color: #666666">(</span>l<span style="color: #666666">+</span>r<span style="color: #666666">)/2;</span>
+            <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>l<span style="color: #666666">&gt;</span>r<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                failed <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">;</span>
+            <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>classes<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>m<span style="color: #666666">).</span><span style="color: #7D9029">lowerbound</span><span style="color: #666666">&lt;</span>lb<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                l<span style="color: #666666">=</span>m<span style="color: #666666">+1;</span>
+            <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>classes<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>m<span style="color: #666666">).</span><span style="color: #7D9029">lowerbound</span><span style="color: #666666">&gt;</span>lb<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                r<span style="color: #666666">=</span>m<span style="color: #666666">-1;</span>
+            <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>classes<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>m<span style="color: #666666">).</span><span style="color: #7D9029">lowerbound</span><span style="color: #666666">==</span>lb<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                <span style="color: #008000; font-weight: bold">return</span> m<span style="color: #666666">;</span>
+            <span style="color: #666666">}</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #666666">-1;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> StatsClasses <span style="color: #0000FF">getClassByLb</span><span style="color: #666666">(</span><span style="color: #B00040">float</span> lb<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">int</span> classIndex <span style="color: #666666">=</span> findClassIndexByLb<span style="color: #666666">(</span>lb<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>classIndex <span style="color: #666666">==</span> <span style="color: #666666">-1)</span> <span style="color: #666666">{</span>
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">;</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">return</span> classes<span style="color: #666666">.</span><span style="color: #7D9029">get</span><span style="color: #666666">(</span>classIndex<span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">reset</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        classes <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> ArrayList<span style="color: #666666">&lt;</span>StatsClasses<span style="color: #666666">&gt;();</span>
+        nextID <span style="color: #666666">=</span> <span style="color: #666666">1;</span>
+        noOfClasses <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">boolean</span> <span style="color: #0000FF">delete</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">return</span> deleteClass<span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">id</span><span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #B00040">boolean</span> <span style="color: #0000FF">deleteClass</span><span style="color: #666666">(</span><span style="color: #B00040">int</span> id<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #B00040">int</span> classIndex <span style="color: #666666">=</span> findClassIndexById<span style="color: #666666">(</span>id<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>classIndex <span style="color: #666666">!=</span> <span style="color: #666666">-1)</span> <span style="color: #666666">{</span>
+            classes<span style="color: #666666">.</span><span style="color: #7D9029">remove</span><span style="color: #666666">(</span>classIndex<span style="color: #666666">);</span>
+            noOfClasses<span style="color: #666666">--;</span>
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">;</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> String <span style="color: #0000FF">toString</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        String sentence <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;(&quot;</span><span style="color: #666666">+</span>Integer<span style="color: #666666">.</span><span style="color: #7D9029">toString</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">id</span><span style="color: #666666">)+</span><span style="color: #BA2121">&quot;,&quot;</span><span style="color: #666666">+</span>Float<span style="color: #666666">.</span><span style="color: #7D9029">toString</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">lowerbound</span><span style="color: #666666">)+</span><span style="color: #BA2121">&quot;,&quot;</span><span style="color: #666666">+</span>Float<span style="color: #666666">.</span><span style="color: #7D9029">toString</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">upperbound</span><span style="color: #666666">)+</span><span style="color: #BA2121">&quot;,&quot;</span><span style="color: #666666">+</span>Integer<span style="color: #666666">.</span><span style="color: #7D9029">toString</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #7D9029">frequency</span><span style="color: #666666">)+</span><span style="color: #BA2121">&quot;)&quot;</span><span style="color: #666666">;</span>
+        <span style="color: #008000; font-weight: bold">return</span> sentence<span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre></div>

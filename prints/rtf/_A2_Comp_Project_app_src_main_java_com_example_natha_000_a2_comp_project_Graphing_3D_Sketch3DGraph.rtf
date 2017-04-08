@@ -1,0 +1,133 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green128\blue0;\red186\green33\blue33;\red0\green0\blue255;\red188\green122\blue0;\red25\green23\blue124;\red64\green128\blue128;\red176\green0\blue64;\red187\green187\blue187;\red0\green0\blue128;\red160\green160\blue0;\red170\green34\blue255;\red136\green136\blue136;\red136\green0\blue0;\red102\green102\blue102;\red187\green102\blue136;\red0\green68\blue221;\red210\green65\blue58;\red255\green0\blue0;\red160\green0\blue0;\red187\green102\blue34;\red0\green160\blue0;\red125\green144\blue41;\red128\green0\blue128;\red153\green153\blue153;}\f0 {\cf14 .}{\chbrdr\chcfpat18 \\}A2_Comp_Project{\chbrdr\chcfpat18 \\}app{\chbrdr\chcfpat18 \\}src{\chbrdr\chcfpat18 \\}main{\chbrdr\chcfpat18 \\}java{\chbrdr\chcfpat18 \\}com{\chbrdr\chcfpat18 \\}example{\chbrdr\chcfpat18 \\}natha_000{\chbrdr\chcfpat18 \\}a2_comp_project{\chbrdr\chcfpat18 \\}Graphing_3D{\chbrdr\chcfpat18 \\}Sketch3DGraph{\cf14 .}{\cf22 java}\par
+{\cf1\b package} {\cf3\b com.example.natha_000.a2_comp_project.Graphing_3D}{\cf14 ;}\par
+\par
+{\cf6\i /**\par
+ * Created by Natha_000 on 22/12/2016.\par
+ */}\par
+{\cf1\b import} {\cf3\b android.util.Log}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b java.io.IOException}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b processing.core.PApplet}{\cf14 ;}\par
+\par
+{\cf1\b public} {\cf1\b class} {\cf3\b Sketch3DGraph} {\cf1\b extends} PApplet {\cf14 \{}\par
+    {\cf6\i // This variable is used to store the parent activity of this fragment\par
+}    Main3DActivity parent{\cf14 ;}\par
+\par
+    {\cf6\i // This variable stores the text contain the desired function\par
+}    String funcText{\cf14 ;}\par
+\par
+    {\cf6\i // This is an array that stores all of the z values for all of the coordinates\par
+}    {\cf1\b private} {\cf7 float}{\cf14 [}{\cf14 ]} floorVertices{\cf14 ;}\par
+\par
+    {\cf6\i // This holds the colour of all of the vertices\par
+}    {\cf1\b private} {\cf7 float}{\cf14 [}{\cf14 ]} floorColors {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}{\cf14 4}{\cf14 ]}{\cf14 ;}\par
+\par
+    {\cf6\i // Stores the rotation of the user within the 3D space\par
+}    {\cf6\i // [rotation in x axis, rotation in y axis]\par
+}    {\cf7 float}{\cf14 [}{\cf14 ]} rotation {\cf14 =} {\cf1\b new} {\cf7 float}{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 ;}\par
+\par
+    {\cf6\i // A constant used to change the sensitivity in rotation\par
+}    {\cf7 float} DT {\cf14 =} {\cf14 0.001f}{\cf14 ;}\par
+\par
+    {\cf6\i // Values for the previous x and y position of the finger on the touch screen respectively\par
+}    {\cf7 float} pMouseX {\cf14 =} {\cf14 0}{\cf14 ;}\par
+    {\cf7 float} pMouseY {\cf14 =} {\cf14 0}{\cf14 ;}\par
+\par
+    {\cf6\i // contains the distance the finger has traveled while on the touch screen squared\par
+}    {\cf6\i // It is reset whenever the user raises their finger\par
+}    {\cf7 float} absDistSquared {\cf14 =} {\cf14 0}{\cf14 ;}\par
+\par
+    {\cf6\i /**\par
+     * This sets up the general settings for the running of the app.\par
+     */}\par
+    {\cf1\b public} {\cf7 void} {\cf3 settings}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        size{\cf14 (}displayWidth{\cf14 ,} displayHeight{\cf14 ,} P3D{\cf14 )}{\cf14 ;}\par
+        parent {\cf14 =} {\cf14 (}Main3DActivity{\cf14 )} getActivity{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: Sketch3DGraph"}{\cf14 ,}{\cf2 "settings"}{\cf14 )}{\cf14 ;}\par
+        funcText {\cf14 =} parent{\cf14 .}{\cf22 functext}{\cf14 ;}\par
+        {\cf1\b try} {\cf14 \{}\par
+            WorldLayoutData{\cf14 .}{\cf22 setParameters}{\cf14 (}{\cf14 -}{\cf14 10}f{\cf14 ,}{\cf14 10}f{\cf14 ,}{\cf14 -}{\cf14 10}f{\cf14 ,}{\cf14 10}f{\cf14 ,}{\cf14 51}{\cf14 ,}{\cf14 51}{\cf14 ,}{\cf14 100}f{\cf14 )}{\cf14 ;}\par
+            WorldLayoutData{\cf14 .}{\cf22 setfunction}{\cf14 (}funcText{\cf14 )}{\cf14 ;}\par
+            WorldLayoutData{\cf14 .}{\cf22 generate}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}} {\cf1\b catch} {\cf14 (}IOException e{\cf14 )} {\cf14 \{}{\cf14 \}}\par
+        floorVertices {\cf14 =} WorldLayoutData{\cf14 .}{\cf22 SURFACE_COORDS}{\cf14 ;}\par
+        floorColors{\cf14 [}{\cf14 0}{\cf14 ]} {\cf14 =} WorldLayoutData{\cf14 .}{\cf22 SURFACE_COLORS}{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 ;}\par
+        floorColors{\cf14 [}{\cf14 1}{\cf14 ]} {\cf14 =} WorldLayoutData{\cf14 .}{\cf22 SURFACE_COLORS}{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 ;}\par
+        floorColors{\cf14 [}{\cf14 2}{\cf14 ]} {\cf14 =} WorldLayoutData{\cf14 .}{\cf22 SURFACE_COLORS}{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 ;}\par
+        floorColors{\cf14 [}{\cf14 3}{\cf14 ]} {\cf14 =} WorldLayoutData{\cf14 .}{\cf22 SURFACE_COLORS}{\cf14 [}{\cf14 3}{\cf14 ]}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * This function is called repeatedly during run time and allows for drawing on the canvas.\par
+     */}\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 draw}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        sketchGraph{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: Sketch3DGraph"}{\cf14 ,}{\cf2 "draw"}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * This function is responsible for the main drawing of the 3D graph.\par
+     * It first finds the current rotation, and then rotates the projection accordingly\par
+     * And then plots the graph within this rotated coordinate system.\par
+     */}\par
+    {\cf1\b public} {\cf7 void} {\cf3 sketchGraph}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        {\cf1\b if} {\cf14 (}WorldLayoutData{\cf14 .}{\cf22 isFlying}{\cf14 (}{\cf14 )}{\cf14 )} {\cf14 \{}\par
+            WorldLayoutData{\cf14 .}{\cf22 fly}{\cf14 (}rotation{\cf14 )}{\cf14 ;}\par
+            {\cf1\b try} {\cf14 \{}\par
+                WorldLayoutData{\cf14 .}{\cf22 generate}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+                floorVertices {\cf14 =} WorldLayoutData{\cf14 .}{\cf22 SURFACE_COORDS}{\cf14 ;}\par
+            {\cf14 \}} {\cf1\b catch} {\cf14 (}IOException e{\cf14 )} {\cf14 \{}\par
+                Log{\cf14 .}{\cf22 e}{\cf14 (}{\cf2 "Project: LOL"}{\cf14 ,} {\cf2 "An error has occurred trying to generate new co-ordinates"}{\cf14 )}{\cf14 ;}\par
+            {\cf14 \}}\par
+        {\cf14 \}}\par
+        noStroke{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: Sketch3DGraph"}{\cf14 ,}{\cf2 "sketchGraph"}{\cf14 )}{\cf14 ;}\par
+        translate{\cf14 (}width{\cf14 /}{\cf14 2}{\cf14 ,} height{\cf14 )}{\cf14 ;}\par
+{\cf6\i //        float rota = map(mouseY,0,displayHeight,-PI,PI);\par
+}        rotateX{\cf14 (}rotation{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 )}{\cf14 ;}\par
+        rotateY{\cf14 (}rotation{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 )}{\cf14 ;}\par
+        background{\cf14 (}{\cf14 0}{\cf14 )}{\cf14 ;}\par
+        noFill{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        fill{\cf14 (}floorColors{\cf14 [}{\cf14 0}{\cf14 ]}{\cf14 *}{\cf14 255}{\cf14 ,}floorColors{\cf14 [}{\cf14 1}{\cf14 ]}{\cf14 *}{\cf14 255}{\cf14 ,}floorColors{\cf14 [}{\cf14 2}{\cf14 ]}{\cf14 *}{\cf14 255}{\cf14 ,}floorColors{\cf14 [}{\cf14 3}{\cf14 ]}{\cf14 *}{\cf14 255}{\cf14 )}{\cf14 ;}\par
+        lights{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf7 float} off {\cf14 =} map{\cf14 (}mouseX{\cf14 ,}{\cf14 0}{\cf14 ,}displayWidth{\cf14 ,}{\cf14 -}{\cf14 10}{\cf14 ,}{\cf14 10}{\cf14 )}{\cf14 ;}\par
+        beginShape{\cf14 (}TRIANGLES{\cf14 )}{\cf14 ;}\par
+        {\cf1\b for} {\cf14 (}{\cf7 int} i{\cf14 =}{\cf14 0}{\cf14 ;} i{\cf14 <}floorVertices{\cf14 .}{\cf22 length}{\cf14 /}{\cf14 3}{\cf14 ;} i{\cf14 +}{\cf14 +}{\cf14 )} {\cf14 \{}\par
+            vertex{\cf14 (}floorVertices{\cf14 [}i{\cf14 *}{\cf14 3}{\cf14 ]}{\cf14 ,} {\cf14 (}{\cf14 -}floorVertices{\cf14 [}i{\cf14 *}{\cf14 3} {\cf14 +} {\cf14 1}{\cf14 ]}{\cf14 +} off{\cf14 )}{\cf14 ,} floorVertices{\cf14 [}i{\cf14 *}{\cf14 3} {\cf14 +} {\cf14 2}{\cf14 ]}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+        endShape{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        fill{\cf14 (}{\cf14 255}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * This function is responsible for resetting the varirable pMouseX and pMouseY to 0\par
+     * It is also responsible for determining whether the user should start moving through the graph\par
+     */}\par
+    {\cf1\b public} {\cf7 void} {\cf3 mouseReleased}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        pMouseX {\cf14 =} {\cf14 0}{\cf14 ;}\par
+        pMouseY {\cf14 =} {\cf14 0}{\cf14 ;}\par
+        Log{\cf14 .}{\cf22 i}{\cf14 (}{\cf2 "Project: mouseReleased"}{\cf14 ,}{\cf2 "Screen has been released and absDist is "} {\cf14 +} Float{\cf14 .}{\cf22 toString}{\cf14 (}absDistSquared{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b if} {\cf14 (}absDistSquared {\cf14 <}{\cf14 =}{\cf14 5}{\cf14 )} {\cf14 \{}\par
+            WorldLayoutData{\cf14 .}{\cf22 toggleFlying}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+        absDistSquared {\cf14 =} {\cf14 0}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * This function is responsible for changing the rotation depending on how the user drags their finger around the screen.\par
+     */}\par
+    {\cf1\b public} {\cf7 void} {\cf3 mouseDragged}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        {\cf1\b if} {\cf14 (}pMouseX {\cf14 !}{\cf14 =} {\cf14 0} {\cf14 |}{\cf14 |} pMouseY {\cf14 !}{\cf14 =} {\cf14 0}{\cf14 )} {\cf14 \{}\par
+            {\cf7 float} deltaX {\cf14 =} mouseX {\cf14 -} pmouseX{\cf14 ;}\par
+            {\cf7 float} deltaY {\cf14 =} mouseY {\cf14 -} pmouseY{\cf14 ;}\par
+            rotation{\cf14 [}{\cf14 1}{\cf14 ]} {\cf14 -}{\cf14 =} deltaX {\cf14 *} DT{\cf14 ;}\par
+            rotation{\cf14 [}{\cf14 0}{\cf14 ]} {\cf14 +}{\cf14 =} deltaY {\cf14 *} DT{\cf14 ;}\par
+            absDistSquared {\cf14 +}{\cf14 =} deltaX {\cf14 *} deltaX {\cf14 +} deltaY {\cf14 *} deltaY{\cf14 ;}\par
+        {\cf14 \}}\par
+        pMouseX {\cf14 =} mouseX{\cf14 ;}\par
+        pMouseY {\cf14 =} mouseY{\cf14 ;}\par
+    {\cf14 \}}\par
+{\cf14 \}}\par
+}

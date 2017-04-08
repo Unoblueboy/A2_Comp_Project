@@ -1,0 +1,183 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green128\blue0;\red186\green33\blue33;\red0\green0\blue255;\red188\green122\blue0;\red25\green23\blue124;\red64\green128\blue128;\red176\green0\blue64;\red187\green187\blue187;\red0\green0\blue128;\red160\green160\blue0;\red170\green34\blue255;\red136\green136\blue136;\red136\green0\blue0;\red102\green102\blue102;\red187\green102\blue136;\red0\green68\blue221;\red210\green65\blue58;\red255\green0\blue0;\red160\green0\blue0;\red187\green102\blue34;\red0\green160\blue0;\red125\green144\blue41;\red128\green0\blue128;\red153\green153\blue153;}\f0 {\cf14 .}{\chbrdr\chcfpat18 \\}A2_Comp_Project{\chbrdr\chcfpat18 \\}app{\chbrdr\chcfpat18 \\}src{\chbrdr\chcfpat18 \\}main{\chbrdr\chcfpat18 \\}java{\chbrdr\chcfpat18 \\}com{\chbrdr\chcfpat18 \\}example{\chbrdr\chcfpat18 \\}natha_000{\chbrdr\chcfpat18 \\}a2_comp_project{\chbrdr\chcfpat18 \\}Graphing_Stats{\chbrdr\chcfpat18 \\}NewFragmentPagerAdapter{\cf14 .}{\cf22 java}\par
+{\cf1\b package} {\cf3\b com.example.natha_000.a2_comp_project.Graphing_Stats}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b android.app.Fragment}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.app.FragmentManager}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.app.FragmentTransaction}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.os.Bundle}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.os.Parcelable}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.support.v4.view.PagerAdapter}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.util.Log}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.view.View}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b android.view.ViewGroup}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b java.util.ArrayList}{\cf14 ;}\par
+\par
+\par
+{\cf6\i /**\par
+ * Created by Natha_000 on 11/02/2017.\par
+ */}\par
+\par
+{\cf1\b public} {\cf1\b abstract} {\cf1\b class} {\cf3\b NewFragmentPagerAdapter} {\cf1\b extends} PagerAdapter {\cf14 \{}\par
+    {\cf1\b private} {\cf1\b static} {\cf1\b final} String TAG {\cf14 =} {\cf2 "NewFragmentPagerAdapter"}{\cf14 ;}\par
+    {\cf1\b private} {\cf1\b static} {\cf1\b final} {\cf7 boolean} DEBUG {\cf14 =} {\cf1\b false}{\cf14 ;}\par
+\par
+    {\cf1\b private} {\cf1\b final} FragmentManager mFragmentManager{\cf14 ;}\par
+    {\cf1\b private} FragmentTransaction mCurTransaction {\cf14 =} {\cf1\b null}{\cf14 ;}\par
+\par
+    {\cf1\b private} ArrayList{\cf14 <}Fragment{\cf14 .}{\cf22 SavedState}{\cf14 >} mSavedState {\cf14 =} {\cf1\b new} ArrayList{\cf14 <}Fragment{\cf14 .}{\cf22 SavedState}{\cf14 >}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf1\b private} ArrayList{\cf14 <}Fragment{\cf14 >} mFragments {\cf14 =} {\cf1\b new} ArrayList{\cf14 <}Fragment{\cf14 >}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf1\b private} Fragment mCurrentPrimaryItem {\cf14 =} {\cf1\b null}{\cf14 ;}\par
+\par
+    {\cf1\b public} {\cf3 NewFragmentPagerAdapter}{\cf14 (}FragmentManager fm{\cf14 )} {\cf14 \{}\par
+        mFragmentManager {\cf14 =} fm{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf6\i /**\par
+     * Return the Fragment associated with a specified position.\par
+     */}\par
+    {\cf1\b public} {\cf1\b abstract} Fragment {\cf3 getItem}{\cf14 (}{\cf7 int} position{\cf14 )}{\cf14 ;}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 startUpdate}{\cf14 (}ViewGroup container{\cf14 )} {\cf14 \{}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} Object {\cf3 instantiateItem}{\cf14 (}ViewGroup container{\cf14 ,} {\cf7 int} position{\cf14 )} {\cf14 \{}\par
+        {\cf6\i // If we already have this item instantiated, there is nothing\par
+}        {\cf6\i // to do.  This can happen when we are restoring the entire pager\par
+}        {\cf6\i // from its saved state, where the fragment manager has already\par
+}        {\cf6\i // taken care of restoring the fragments we previously had instantiated.\par
+}        {\cf1\b if} {\cf14 (}mFragments{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )} {\cf14 >} position{\cf14 )} {\cf14 \{}\par
+            Fragment f {\cf14 =} mFragments{\cf14 .}{\cf22 get}{\cf14 (}position{\cf14 )}{\cf14 ;}\par
+            {\cf1\b if} {\cf14 (}f {\cf14 !}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+                {\cf1\b return} f{\cf14 ;}\par
+            {\cf14 \}}\par
+        {\cf14 \}}\par
+\par
+        {\cf1\b if} {\cf14 (}mCurTransaction {\cf14 =}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+            mCurTransaction {\cf14 =} mFragmentManager{\cf14 .}{\cf22 beginTransaction}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+\par
+        Fragment fragment {\cf14 =} getItem{\cf14 (}position{\cf14 )}{\cf14 ;}\par
+        {\cf1\b if} {\cf14 (}DEBUG{\cf14 )} Log{\cf14 .}{\cf22 v}{\cf14 (}TAG{\cf14 ,} {\cf2 "Adding item #"} {\cf14 +} position {\cf14 +} {\cf2 ": f="} {\cf14 +} fragment{\cf14 )}{\cf14 ;}\par
+        {\cf1\b if} {\cf14 (}mSavedState{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )} {\cf14 >} position{\cf14 )} {\cf14 \{}\par
+            Fragment{\cf14 .}{\cf22 SavedState} fss {\cf14 =} mSavedState{\cf14 .}{\cf22 get}{\cf14 (}position{\cf14 )}{\cf14 ;}\par
+            {\cf1\b if} {\cf14 (}fss {\cf14 !}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+                fragment{\cf14 .}{\cf22 setInitialSavedState}{\cf14 (}fss{\cf14 )}{\cf14 ;}\par
+            {\cf14 \}}\par
+        {\cf14 \}}\par
+        {\cf1\b while} {\cf14 (}mFragments{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )} {\cf14 <}{\cf14 =} position{\cf14 )} {\cf14 \{}\par
+            mFragments{\cf14 .}{\cf22 add}{\cf14 (}{\cf1\b null}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+        fragment{\cf14 .}{\cf22 setMenuVisibility}{\cf14 (}{\cf1\b false}{\cf14 )}{\cf14 ;}\par
+        fragment{\cf14 .}{\cf22 setUserVisibleHint}{\cf14 (}{\cf1\b false}{\cf14 )}{\cf14 ;}\par
+        mFragments{\cf14 .}{\cf22 set}{\cf14 (}position{\cf14 ,} fragment{\cf14 )}{\cf14 ;}\par
+        mCurTransaction{\cf14 .}{\cf22 add}{\cf14 (}container{\cf14 .}{\cf22 getId}{\cf14 (}{\cf14 )}{\cf14 ,} fragment{\cf14 )}{\cf14 ;}\par
+\par
+        {\cf1\b return} fragment{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 destroyItem}{\cf14 (}ViewGroup container{\cf14 ,} {\cf7 int} position{\cf14 ,} Object object{\cf14 )} {\cf14 \{}\par
+        Fragment fragment {\cf14 =} {\cf14 (}Fragment{\cf14 )}object{\cf14 ;}\par
+\par
+        {\cf1\b if} {\cf14 (}mCurTransaction {\cf14 =}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+            mCurTransaction {\cf14 =} mFragmentManager{\cf14 .}{\cf22 beginTransaction}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b if} {\cf14 (}DEBUG{\cf14 )} Log{\cf14 .}{\cf22 v}{\cf14 (}TAG{\cf14 ,} {\cf2 "Removing item #"} {\cf14 +} position {\cf14 +} {\cf2 ": f="} {\cf14 +} object\par
+                {\cf14 +} {\cf2 " v="} {\cf14 +} {\cf14 (}{\cf14 (}Fragment{\cf14 )}object{\cf14 )}{\cf14 .}{\cf22 getView}{\cf14 (}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        {\cf1\b while} {\cf14 (}mSavedState{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )} {\cf14 <}{\cf14 =} position{\cf14 )} {\cf14 \{}\par
+            mSavedState{\cf14 .}{\cf22 add}{\cf14 (}{\cf1\b null}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+        mSavedState{\cf14 .}{\cf22 set}{\cf14 (}position{\cf14 ,} mFragmentManager{\cf14 .}{\cf22 saveFragmentInstanceState}{\cf14 (}fragment{\cf14 )}{\cf14 )}{\cf14 ;}\par
+        mFragments{\cf14 .}{\cf22 set}{\cf14 (}position{\cf14 ,} {\cf1\b null}{\cf14 )}{\cf14 ;}\par
+\par
+        mCurTransaction{\cf14 .}{\cf22 remove}{\cf14 (}fragment{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 setPrimaryItem}{\cf14 (}ViewGroup container{\cf14 ,} {\cf7 int} position{\cf14 ,} Object object{\cf14 )} {\cf14 \{}\par
+        Fragment fragment {\cf14 =} {\cf14 (}Fragment{\cf14 )}object{\cf14 ;}\par
+        {\cf1\b if} {\cf14 (}fragment {\cf14 !}{\cf14 =} mCurrentPrimaryItem{\cf14 )} {\cf14 \{}\par
+            {\cf1\b if} {\cf14 (}mCurrentPrimaryItem {\cf14 !}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+                mCurrentPrimaryItem{\cf14 .}{\cf22 setMenuVisibility}{\cf14 (}{\cf1\b false}{\cf14 )}{\cf14 ;}\par
+                mCurrentPrimaryItem{\cf14 .}{\cf22 setUserVisibleHint}{\cf14 (}{\cf1\b false}{\cf14 )}{\cf14 ;}\par
+            {\cf14 \}}\par
+            {\cf1\b if} {\cf14 (}fragment {\cf14 !}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+                fragment{\cf14 .}{\cf22 setMenuVisibility}{\cf14 (}{\cf1\b true}{\cf14 )}{\cf14 ;}\par
+                fragment{\cf14 .}{\cf22 setUserVisibleHint}{\cf14 (}{\cf1\b true}{\cf14 )}{\cf14 ;}\par
+            {\cf14 \}}\par
+            mCurrentPrimaryItem {\cf14 =} fragment{\cf14 ;}\par
+        {\cf14 \}}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 finishUpdate}{\cf14 (}ViewGroup container{\cf14 )} {\cf14 \{}\par
+        {\cf1\b if} {\cf14 (}mCurTransaction {\cf14 !}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+            mCurTransaction{\cf14 .}{\cf22 commitAllowingStateLoss}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+            mCurTransaction {\cf14 =} {\cf1\b null}{\cf14 ;}\par
+            mFragmentManager{\cf14 .}{\cf22 executePendingTransactions}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 boolean} {\cf3 isViewFromObject}{\cf14 (}View view{\cf14 ,} Object object{\cf14 )} {\cf14 \{}\par
+        {\cf1\b return} {\cf14 (}{\cf14 (}Fragment{\cf14 )}object{\cf14 )}{\cf14 .}{\cf22 getView}{\cf14 (}{\cf14 )} {\cf14 =}{\cf14 =} view{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} Parcelable {\cf3 saveState}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        Bundle state {\cf14 =} {\cf1\b null}{\cf14 ;}\par
+        {\cf1\b if} {\cf14 (}mSavedState{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )} {\cf14 >} {\cf14 0}{\cf14 )} {\cf14 \{}\par
+            state {\cf14 =} {\cf1\b new} Bundle{\cf14 (}{\cf14 )}{\cf14 ;}\par
+            Fragment{\cf14 .}{\cf22 SavedState}{\cf14 [}{\cf14 ]} fss {\cf14 =} {\cf1\b new} Fragment{\cf14 .}{\cf22 SavedState}{\cf14 [}mSavedState{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )}{\cf14 ]}{\cf14 ;}\par
+            mSavedState{\cf14 .}{\cf22 toArray}{\cf14 (}fss{\cf14 )}{\cf14 ;}\par
+            state{\cf14 .}{\cf22 putParcelableArray}{\cf14 (}{\cf2 "states"}{\cf14 ,} fss{\cf14 )}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b for} {\cf14 (}{\cf7 int} i{\cf14 =}{\cf14 0}{\cf14 ;} i{\cf14 <}mFragments{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )}{\cf14 ;} i{\cf14 +}{\cf14 +}{\cf14 )} {\cf14 \{}\par
+            Fragment f {\cf14 =} mFragments{\cf14 .}{\cf22 get}{\cf14 (}i{\cf14 )}{\cf14 ;}\par
+            {\cf1\b if} {\cf14 (}f {\cf14 !}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+                {\cf1\b if} {\cf14 (}state {\cf14 =}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+                    state {\cf14 =} {\cf1\b new} Bundle{\cf14 (}{\cf14 )}{\cf14 ;}\par
+                {\cf14 \}}\par
+                String key {\cf14 =} {\cf2 "f"} {\cf14 +} i{\cf14 ;}\par
+                mFragmentManager{\cf14 .}{\cf22 putFragment}{\cf14 (}state{\cf14 ,} key{\cf14 ,} f{\cf14 )}{\cf14 ;}\par
+            {\cf14 \}}\par
+        {\cf14 \}}\par
+        {\cf1\b return} state{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf11 @Override}\par
+    {\cf1\b public} {\cf7 void} {\cf3 restoreState}{\cf14 (}Parcelable state{\cf14 ,} ClassLoader loader{\cf14 )} {\cf14 \{}\par
+        {\cf1\b if} {\cf14 (}state {\cf14 !}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+            Bundle bundle {\cf14 =} {\cf14 (}Bundle{\cf14 )}state{\cf14 ;}\par
+            bundle{\cf14 .}{\cf22 setClassLoader}{\cf14 (}loader{\cf14 )}{\cf14 ;}\par
+            Parcelable{\cf14 [}{\cf14 ]} fss {\cf14 =} bundle{\cf14 .}{\cf22 getParcelableArray}{\cf14 (}{\cf2 "states"}{\cf14 )}{\cf14 ;}\par
+            mSavedState{\cf14 .}{\cf22 clear}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+            mFragments{\cf14 .}{\cf22 clear}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+            {\cf1\b if} {\cf14 (}fss {\cf14 !}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+                {\cf1\b for} {\cf14 (}{\cf7 int} i{\cf14 =}{\cf14 0}{\cf14 ;} i{\cf14 <}fss{\cf14 .}{\cf22 length}{\cf14 ;} i{\cf14 +}{\cf14 +}{\cf14 )} {\cf14 \{}\par
+                    mSavedState{\cf14 .}{\cf22 add}{\cf14 (}{\cf14 (}Fragment{\cf14 .}{\cf22 SavedState}{\cf14 )}fss{\cf14 [}i{\cf14 ]}{\cf14 )}{\cf14 ;}\par
+                {\cf14 \}}\par
+            {\cf14 \}}\par
+            Iterable{\cf14 <}String{\cf14 >} keys {\cf14 =} bundle{\cf14 .}{\cf22 keySet}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+            {\cf1\b for} {\cf14 (}String key{\cf14 :} keys{\cf14 )} {\cf14 \{}\par
+                {\cf1\b if} {\cf14 (}key{\cf14 .}{\cf22 startsWith}{\cf14 (}{\cf2 "f"}{\cf14 )}{\cf14 )} {\cf14 \{}\par
+                    {\cf7 int} index {\cf14 =} Integer{\cf14 .}{\cf22 parseInt}{\cf14 (}key{\cf14 .}{\cf22 substring}{\cf14 (}{\cf14 1}{\cf14 )}{\cf14 )}{\cf14 ;}\par
+                    Fragment f {\cf14 =} mFragmentManager{\cf14 .}{\cf22 getFragment}{\cf14 (}bundle{\cf14 ,} key{\cf14 )}{\cf14 ;}\par
+                    {\cf1\b if} {\cf14 (}f {\cf14 !}{\cf14 =} {\cf1\b null}{\cf14 )} {\cf14 \{}\par
+                        {\cf1\b while} {\cf14 (}mFragments{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )} {\cf14 <}{\cf14 =} index{\cf14 )} {\cf14 \{}\par
+                            mFragments{\cf14 .}{\cf22 add}{\cf14 (}{\cf1\b null}{\cf14 )}{\cf14 ;}\par
+                        {\cf14 \}}\par
+                        f{\cf14 .}{\cf22 setMenuVisibility}{\cf14 (}{\cf1\b false}{\cf14 )}{\cf14 ;}\par
+                        mFragments{\cf14 .}{\cf22 set}{\cf14 (}index{\cf14 ,} f{\cf14 )}{\cf14 ;}\par
+                    {\cf14 \}} {\cf1\b else} {\cf14 \{}\par
+                        Log{\cf14 .}{\cf22 w}{\cf14 (}TAG{\cf14 ,} {\cf2 "Bad fragment at key "} {\cf14 +} key{\cf14 )}{\cf14 ;}\par
+                    {\cf14 \}}\par
+                {\cf14 \}}\par
+            {\cf14 \}}\par
+        {\cf14 \}}\par
+    {\cf14 \}}\par
+{\cf14 \}}\par
+}

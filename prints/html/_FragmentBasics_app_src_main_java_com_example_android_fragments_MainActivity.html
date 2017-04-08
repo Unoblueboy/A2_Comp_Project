@@ -1,0 +1,88 @@
+<p style="font-size:14pt;font-family:sans-serif"><strong>.\FragmentBasics\app\src\main\java\com\example\android\fragments\MainActivity.java</strong></p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #408080; font-style: italic">/*</span>
+<span style="color: #408080; font-style: italic"> * Copyright (C) 2012 The Android Open Source Project</span>
+<span style="color: #408080; font-style: italic"> *</span>
+<span style="color: #408080; font-style: italic"> * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span style="color: #408080; font-style: italic"> * you may not use this file except in compliance with the License.</span>
+<span style="color: #408080; font-style: italic"> * You may obtain a copy of the License at</span>
+<span style="color: #408080; font-style: italic"> *</span>
+<span style="color: #408080; font-style: italic"> *      http://www.apache.org/licenses/LICENSE-2.0</span>
+<span style="color: #408080; font-style: italic"> *</span>
+<span style="color: #408080; font-style: italic"> * Unless required by applicable law or agreed to in writing, software</span>
+<span style="color: #408080; font-style: italic"> * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span style="color: #408080; font-style: italic"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span style="color: #408080; font-style: italic"> * See the License for the specific language governing permissions and</span>
+<span style="color: #408080; font-style: italic"> * limitations under the License.</span>
+<span style="color: #408080; font-style: italic"> */</span>
+<span style="color: #008000; font-weight: bold">package</span> <span style="color: #0000FF; font-weight: bold">com.example.android.fragments</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.os.Bundle</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.support.v4.app.FragmentActivity</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.support.v4.app.FragmentTransaction</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">MainActivity</span> <span style="color: #008000; font-weight: bold">extends</span> FragmentActivity 
+        <span style="color: #008000; font-weight: bold">implements</span> HeadlinesFragment<span style="color: #666666">.</span><span style="color: #7D9029">OnHeadlineSelectedListener</span> <span style="color: #666666">{</span>
+
+    <span style="color: #408080; font-style: italic">/** Called when the activity is first created. */</span>
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onCreate</span><span style="color: #666666">(</span>Bundle savedInstanceState<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">super</span><span style="color: #666666">.</span><span style="color: #7D9029">onCreate</span><span style="color: #666666">(</span>savedInstanceState<span style="color: #666666">);</span>
+        setContentView<span style="color: #666666">(</span>R<span style="color: #666666">.</span><span style="color: #7D9029">layout</span><span style="color: #666666">.</span><span style="color: #7D9029">news_articles</span><span style="color: #666666">);</span>
+
+        <span style="color: #408080; font-style: italic">// Check whether the activity is using the layout version with</span>
+        <span style="color: #408080; font-style: italic">// the fragment_container FrameLayout. If so, we must add the first fragment</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>findViewById<span style="color: #666666">(</span>R<span style="color: #666666">.</span><span style="color: #7D9029">id</span><span style="color: #666666">.</span><span style="color: #7D9029">fragment_container</span><span style="color: #666666">)</span> <span style="color: #666666">!=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+
+            <span style="color: #408080; font-style: italic">// However, if we&#39;re being restored from a previous state,</span>
+            <span style="color: #408080; font-style: italic">// then we don&#39;t need to do anything and should return or else</span>
+            <span style="color: #408080; font-style: italic">// we could end up with overlapping fragments.</span>
+            <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>savedInstanceState <span style="color: #666666">!=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                <span style="color: #008000; font-weight: bold">return</span><span style="color: #666666">;</span>
+            <span style="color: #666666">}</span>
+
+            <span style="color: #408080; font-style: italic">// Create an instance of ExampleFragment</span>
+            HeadlinesFragment firstFragment <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> HeadlinesFragment<span style="color: #666666">();</span>
+
+            <span style="color: #408080; font-style: italic">// In case this activity was started with special instructions from an Intent,</span>
+            <span style="color: #408080; font-style: italic">// pass the Intent&#39;s extras to the fragment as arguments</span>
+            firstFragment<span style="color: #666666">.</span><span style="color: #7D9029">setArguments</span><span style="color: #666666">(</span>getIntent<span style="color: #666666">().</span><span style="color: #7D9029">getExtras</span><span style="color: #666666">());</span>
+
+            <span style="color: #408080; font-style: italic">// Add the fragment to the &#39;fragment_container&#39; FrameLayout</span>
+            getSupportFragmentManager<span style="color: #666666">().</span><span style="color: #7D9029">beginTransaction</span><span style="color: #666666">()</span>
+                    <span style="color: #666666">.</span><span style="color: #7D9029">add</span><span style="color: #666666">(</span>R<span style="color: #666666">.</span><span style="color: #7D9029">id</span><span style="color: #666666">.</span><span style="color: #7D9029">fragment_container</span><span style="color: #666666">,</span> firstFragment<span style="color: #666666">).</span><span style="color: #7D9029">commit</span><span style="color: #666666">();</span>
+        <span style="color: #666666">}</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onArticleSelected</span><span style="color: #666666">(</span><span style="color: #B00040">int</span> position<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #408080; font-style: italic">// The user selected the headline of an article from the HeadlinesFragment</span>
+
+        <span style="color: #408080; font-style: italic">// Capture the article fragment from the activity layout</span>
+        ArticleFragment articleFrag <span style="color: #666666">=</span> <span style="color: #666666">(</span>ArticleFragment<span style="color: #666666">)</span>
+                getSupportFragmentManager<span style="color: #666666">().</span><span style="color: #7D9029">findFragmentById</span><span style="color: #666666">(</span>R<span style="color: #666666">.</span><span style="color: #7D9029">id</span><span style="color: #666666">.</span><span style="color: #7D9029">article_fragment</span><span style="color: #666666">);</span>
+
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>articleFrag <span style="color: #666666">!=</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            <span style="color: #408080; font-style: italic">// If article frag is available, we&#39;re in two-pane layout...</span>
+
+            <span style="color: #408080; font-style: italic">// Call a method in the ArticleFragment to update its content</span>
+            articleFrag<span style="color: #666666">.</span><span style="color: #7D9029">updateArticleView</span><span style="color: #666666">(</span>position<span style="color: #666666">);</span>
+
+        <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #666666">{</span>
+            <span style="color: #408080; font-style: italic">// If the frag is not available, we&#39;re in the one-pane layout and must swap frags...</span>
+
+            <span style="color: #408080; font-style: italic">// Create fragment and give it an argument for the selected article</span>
+            ArticleFragment newFragment <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> ArticleFragment<span style="color: #666666">();</span>
+            Bundle args <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> Bundle<span style="color: #666666">();</span>
+            args<span style="color: #666666">.</span><span style="color: #7D9029">putInt</span><span style="color: #666666">(</span>ArticleFragment<span style="color: #666666">.</span><span style="color: #7D9029">ARG_POSITION</span><span style="color: #666666">,</span> position<span style="color: #666666">);</span>
+            newFragment<span style="color: #666666">.</span><span style="color: #7D9029">setArguments</span><span style="color: #666666">(</span>args<span style="color: #666666">);</span>
+            FragmentTransaction transaction <span style="color: #666666">=</span> getSupportFragmentManager<span style="color: #666666">().</span><span style="color: #7D9029">beginTransaction</span><span style="color: #666666">();</span>
+
+            <span style="color: #408080; font-style: italic">// Replace whatever is in the fragment_container view with this fragment,</span>
+            <span style="color: #408080; font-style: italic">// and add the transaction to the back stack so the user can navigate back</span>
+            transaction<span style="color: #666666">.</span><span style="color: #7D9029">replace</span><span style="color: #666666">(</span>R<span style="color: #666666">.</span><span style="color: #7D9029">id</span><span style="color: #666666">.</span><span style="color: #7D9029">fragment_container</span><span style="color: #666666">,</span> newFragment<span style="color: #666666">);</span>
+            transaction<span style="color: #666666">.</span><span style="color: #7D9029">addToBackStack</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">);</span>
+
+            <span style="color: #408080; font-style: italic">// Commit the transaction</span>
+            transaction<span style="color: #666666">.</span><span style="color: #7D9029">commit</span><span style="color: #666666">();</span>
+        <span style="color: #666666">}</span>
+    <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre></div>

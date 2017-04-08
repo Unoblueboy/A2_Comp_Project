@@ -1,0 +1,289 @@
+<p style="font-size:14pt;font-family:sans-serif"><strong>.\A2_Comp_Project\app\src\main\java\com\example\natha_000\a2_comp_project\Graphing_Stats\TabbedStatsActivity.java</strong></p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">package</span> <span style="color: #0000FF; font-weight: bold">com.example.natha_000.a2_comp_project.Graphing_Stats</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.app.Fragment</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.app.FragmentManager</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.os.Bundle</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.os.Environment</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.support.design.widget.FloatingActionButton</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.support.design.widget.TabLayout</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.support.v4.app.FragmentPagerAdapter</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.support.v4.view.ViewPager</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.support.v7.app.AppCompatActivity</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.support.v7.widget.Toolbar</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.util.Log</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.view.Menu</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.view.MenuItem</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">android.view.View</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">com.example.natha_000.a2_comp_project.R</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.io.File</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.text.SimpleDateFormat</span><span style="color: #666666">;</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">java.util.Date</span><span style="color: #666666">;</span>
+
+<span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TabbedStatsActivity</span> <span style="color: #008000; font-weight: bold">extends</span> AppCompatActivity <span style="color: #666666">{</span>
+
+    <span style="color: #008000; font-weight: bold">static</span> File folder <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> File<span style="color: #666666">(</span>Environment<span style="color: #666666">.</span><span style="color: #7D9029">getExternalStorageDirectory</span><span style="color: #666666">()</span> <span style="color: #666666">+</span> File<span style="color: #666666">.</span><span style="color: #7D9029">separator</span> <span style="color: #666666">+</span> <span style="color: #BA2121">&quot;Statistics&quot;</span><span style="color: #666666">);</span>
+    <span style="color: #008000; font-weight: bold">private</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #008000; font-weight: bold">final</span> <span style="color: #B00040">int</span> READ_REQUEST_CODE <span style="color: #666666">=</span> <span style="color: #666666">42;</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * The {@link android.support.v4.view.PagerAdapter} that will provide</span>
+<span style="color: #408080; font-style: italic">     * fragments for each of the sections. We use a</span>
+<span style="color: #408080; font-style: italic">     * {@link FragmentPagerAdapter} derivative, which will keep every</span>
+<span style="color: #408080; font-style: italic">     * loaded fragment in memory. If this becomes too memory intensive, it</span>
+<span style="color: #408080; font-style: italic">     * may be best to switch to a</span>
+<span style="color: #408080; font-style: italic">     * {@link android.support.v4.app.FragmentStatePagerAdapter}.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">private</span> SectionsPagerAdapter mSectionsPagerAdapter<span style="color: #666666">;</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * The {@link ViewPager} that will host the section contents.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">private</span> ViewPager mViewPager<span style="color: #666666">;</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">protected</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onCreate</span><span style="color: #666666">(</span>Bundle savedInstanceState<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">super</span><span style="color: #666666">.</span><span style="color: #7D9029">onCreate</span><span style="color: #666666">(</span>savedInstanceState<span style="color: #666666">);</span>
+        setContentView<span style="color: #666666">(</span>R<span style="color: #666666">.</span><span style="color: #7D9029">layout</span><span style="color: #666666">.</span><span style="color: #7D9029">activity_tabbed_stats</span><span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(0,10,1);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(10,20,2);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(20,30,1);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(30,40,2);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(40,50,1);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(50,60,1);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(60,70,5);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(70,80,4);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(80,90,11);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(90,100,5);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(100,110,4);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(110,120,8);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(120,130,11);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(130,140,13);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(140,150,7);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(150,160,12);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(160,170,10);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(170,180,7);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(180,190,13);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(190,200,25);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(200,210,11);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(210,220,21);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(220,230,22);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(230,240,31);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(240,250,24);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(250,260,35);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(260,270,31);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(270,280,36);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(280,290,37);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(290,300,39);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(300,310,40);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(310,320,57);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(320,330,41);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(330,340,50);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(340,350,52);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(350,360,70);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(360,370,72);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(370,380,67);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(380,390,82);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(390,400,74);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(400,410,85);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(410,420,73);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(420,430,81);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(430,440,72);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(440,450,92);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(450,460,85);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(460,470,108);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(470,480,90);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(480,490,84);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(490,500,85);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(500,510,83);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(510,520,94);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(520,530,100);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(530,540,74);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(540,550,85);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(550,560,105);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(560,570,73);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(570,580,82);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(580,590,86);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(590,600,80);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(600,610,87);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(610,620,72);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(620,630,67);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(630,640,72);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(640,650,67);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(650,660,69);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(660,670,38);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(670,680,58);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(680,690,63);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(690,700,63);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(700,710,58);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(710,720,42);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(720,730,44);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(730,740,41);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(740,750,28);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(750,760,45);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(760,770,35);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(770,780,24);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(780,790,24);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(790,800,13);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(800,810,22);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(810,820,16);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(820,830,16);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(830,840,6);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(840,850,12);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(850,860,9);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(860,870,13);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(870,880,11);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(880,890,11);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(890,900,9);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(900,910,5);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(910,920,5);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(920,930,6);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(930,940,2);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(940,950,4);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(950,960,4);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(960,970,2);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(970,980,4);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(980,990,2);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(990,1000,1);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(1000,1010,0);</span>
+        <span style="color: #008000; font-weight: bold">new</span> StatsClasses<span style="color: #666666">(1010,1020,5);</span>
+
+        Toolbar toolbar <span style="color: #666666">=</span> <span style="color: #666666">(</span>Toolbar<span style="color: #666666">)</span> findViewById<span style="color: #666666">(</span>R<span style="color: #666666">.</span><span style="color: #7D9029">id</span><span style="color: #666666">.</span><span style="color: #7D9029">toolbar</span><span style="color: #666666">);</span>
+        setSupportActionBar<span style="color: #666666">(</span>toolbar<span style="color: #666666">);</span>
+
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(!</span>folder<span style="color: #666666">.</span><span style="color: #7D9029">exists</span><span style="color: #666666">())</span> <span style="color: #666666">{</span>
+            folder<span style="color: #666666">.</span><span style="color: #7D9029">mkdirs</span><span style="color: #666666">();</span>
+        <span style="color: #666666">}</span>
+
+        <span style="color: #408080; font-style: italic">// Create the adapter that will return a fragment for each of the three</span>
+        <span style="color: #408080; font-style: italic">// primary sections of the activity.</span>
+        mSectionsPagerAdapter <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> SectionsPagerAdapter<span style="color: #666666">(</span>getFragmentManager<span style="color: #666666">());</span>
+
+        <span style="color: #408080; font-style: italic">// Set up the ViewPager with the sections adapter.</span>
+        mViewPager <span style="color: #666666">=</span> <span style="color: #666666">(</span>ViewPager<span style="color: #666666">)</span> findViewById<span style="color: #666666">(</span>R<span style="color: #666666">.</span><span style="color: #7D9029">id</span><span style="color: #666666">.</span><span style="color: #7D9029">container</span><span style="color: #666666">);</span>
+        mViewPager<span style="color: #666666">.</span><span style="color: #7D9029">setAdapter</span><span style="color: #666666">(</span>mSectionsPagerAdapter<span style="color: #666666">);</span>
+        mViewPager<span style="color: #666666">.</span><span style="color: #7D9029">setCurrentItem</span><span style="color: #666666">(0);</span>
+        mViewPager<span style="color: #666666">.</span><span style="color: #7D9029">setOnPageChangeListener</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">new</span> ViewPager<span style="color: #666666">.</span><span style="color: #7D9029">OnPageChangeListener</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+
+            <span style="color: #AA22FF">@Override</span>
+            <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onPageSelected</span><span style="color: #666666">(</span><span style="color: #B00040">int</span> position<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+<span style="color: #408080; font-style: italic">//                Log.i(&quot;Tabbed&quot;,&quot;On Page Selected&quot;+Integer.toString(position));</span>
+                <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>position <span style="color: #666666">==</span> <span style="color: #666666">0)</span> <span style="color: #666666">{</span>
+                    StatsClasses<span style="color: #666666">.</span><span style="color: #7D9029">reset</span><span style="color: #666666">();</span>
+                <span style="color: #666666">}</span>
+            <span style="color: #666666">}</span>
+
+            <span style="color: #AA22FF">@Override</span>
+            <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onPageScrolled</span><span style="color: #666666">(</span><span style="color: #B00040">int</span> arg0<span style="color: #666666">,</span> <span style="color: #B00040">float</span> arg1<span style="color: #666666">,</span> <span style="color: #B00040">int</span> arg2<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+<span style="color: #408080; font-style: italic">//                Log.i(&quot;Tabbed&quot;,&quot;On Page Scrolled: &quot; + Arrays.toString(new float[]{arg0,arg1,arg2}));</span>
+            <span style="color: #666666">}</span>
+
+            <span style="color: #AA22FF">@Override</span>
+            <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onPageScrollStateChanged</span><span style="color: #666666">(</span><span style="color: #B00040">int</span> pos<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+<span style="color: #408080; font-style: italic">//                Log.i(&quot;Tabbed&quot;,&quot;On Page Scroll State Changed: &quot; + Integer.toString(pos));</span>
+            <span style="color: #666666">}</span>
+        <span style="color: #666666">});</span>
+
+        TabLayout tabLayout <span style="color: #666666">=</span> <span style="color: #666666">(</span>TabLayout<span style="color: #666666">)</span> findViewById<span style="color: #666666">(</span>R<span style="color: #666666">.</span><span style="color: #7D9029">id</span><span style="color: #666666">.</span><span style="color: #7D9029">tabs</span><span style="color: #666666">);</span>
+        tabLayout<span style="color: #666666">.</span><span style="color: #7D9029">setupWithViewPager</span><span style="color: #666666">(</span>mViewPager<span style="color: #666666">);</span>
+
+        FloatingActionButton fab <span style="color: #666666">=</span> <span style="color: #666666">(</span>FloatingActionButton<span style="color: #666666">)</span> findViewById<span style="color: #666666">(</span>R<span style="color: #666666">.</span><span style="color: #7D9029">id</span><span style="color: #666666">.</span><span style="color: #7D9029">fab</span><span style="color: #666666">);</span>
+        fab<span style="color: #666666">.</span><span style="color: #7D9029">setOnClickListener</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">new</span> View<span style="color: #666666">.</span><span style="color: #7D9029">OnClickListener</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+            <span style="color: #AA22FF">@Override</span>
+            <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onClick</span><span style="color: #666666">(</span>View view<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                export<span style="color: #666666">();</span>
+            <span style="color: #666666">}</span>
+        <span style="color: #666666">});</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">export</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        String newfolname <span style="color: #666666">=</span> <span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">new</span> SimpleDateFormat<span style="color: #666666">(</span><span style="color: #BA2121">&quot;dd-MM-yy-HH:mm:ss&quot;</span><span style="color: #666666">)).</span><span style="color: #7D9029">format</span><span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">new</span> Date<span style="color: #666666">());</span>
+
+        File newfolder <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> File<span style="color: #666666">(</span>folder<span style="color: #666666">.</span><span style="color: #7D9029">toString</span><span style="color: #666666">()</span> <span style="color: #666666">+</span> File<span style="color: #666666">.</span><span style="color: #7D9029">separator</span> <span style="color: #666666">+</span> newfolname<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(!</span>newfolder<span style="color: #666666">.</span><span style="color: #7D9029">exists</span><span style="color: #666666">())</span> <span style="color: #666666">{</span>
+            newfolder<span style="color: #666666">.</span><span style="color: #7D9029">mkdirs</span><span style="color: #666666">();</span>
+        <span style="color: #666666">}</span>
+        <span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">new</span> SketchHistogram<span style="color: #666666">()).</span><span style="color: #7D9029">export</span><span style="color: #666666">(600,</span> <span style="color: #666666">1000,</span> newfolder<span style="color: #666666">);</span>
+        <span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">new</span> SketchCumFreq<span style="color: #666666">()).</span><span style="color: #7D9029">export</span><span style="color: #666666">(600,</span> <span style="color: #666666">1000,</span> newfolder<span style="color: #666666">);</span>
+        <span style="color: #666666">(</span><span style="color: #008000; font-weight: bold">new</span> StatsDataTable<span style="color: #666666">()).</span><span style="color: #7D9029">export</span><span style="color: #666666">(</span>newfolder<span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">boolean</span> <span style="color: #0000FF">onCreateOptionsMenu</span><span style="color: #666666">(</span>Menu menu<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #408080; font-style: italic">// Inflate the menu; this adds items to the action bar if it is present.</span>
+        getMenuInflater<span style="color: #666666">().</span><span style="color: #7D9029">inflate</span><span style="color: #666666">(</span>R<span style="color: #666666">.</span><span style="color: #7D9029">menu</span><span style="color: #666666">.</span><span style="color: #7D9029">menu_tabbed_stats</span><span style="color: #666666">,</span> menu<span style="color: #666666">);</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">boolean</span> <span style="color: #0000FF">onOptionsItemSelected</span><span style="color: #666666">(</span>MenuItem item<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #408080; font-style: italic">// Handle action bar item clicks here. The action bar will</span>
+        <span style="color: #408080; font-style: italic">// automatically handle clicks on the Home/Up button, so long</span>
+        <span style="color: #408080; font-style: italic">// as you specify a parent activity in AndroidManifest.xml.</span>
+        <span style="color: #B00040">int</span> id <span style="color: #666666">=</span> item<span style="color: #666666">.</span><span style="color: #7D9029">getItemId</span><span style="color: #666666">();</span>
+
+        <span style="color: #408080; font-style: italic">//noinspection SimplifiableIfStatement</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>id <span style="color: #666666">==</span> R<span style="color: #666666">.</span><span style="color: #7D9029">id</span><span style="color: #666666">.</span><span style="color: #7D9029">action_settings</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">true</span><span style="color: #666666">;</span>
+        <span style="color: #666666">}</span>
+
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">super</span><span style="color: #666666">.</span><span style="color: #7D9029">onOptionsItemSelected</span><span style="color: #666666">(</span>item<span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #408080; font-style: italic">/**</span>
+<span style="color: #408080; font-style: italic">     * A {@link NewFragmentPagerAdapter} that returns a fragment corresponding to</span>
+<span style="color: #408080; font-style: italic">     * one of the sections/tabs/pages.</span>
+<span style="color: #408080; font-style: italic">     */</span>
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">SectionsPagerAdapter</span> <span style="color: #008000; font-weight: bold">extends</span> NewFragmentPagerAdapter <span style="color: #666666">{</span>
+
+        <span style="color: #B00040">int</span> prevFragment <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+
+        <span style="color: #008000; font-weight: bold">public</span> <span style="color: #0000FF">SectionsPagerAdapter</span><span style="color: #666666">(</span>FragmentManager fm<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            <span style="color: #008000; font-weight: bold">super</span><span style="color: #666666">(</span>fm<span style="color: #666666">);</span>
+            Log<span style="color: #666666">.</span><span style="color: #7D9029">i</span><span style="color: #666666">(</span><span style="color: #BA2121">&quot;Project: Switch&quot;</span><span style="color: #666666">,</span><span style="color: #BA2121">&quot;&quot;</span><span style="color: #666666">);</span>
+        <span style="color: #666666">}</span>
+
+        <span style="color: #AA22FF">@Override</span>
+        <span style="color: #008000; font-weight: bold">public</span> Fragment <span style="color: #0000FF">getItem</span><span style="color: #666666">(</span><span style="color: #B00040">int</span> position<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            <span style="color: #408080; font-style: italic">// getItem is called to instantiate the fragment for the given page.</span>
+            <span style="color: #408080; font-style: italic">// Return a PlaceholderFragment (defined as a static inner class below).</span>
+            <span style="color: #008000; font-weight: bold">switch</span> <span style="color: #666666">(</span>position<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                <span style="color: #008000; font-weight: bold">case</span> <span style="color: #666666">0:</span>
+                    <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">new</span> StatsDataTable<span style="color: #666666">();</span>
+                <span style="color: #008000; font-weight: bold">case</span> <span style="color: #666666">1:</span>
+                    <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">new</span> SketchHistogram<span style="color: #666666">();</span>
+                <span style="color: #008000; font-weight: bold">case</span> <span style="color: #666666">2:</span>
+                    <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">new</span> SketchCumFreq<span style="color: #666666">();</span>
+            <span style="color: #666666">}</span>
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">;</span>
+
+<span style="color: #408080; font-style: italic">//            return PlaceholderFragment.newInstance(position + 1);</span>
+        <span style="color: #666666">}</span>
+
+        <span style="color: #AA22FF">@Override</span>
+        <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">int</span> <span style="color: #0000FF">getCount</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+            <span style="color: #408080; font-style: italic">// Show 3 total pages.</span>
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #666666">3;</span>
+        <span style="color: #666666">}</span>
+
+        <span style="color: #AA22FF">@Override</span>
+        <span style="color: #008000; font-weight: bold">public</span> CharSequence <span style="color: #0000FF">getPageTitle</span><span style="color: #666666">(</span><span style="color: #B00040">int</span> position<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+            Log<span style="color: #666666">.</span><span style="color: #7D9029">i</span><span style="color: #666666">(</span><span style="color: #BA2121">&quot;Project: Switch Title&quot;</span><span style="color: #666666">,</span>Integer<span style="color: #666666">.</span><span style="color: #7D9029">toString</span><span style="color: #666666">(</span>position<span style="color: #666666">));</span>
+            <span style="color: #008000; font-weight: bold">switch</span> <span style="color: #666666">(</span>position<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+                <span style="color: #008000; font-weight: bold">case</span> <span style="color: #666666">0:</span>
+                    <span style="color: #008000; font-weight: bold">return</span> <span style="color: #BA2121">&quot;table&quot;</span><span style="color: #666666">;</span>
+                <span style="color: #008000; font-weight: bold">case</span> <span style="color: #666666">1:</span>
+                    <span style="color: #008000; font-weight: bold">return</span> <span style="color: #BA2121">&quot;Histogram&quot;</span><span style="color: #666666">;</span>
+                <span style="color: #008000; font-weight: bold">case</span> <span style="color: #666666">2:</span>
+                    <span style="color: #008000; font-weight: bold">return</span> <span style="color: #BA2121">&quot;Cumulative Frequency&quot;</span><span style="color: #666666">;</span>
+            <span style="color: #666666">}</span>
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">null</span><span style="color: #666666">;</span>
+        <span style="color: #666666">}</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000; font-weight: bold">public</span> <span style="color: #B00040">void</span> <span style="color: #0000FF">onDestroy</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        <span style="color: #008000; font-weight: bold">super</span><span style="color: #666666">.</span><span style="color: #7D9029">onDestroy</span><span style="color: #666666">();</span>
+        StatsClasses<span style="color: #666666">.</span><span style="color: #7D9029">reset</span><span style="color: #666666">();</span>
+    <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre></div>

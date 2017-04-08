@@ -1,0 +1,192 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green128\blue0;\red186\green33\blue33;\red0\green0\blue255;\red188\green122\blue0;\red25\green23\blue124;\red64\green128\blue128;\red176\green0\blue64;\red187\green187\blue187;\red0\green0\blue128;\red160\green160\blue0;\red170\green34\blue255;\red136\green136\blue136;\red136\green0\blue0;\red102\green102\blue102;\red187\green102\blue136;\red0\green68\blue221;\red210\green65\blue58;\red255\green0\blue0;\red160\green0\blue0;\red187\green102\blue34;\red0\green160\blue0;\red125\green144\blue41;\red128\green0\blue128;\red153\green153\blue153;}\f0 {\cf14 .}{\chbrdr\chcfpat18 \\}A2_Comp_Project{\chbrdr\chcfpat18 \\}app{\chbrdr\chcfpat18 \\}src{\chbrdr\chcfpat18 \\}main{\chbrdr\chcfpat18 \\}java{\chbrdr\chcfpat18 \\}com{\chbrdr\chcfpat18 \\}example{\chbrdr\chcfpat18 \\}natha_000{\chbrdr\chcfpat18 \\}a2_comp_project{\chbrdr\chcfpat18 \\}Graphing_Stats{\chbrdr\chcfpat18 \\}StatsClasses{\cf14 .}{\cf22 java}\par
+{\cf1\b package} {\cf3\b com.example.natha_000.a2_comp_project.Graphing_Stats}{\cf14 ;}\par
+\par
+{\cf1\b import} {\cf3\b java.util.ArrayList}{\cf14 ;}\par
+{\cf1\b import} {\cf3\b java.util.List}{\cf14 ;}\par
+\par
+{\cf6\i /**\par
+ * Created by Natha_000 on 05/02/2017.\par
+ */}\par
+\par
+{\cf1\b public} {\cf1\b class} {\cf3\b StatsClasses} {\cf14 \{}\par
+    {\cf1\b public} {\cf1\b static} List{\cf14 <}StatsClasses{\cf14 >} classes {\cf14 =} {\cf1\b new} ArrayList{\cf14 <}StatsClasses{\cf14 >}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+    {\cf1\b public} {\cf1\b static} {\cf7 int} nextID {\cf14 =} {\cf14 1}{\cf14 ;}\par
+    {\cf1\b public} {\cf7 int} id{\cf14 ;}\par
+    {\cf1\b public} {\cf7 float} classwidth{\cf14 ;}\par
+    {\cf1\b public} {\cf7 float} lowerbound{\cf14 ;}\par
+    {\cf1\b public} {\cf7 float} upperbound{\cf14 ;}\par
+    {\cf1\b public} {\cf7 int} frequency{\cf14 ;}\par
+    {\cf1\b public} {\cf7 float} freqdensity{\cf14 ;}\par
+    {\cf1\b public} {\cf1\b static} {\cf7 int} noOfClasses {\cf14 =} {\cf14 0}{\cf14 ;}\par
+\par
+    {\cf1\b public} {\cf3 StatsClasses}{\cf14 (}{\cf7 float} lb{\cf14 ,} {\cf7 float} ub{\cf14 ,} {\cf7 int} freq{\cf14 )} {\cf14 \{}\par
+        {\cf1\b this}{\cf14 .}{\cf22 id} {\cf14 =} nextID{\cf14 ;}\par
+        {\cf1\b this}{\cf14 .}{\cf22 lowerbound} {\cf14 =} lb{\cf14 ;}\par
+        {\cf1\b this}{\cf14 .}{\cf22 upperbound} {\cf14 =} ub{\cf14 ;}\par
+        {\cf1\b this}{\cf14 .}{\cf22 frequency} {\cf14 =} freq{\cf14 ;}\par
+        {\cf1\b this}{\cf14 .}{\cf22 classwidth} {\cf14 =} ub{\cf14 -}lb{\cf14 ;}\par
+        {\cf1\b this}{\cf14 .}{\cf22 freqdensity} {\cf14 =} {\cf14 (}{\cf7 float}{\cf14 )}freq{\cf14 /}{\cf1\b this}{\cf14 .}{\cf22 classwidth}{\cf14 ;}\par
+        addClass{\cf14 (}{\cf1\b this}{\cf14 )}{\cf14 ;}\par
+        nextID{\cf14 +}{\cf14 +}{\cf14 ;}\par
+        noOfClasses{\cf14 +}{\cf14 +}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf1\b static} {\cf7 void} {\cf3 addClass}{\cf14 (}StatsClasses class_{\cf14 )} {\cf14 \{}\par
+        classes{\cf14 .}{\cf22 add}{\cf14 (}class_{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 boolean} {\cf3 contains}{\cf14 (}{\cf7 float} bound{\cf14 )} {\cf14 \{}\par
+        {\cf1\b if} {\cf14 (}{\cf1\b this}{\cf14 .}{\cf22 lowerbound} {\cf14 <} bound {\cf14 &}{\cf14 &} {\cf1\b this}{\cf14 .}{\cf22 upperbound} {\cf14 >} bound{\cf14 )} {\cf14 \{}\par
+            {\cf1\b return} {\cf1\b true}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b return} {\cf1\b false}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 boolean} {\cf3 contains}{\cf14 (}StatsClasses other{\cf14 )} {\cf14 \{}\par
+        {\cf1\b return} contains{\cf14 (}other{\cf14 .}{\cf22 lowerbound}{\cf14 ,}other{\cf14 .}{\cf22 upperbound}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 boolean} {\cf3 contains}{\cf14 (}{\cf7 float} lb{\cf14 ,} {\cf7 float} ub{\cf14 )} {\cf14 \{}\par
+        {\cf1\b if} {\cf14 (}{\cf1\b this}{\cf14 .}{\cf22 lowerbound} {\cf14 <}{\cf14 =} lb {\cf14 &}{\cf14 &} {\cf1\b this}{\cf14 .}{\cf22 upperbound} {\cf14 >}{\cf14 =} ub{\cf14 )} {\cf14 \{}\par
+            {\cf1\b return} {\cf1\b true}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b return} {\cf1\b false}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 boolean} {\cf3 surrounds}{\cf14 (}StatsClasses other{\cf14 )} {\cf14 \{}\par
+        {\cf1\b if} {\cf14 (}{\cf1\b this}{\cf14 .}{\cf22 lowerbound} {\cf14 >}{\cf14 =} other{\cf14 .}{\cf22 lowerbound} {\cf14 &}{\cf14 &} {\cf1\b this}{\cf14 .}{\cf22 upperbound} {\cf14 <}{\cf14 =} other{\cf14 .}{\cf22 upperbound}{\cf14 )} {\cf14 \{}\par
+            {\cf1\b return} {\cf1\b true}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b return} {\cf1\b false}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 boolean} {\cf3 surrounds}{\cf14 (}{\cf7 float} lb{\cf14 ,} {\cf7 float} ub{\cf14 )} {\cf14 \{}\par
+        {\cf1\b if} {\cf14 (}{\cf1\b this}{\cf14 .}{\cf22 lowerbound} {\cf14 >}{\cf14 =} lb {\cf14 &}{\cf14 &} {\cf1\b this}{\cf14 .}{\cf22 upperbound} {\cf14 <}{\cf14 =} ub{\cf14 )} {\cf14 \{}\par
+            {\cf1\b return} {\cf1\b true}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b return} {\cf1\b false}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 boolean} {\cf3 setLB}{\cf14 (}{\cf7 float} lb{\cf14 )} {\cf14 \{}\par
+        {\cf1\b if} {\cf14 (}validBound{\cf14 (}lb{\cf14 )} {\cf14 &}{\cf14 &} validBounds{\cf14 (}lb{\cf14 ,}{\cf1\b this}{\cf14 .}{\cf22 upperbound}{\cf14 )}{\cf14 )} {\cf14 \{}\par
+            {\cf1\b this}{\cf14 .}{\cf22 lowerbound} {\cf14 =} lb{\cf14 ;}\par
+            {\cf1\b return} {\cf1\b true}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b return} {\cf1\b false}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 boolean} {\cf3 setUB}{\cf14 (}{\cf7 float} ub{\cf14 )} {\cf14 \{}\par
+        {\cf1\b if} {\cf14 (}validBound{\cf14 (}ub{\cf14 )} {\cf14 &}{\cf14 &} validBounds{\cf14 (}{\cf1\b this}{\cf14 .}{\cf22 lowerbound}{\cf14 ,}ub{\cf14 )}{\cf14 )} {\cf14 \{}\par
+            {\cf1\b this}{\cf14 .}{\cf22 upperbound} {\cf14 =} ub{\cf14 ;}\par
+            {\cf1\b return} {\cf1\b true}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b return} {\cf1\b false}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf1\b static} {\cf7 boolean} {\cf3 validBound}{\cf14 (}{\cf7 float} bound{\cf14 )}{\cf14 \{}\par
+        {\cf1\b for} {\cf14 (}StatsClasses class_ {\cf14 :} classes{\cf14 )} {\cf14 \{}\par
+            {\cf1\b if} {\cf14 (}class_{\cf14 .}{\cf22 contains}{\cf14 (}bound{\cf14 )}{\cf14 )} {\cf14 \{}\par
+                {\cf1\b return} {\cf1\b false}{\cf14 ;}\par
+            {\cf14 \}}\par
+        {\cf14 \}}\par
+        {\cf1\b return} {\cf1\b true}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf1\b static} {\cf7 boolean} {\cf3 validBounds}{\cf14 (}{\cf7 float} lb{\cf14 ,} {\cf7 float} ub{\cf14 )}{\cf14 \{}\par
+        {\cf1\b if} {\cf14 (}ub{\cf14 -}lb{\cf14 <}{\cf14 =}{\cf14 0}{\cf14 )}{\cf14 \{}\par
+            {\cf1\b return} {\cf1\b false}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b for} {\cf14 (}StatsClasses class_ {\cf14 :} classes{\cf14 )} {\cf14 \{}\par
+            {\cf1\b if} {\cf14 (}class_{\cf14 .}{\cf22 contains}{\cf14 (}lb{\cf14 ,}ub{\cf14 )} {\cf14 |}{\cf14 |} class_{\cf14 .}{\cf22 surrounds}{\cf14 (}lb{\cf14 ,}ub{\cf14 )} {\cf14 |}{\cf14 |} {\cf14 !}validBound{\cf14 (}lb{\cf14 )} {\cf14 |}{\cf14 |} {\cf14 !}validBound{\cf14 (}ub{\cf14 )}{\cf14 )} {\cf14 \{}\par
+                {\cf1\b return} {\cf1\b false}{\cf14 ;}\par
+            {\cf14 \}}\par
+        {\cf14 \}}\par
+        {\cf1\b return} {\cf1\b true}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 boolean} {\cf3 equals}{\cf14 (}StatsClasses other{\cf14 )} {\cf14 \{}\par
+        {\cf1\b return} {\cf1\b this}{\cf14 .}{\cf22 id} {\cf14 =}{\cf14 =} other{\cf14 .}{\cf22 id}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf1\b static} {\cf7 int} {\cf3 findClassIndexById}{\cf14 (}{\cf7 int} id{\cf14 )} {\cf14 \{}\par
+        {\cf7 boolean} found {\cf14 =} {\cf1\b false}{\cf14 ;}\par
+        {\cf7 boolean} failed {\cf14 =} {\cf1\b false}{\cf14 ;}\par
+        {\cf7 int} l {\cf14 =} {\cf14 0}{\cf14 ;}\par
+        {\cf7 int} r {\cf14 =} classes{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )}{\cf14 -}{\cf14 1}{\cf14 ;}\par
+        {\cf1\b while} {\cf14 (}{\cf14 !}found {\cf14 &}{\cf14 &} {\cf14 !}failed{\cf14 )} {\cf14 \{}\par
+            {\cf7 int} m {\cf14 =} {\cf14 (}l{\cf14 +}r{\cf14 )}{\cf14 /}{\cf14 2}{\cf14 ;}\par
+            {\cf1\b if} {\cf14 (}l{\cf14 >}r{\cf14 )} {\cf14 \{}\par
+                failed {\cf14 =} {\cf1\b true}{\cf14 ;}\par
+            {\cf14 \}} {\cf1\b else} {\cf1\b if} {\cf14 (}classes{\cf14 .}{\cf22 get}{\cf14 (}m{\cf14 )}{\cf14 .}{\cf22 id}{\cf14 <}id{\cf14 )} {\cf14 \{}\par
+                l{\cf14 =}m{\cf14 +}{\cf14 1}{\cf14 ;}\par
+            {\cf14 \}} {\cf1\b else} {\cf1\b if} {\cf14 (}classes{\cf14 .}{\cf22 get}{\cf14 (}m{\cf14 )}{\cf14 .}{\cf22 id}{\cf14 >}id{\cf14 )} {\cf14 \{}\par
+                r{\cf14 =}m{\cf14 -}{\cf14 1}{\cf14 ;}\par
+            {\cf14 \}} {\cf1\b else} {\cf1\b if} {\cf14 (}classes{\cf14 .}{\cf22 get}{\cf14 (}m{\cf14 )}{\cf14 .}{\cf22 id}{\cf14 =}{\cf14 =}id{\cf14 )} {\cf14 \{}\par
+                {\cf1\b return} m{\cf14 ;}\par
+            {\cf14 \}}\par
+        {\cf14 \}}\par
+        {\cf1\b return} {\cf14 -}{\cf14 1}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf1\b static} StatsClasses {\cf3 getClassById}{\cf14 (}{\cf7 int} id{\cf14 )}{\cf14 \{}\par
+        {\cf7 int} classIndex {\cf14 =} findClassIndexById{\cf14 (}id{\cf14 )}{\cf14 ;}\par
+        {\cf1\b if} {\cf14 (}classIndex {\cf14 =}{\cf14 =} {\cf14 -}{\cf14 1}{\cf14 )} {\cf14 \{}\par
+            {\cf1\b return} {\cf1\b null}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b return} classes{\cf14 .}{\cf22 get}{\cf14 (}classIndex{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf1\b static} {\cf7 int} {\cf3 findClassIndexByLb}{\cf14 (}{\cf7 float} lb{\cf14 )} {\cf14 \{}\par
+        {\cf7 boolean} found {\cf14 =} {\cf1\b false}{\cf14 ;}\par
+        {\cf7 boolean} failed {\cf14 =} {\cf1\b false}{\cf14 ;}\par
+        {\cf7 int} l {\cf14 =} {\cf14 0}{\cf14 ;}\par
+        {\cf7 int} r {\cf14 =} classes{\cf14 .}{\cf22 size}{\cf14 (}{\cf14 )}{\cf14 -}{\cf14 1}{\cf14 ;}\par
+        {\cf1\b while} {\cf14 (}{\cf14 !}found {\cf14 &}{\cf14 &} {\cf14 !}failed{\cf14 )} {\cf14 \{}\par
+            {\cf7 int} m {\cf14 =} {\cf14 (}l{\cf14 +}r{\cf14 )}{\cf14 /}{\cf14 2}{\cf14 ;}\par
+            {\cf1\b if} {\cf14 (}l{\cf14 >}r{\cf14 )} {\cf14 \{}\par
+                failed {\cf14 =} {\cf1\b true}{\cf14 ;}\par
+            {\cf14 \}} {\cf1\b else} {\cf1\b if} {\cf14 (}classes{\cf14 .}{\cf22 get}{\cf14 (}m{\cf14 )}{\cf14 .}{\cf22 lowerbound}{\cf14 <}lb{\cf14 )} {\cf14 \{}\par
+                l{\cf14 =}m{\cf14 +}{\cf14 1}{\cf14 ;}\par
+            {\cf14 \}} {\cf1\b else} {\cf1\b if} {\cf14 (}classes{\cf14 .}{\cf22 get}{\cf14 (}m{\cf14 )}{\cf14 .}{\cf22 lowerbound}{\cf14 >}lb{\cf14 )} {\cf14 \{}\par
+                r{\cf14 =}m{\cf14 -}{\cf14 1}{\cf14 ;}\par
+            {\cf14 \}} {\cf1\b else} {\cf1\b if} {\cf14 (}classes{\cf14 .}{\cf22 get}{\cf14 (}m{\cf14 )}{\cf14 .}{\cf22 lowerbound}{\cf14 =}{\cf14 =}lb{\cf14 )} {\cf14 \{}\par
+                {\cf1\b return} m{\cf14 ;}\par
+            {\cf14 \}}\par
+        {\cf14 \}}\par
+        {\cf1\b return} {\cf14 -}{\cf14 1}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf1\b static} StatsClasses {\cf3 getClassByLb}{\cf14 (}{\cf7 float} lb{\cf14 )} {\cf14 \{}\par
+        {\cf7 int} classIndex {\cf14 =} findClassIndexByLb{\cf14 (}lb{\cf14 )}{\cf14 ;}\par
+        {\cf1\b if} {\cf14 (}classIndex {\cf14 =}{\cf14 =} {\cf14 -}{\cf14 1}{\cf14 )} {\cf14 \{}\par
+            {\cf1\b return} {\cf1\b null}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b return} classes{\cf14 .}{\cf22 get}{\cf14 (}classIndex{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf1\b static} {\cf7 void} {\cf3 reset}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        classes {\cf14 =} {\cf1\b new} ArrayList{\cf14 <}StatsClasses{\cf14 >}{\cf14 (}{\cf14 )}{\cf14 ;}\par
+        nextID {\cf14 =} {\cf14 1}{\cf14 ;}\par
+        noOfClasses {\cf14 =} {\cf14 0}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf7 boolean} {\cf3 delete}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        {\cf1\b return} deleteClass{\cf14 (}{\cf1\b this}{\cf14 .}{\cf22 id}{\cf14 )}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} {\cf1\b static} {\cf7 boolean} {\cf3 deleteClass}{\cf14 (}{\cf7 int} id{\cf14 )} {\cf14 \{}\par
+        {\cf7 int} classIndex {\cf14 =} findClassIndexById{\cf14 (}id{\cf14 )}{\cf14 ;}\par
+        {\cf1\b if} {\cf14 (}classIndex {\cf14 !}{\cf14 =} {\cf14 -}{\cf14 1}{\cf14 )} {\cf14 \{}\par
+            classes{\cf14 .}{\cf22 remove}{\cf14 (}classIndex{\cf14 )}{\cf14 ;}\par
+            noOfClasses{\cf14 -}{\cf14 -}{\cf14 ;}\par
+            {\cf1\b return} {\cf1\b true}{\cf14 ;}\par
+        {\cf14 \}}\par
+        {\cf1\b return} {\cf1\b false}{\cf14 ;}\par
+    {\cf14 \}}\par
+\par
+    {\cf1\b public} String {\cf3 toString}{\cf14 (}{\cf14 )} {\cf14 \{}\par
+        String sentence {\cf14 =} {\cf2 "("}{\cf14 +}Integer{\cf14 .}{\cf22 toString}{\cf14 (}{\cf1\b this}{\cf14 .}{\cf22 id}{\cf14 )}{\cf14 +}{\cf2 ","}{\cf14 +}Float{\cf14 .}{\cf22 toString}{\cf14 (}{\cf1\b this}{\cf14 .}{\cf22 lowerbound}{\cf14 )}{\cf14 +}{\cf2 ","}{\cf14 +}Float{\cf14 .}{\cf22 toString}{\cf14 (}{\cf1\b this}{\cf14 .}{\cf22 upperbound}{\cf14 )}{\cf14 +}{\cf2 ","}{\cf14 +}Integer{\cf14 .}{\cf22 toString}{\cf14 (}{\cf1\b this}{\cf14 .}{\cf22 frequency}{\cf14 )}{\cf14 +}{\cf2 ")"}{\cf14 ;}\par
+        {\cf1\b return} sentence{\cf14 ;}\par
+    {\cf14 \}}\par
+{\cf14 \}}\par
+}

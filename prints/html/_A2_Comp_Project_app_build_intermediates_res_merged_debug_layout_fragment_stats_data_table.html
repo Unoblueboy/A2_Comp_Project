@@ -1,0 +1,126 @@
+<p style="font-size:14pt;font-family:sans-serif"><strong>.\A2_Comp_Project\app\build\intermediates\res\merged\debug\layout\fragment_stats_data_table.xml</strong></p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">&lt;FrameLayout</span> <span style="color: #7D9029">xmlns:android=</span><span style="color: #BA2121">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span style="color: #7D9029">xmlns:tools=</span><span style="color: #BA2121">&quot;http://schemas.android.com/tools&quot;</span>
+    <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;match_parent&quot;</span>
+    <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;match_parent&quot;</span>
+    <span style="color: #7D9029">android:paddingBottom=</span><span style="color: #BA2121">&quot;@dimen/activity_vertical_margin&quot;</span>
+    <span style="color: #7D9029">android:paddingLeft=</span><span style="color: #BA2121">&quot;@dimen/activity_horizontal_margin&quot;</span>
+    <span style="color: #7D9029">android:paddingRight=</span><span style="color: #BA2121">&quot;@dimen/activity_horizontal_margin&quot;</span>
+    <span style="color: #7D9029">android:paddingTop=</span><span style="color: #BA2121">&quot;@dimen/activity_vertical_margin&quot;</span>
+    <span style="color: #7D9029">tools:context=</span><span style="color: #BA2121">&quot;com.example.natha_000.a2_comp_project.Graphing_Stats.StatsDataTable&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+
+    <span style="color: #408080; font-style: italic">&lt;!-- TODO: Update blank fragment layout --&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;RelativeLayout</span>
+        <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;match_parent&quot;</span>
+        <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;match_parent&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+
+        <span style="color: #008000; font-weight: bold">&lt;ScrollView</span>
+            <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;match_parent&quot;</span>
+            <span style="color: #7D9029">android:layout_alignParentTop=</span><span style="color: #BA2121">&quot;true&quot;</span>
+            <span style="color: #7D9029">android:layout_above=</span><span style="color: #BA2121">&quot;@+id/ll1&quot;</span>
+            <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;500dp&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+
+            <span style="color: #008000; font-weight: bold">&lt;TableLayout</span>
+                <span style="color: #7D9029">android:id =</span> <span style="color: #BA2121">&quot;@+id/tl2&quot;</span>
+                <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;match_parent&quot;</span>
+                <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+
+                <span style="color: #008000; font-weight: bold">&lt;TableRow</span>
+                    <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;match_parent&quot;</span>
+                    <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;match_parent&quot;</span> <span style="color: #008000; font-weight: bold">&gt;</span>
+
+                    <span style="color: #008000; font-weight: bold">&lt;TextView</span>
+                        <span style="color: #7D9029">android:text=</span><span style="color: #BA2121">&quot;Class Lower Bound&quot;</span>
+                        <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;0dp&quot;</span>
+                        <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;fill_parent&quot;</span>
+                        <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/textView&quot;</span>
+                        <span style="color: #7D9029">android:layout_weight=</span><span style="color: #BA2121">&quot;1&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+                    <span style="color: #008000; font-weight: bold">&lt;TextView</span>
+                        <span style="color: #7D9029">android:text=</span><span style="color: #BA2121">&quot;Class Upper Bound&quot;</span>
+                        <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;0dp&quot;</span>
+                        <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/textView2&quot;</span>
+                        <span style="color: #7D9029">android:layout_weight=</span><span style="color: #BA2121">&quot;1&quot;</span>
+                        <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;fill_parent&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+                    <span style="color: #008000; font-weight: bold">&lt;TextView</span>
+                        <span style="color: #7D9029">android:text=</span><span style="color: #BA2121">&quot;Class Frequency&quot;</span>
+                        <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;0dp&quot;</span>
+                        <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;fill_parent&quot;</span>
+                        <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/textView3&quot;</span>
+                        <span style="color: #7D9029">android:layout_weight=</span><span style="color: #BA2121">&quot;1&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+                    <span style="color: #008000; font-weight: bold">&lt;Space</span>
+                        <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;0dp&quot;</span>
+                        <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;fill_parent&quot;</span>
+                        <span style="color: #7D9029">android:layout_weight=</span><span style="color: #BA2121">&quot;1&quot;</span><span style="color: #008000; font-weight: bold">/&gt;</span>
+
+                <span style="color: #008000; font-weight: bold">&lt;/TableRow&gt;</span>
+
+                <span style="color: #008000; font-weight: bold">&lt;TableRow</span>
+                    <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;match_parent&quot;</span>
+                    <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;match_parent&quot;</span> <span style="color: #008000; font-weight: bold">&gt;</span>
+
+                    <span style="color: #008000; font-weight: bold">&lt;EditText</span>
+                        <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;0dp&quot;</span>
+                        <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+                        <span style="color: #7D9029">android:inputType=</span><span style="color: #BA2121">&quot;numberDecimal&quot;</span>
+                        <span style="color: #7D9029">android:ems=</span><span style="color: #BA2121">&quot;10&quot;</span>
+                        <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/editText&quot;</span>
+                        <span style="color: #7D9029">android:layout_weight=</span><span style="color: #BA2121">&quot;1&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+                    <span style="color: #008000; font-weight: bold">&lt;EditText</span>
+                        <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;0dp&quot;</span>
+                        <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+                        <span style="color: #7D9029">android:inputType=</span><span style="color: #BA2121">&quot;numberDecimal&quot;</span>
+                        <span style="color: #7D9029">android:ems=</span><span style="color: #BA2121">&quot;10&quot;</span>
+                        <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/editText2&quot;</span>
+                        <span style="color: #7D9029">android:layout_weight=</span><span style="color: #BA2121">&quot;1&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+                    <span style="color: #008000; font-weight: bold">&lt;EditText</span>
+                        <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;0dp&quot;</span>
+                        <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+                        <span style="color: #7D9029">android:inputType=</span><span style="color: #BA2121">&quot;number&quot;</span>
+                        <span style="color: #7D9029">android:ems=</span><span style="color: #BA2121">&quot;10&quot;</span>
+                        <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/editText3&quot;</span>
+                        <span style="color: #7D9029">android:layout_weight=</span><span style="color: #BA2121">&quot;1&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+                    <span style="color: #008000; font-weight: bold">&lt;Button</span>
+                        <span style="color: #7D9029">android:text=</span><span style="color: #BA2121">&quot;Delete?&quot;</span>
+                        <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;0dp&quot;</span>
+                        <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+                        <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/button10&quot;</span>
+                        <span style="color: #7D9029">android:layout_weight=</span><span style="color: #BA2121">&quot;1&quot;</span><span style="color: #008000; font-weight: bold">/&gt;</span>
+
+                <span style="color: #008000; font-weight: bold">&lt;/TableRow&gt;</span>
+
+            <span style="color: #008000; font-weight: bold">&lt;/TableLayout&gt;</span>
+        <span style="color: #008000; font-weight: bold">&lt;/ScrollView&gt;</span>
+
+        <span style="color: #008000; font-weight: bold">&lt;LinearLayout</span>
+            <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/ll1&quot;</span>
+            <span style="color: #7D9029">android:orientation=</span><span style="color: #BA2121">&quot;horizontal&quot;</span>
+            <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;match_parent&quot;</span>
+            <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+            <span style="color: #7D9029">android:layout_alignParentBottom=</span><span style="color: #BA2121">&quot;true&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+
+            <span style="color: #008000; font-weight: bold">&lt;Button</span>
+                <span style="color: #7D9029">android:text=</span><span style="color: #BA2121">&quot;Add Row&quot;</span>
+                <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+                <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+                <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/button11&quot;</span>
+                <span style="color: #7D9029">android:layout_weight=</span><span style="color: #BA2121">&quot;1&quot;</span><span style="color: #008000; font-weight: bold">/&gt;</span>
+
+            <span style="color: #008000; font-weight: bold">&lt;Button</span>
+                <span style="color: #7D9029">android:text=</span><span style="color: #BA2121">&quot;Clear All&quot;</span>
+                <span style="color: #7D9029">android:layout_width=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+                <span style="color: #7D9029">android:layout_height=</span><span style="color: #BA2121">&quot;wrap_content&quot;</span>
+                <span style="color: #7D9029">android:id=</span><span style="color: #BA2121">&quot;@+id/button12&quot;</span>
+                <span style="color: #7D9029">android:layout_weight=</span><span style="color: #BA2121">&quot;1&quot;</span>
+                <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+        <span style="color: #008000; font-weight: bold">&lt;/LinearLayout&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;/RelativeLayout&gt;</span>
+
+<span style="color: #008000; font-weight: bold">&lt;/FrameLayout&gt;</span>
+</pre></div>
